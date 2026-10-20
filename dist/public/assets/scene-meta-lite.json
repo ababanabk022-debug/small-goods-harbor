@@ -1,0 +1,4206 @@
+{
+  "sourceScene": "Small Goods · Reference Harbor",
+  "generatedAt": "2026-10-20T19:51:14",
+  "coordinateSystem": "glTF right-handed Y-up: Blender (x,y,z) to (x,z,-y)",
+  "groupNames": [
+    "STATIC",
+    "BOAT",
+    "SEABED",
+    "FOAM",
+    "CLOUDS"
+  ],
+  "boatPivot": [
+    3.4700000286102295,
+    0.20000000298023224,
+    3.4800000190734863
+  ],
+  "water": {
+    "radius": 6.2,
+    "surfaceY": 0,
+    "bottomY": -1.64,
+    "loopSeconds": 6
+  },
+  "camera": {
+    "position": [
+      5.5,
+      13.300000190734863,
+      16.0
+    ],
+    "target": [
+      0,
+      1.25,
+      0
+    ],
+    "orthographicScale": 17.200000762939453
+  },
+  "sourceObjectCount": 2737,
+  "drawCalls": 86,
+  "triangles": 588520,
+  "vertices": 691228,
+  "bytes": 5355208,
+  "sha256": "e2e51c38a6a5c93eb3c0b65032ffe364fd58c04cb240f57b520afd78b589f3e3",
+  "materialMode": "Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Fine procedural bumps remain real-time approximations.",
+  "clouds": [
+    {
+      "name": "Central cloud | continuous soft silhouette",
+      "category": "CLOUDS",
+      "vertices": 2856,
+      "triangles": 5708,
+      "min": [
+        -1.56782066822052,
+        7.080734729766846,
+        -1.2150477170944214
+      ],
+      "max": [
+        1.0743283033370972,
+        7.921962738037109,
+        -0.14015334844589233
+      ]
+    },
+    {
+      "name": "Left companion cloud | continuous soft silhouette",
+      "category": "CLOUDS",
+      "vertices": 2448,
+      "triangles": 4892,
+      "min": [
+        -4.809024810791016,
+        4.692483901977539,
+        -0.5729236602783203
+      ],
+      "max": [
+        -3.5398924350738525,
+        5.185301780700684,
+        -0.05217958986759186
+      ]
+    },
+    {
+      "name": "Right companion cloud | continuous soft silhouette",
+      "category": "CLOUDS",
+      "vertices": 1823,
+      "triangles": 3642,
+      "min": [
+        2.184885263442993,
+        4.965078353881836,
+        -2.1340458393096924
+      ],
+      "max": [
+        3.273181200027466,
+        5.388391017913818,
+        -1.6880120038986206
+      ]
+    },
+    {
+      "name": "Front floating cloud | continuous soft silhouette",
+      "category": "CLOUDS",
+      "vertices": 2448,
+      "triangles": 4892,
+      "min": [
+        -3.3540101051330566,
+        3.857830047607422,
+        -3.5329668521881104
+      ],
+      "max": [
+        -1.805668592453003,
+        4.459068298339844,
+        -2.8976590633392334
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "category": "STATIC",
+      "material": "Harbor | wood_dark",
+      "vertices": 15080,
+      "triangles": 17068,
+      "sourceObjects": 114
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • warm painted ivory",
+      "vertices": 3159,
+      "triangles": 5310,
+      "sourceObjects": 18
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • warm painted ivory",
+      "vertices": 2912,
+      "triangles": 4824,
+      "sourceObjects": 14
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | sand",
+      "vertices": 3467,
+      "triangles": 3134,
+      "sourceObjects": 18
+    },
+    {
+      "category": "STATIC",
+      "material": "Wet ivory sand on submerged beach slope",
+      "vertices": 290,
+      "triangles": 470,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "Earth",
+      "vertices": 155,
+      "triangles": 63,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | warm weathered granite",
+      "vertices": 234977,
+      "triangles": 93863,
+      "sourceObjects": 72
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | rock",
+      "vertices": 8344,
+      "triangles": 4472,
+      "sourceObjects": 74
+    },
+    {
+      "category": "STATIC",
+      "material": "Palm Bark",
+      "vertices": 936,
+      "triangles": 1860,
+      "sourceObjects": 3
+    },
+    {
+      "category": "STATIC",
+      "material": "Palm Ring",
+      "vertices": 6552,
+      "triangles": 12096,
+      "sourceObjects": 84
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | deep palm green",
+      "vertices": 40141,
+      "triangles": 37182,
+      "sourceObjects": 145
+    },
+    {
+      "category": "STATIC",
+      "material": "Coconut",
+      "vertices": 1212,
+      "triangles": 2376,
+      "sourceObjects": 12
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | living palm green",
+      "vertices": 51180,
+      "triangles": 56793,
+      "sourceObjects": 193
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | sunlit palm green",
+      "vertices": 19884,
+      "triangles": 19902,
+      "sourceObjects": 87
+    },
+    {
+      "category": "STATIC",
+      "material": "Twig",
+      "vertices": 7392,
+      "triangles": 6776,
+      "sourceObjects": 154
+    },
+    {
+      "category": "STATIC",
+      "material": "Pollen",
+      "vertices": 3024,
+      "triangles": 5856,
+      "sourceObjects": 48
+    },
+    {
+      "category": "STATIC",
+      "material": "Flower Yellow",
+      "vertices": 1440,
+      "triangles": 1440,
+      "sourceObjects": 6
+    },
+    {
+      "category": "STATIC",
+      "material": "Flower White",
+      "vertices": 1440,
+      "triangles": 1440,
+      "sourceObjects": 6
+    },
+    {
+      "category": "SEABED",
+      "material": "Harbor | rock",
+      "vertices": 5628,
+      "triangles": 2836,
+      "sourceObjects": 6
+    },
+    {
+      "category": "SEABED",
+      "material": "Harbor | rock_dark",
+      "vertices": 17688,
+      "triangles": 7406,
+      "sourceObjects": 48
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 04",
+      "vertices": 6456,
+      "triangles": 3228,
+      "sourceObjects": 34
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 01",
+      "vertices": 5520,
+      "triangles": 2760,
+      "sourceObjects": 31
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 06",
+      "vertices": 5424,
+      "triangles": 2712,
+      "sourceObjects": 30
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 05",
+      "vertices": 4980,
+      "triangles": 2490,
+      "sourceObjects": 26
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 00",
+      "vertices": 6252,
+      "triangles": 3126,
+      "sourceObjects": 34
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 02",
+      "vertices": 4644,
+      "triangles": 2322,
+      "sourceObjects": 26
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 03",
+      "vertices": 8316,
+      "triangles": 4158,
+      "sourceObjects": 43
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | wood_light",
+      "vertices": 37185,
+      "triangles": 19597,
+      "sourceObjects": 181
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | wood.001",
+      "vertices": 20112,
+      "triangles": 12192,
+      "sourceObjects": 108
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • recessed interior",
+      "vertices": 432,
+      "triangles": 216,
+      "sourceObjects": 2
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | metal",
+      "vertices": 16205,
+      "triangles": 22694,
+      "sourceObjects": 201
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • aged map paper",
+      "vertices": 864,
+      "triangles": 432,
+      "sourceObjects": 4
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • watercolor sea",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • watercolor islands",
+      "vertices": 303,
+      "triangles": 594,
+      "sourceObjects": 3
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | linen",
+      "vertices": 5066,
+      "triangles": 7128,
+      "sourceObjects": 11
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | rope",
+      "vertices": 10446,
+      "triangles": 20364,
+      "sourceObjects": 44
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | glow",
+      "vertices": 303,
+      "triangles": 594,
+      "sourceObjects": 3
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • faded navy blue",
+      "vertices": 776,
+      "triangles": 1300,
+      "sourceObjects": 3
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | wood_dark",
+      "vertices": 1872,
+      "triangles": 1920,
+      "sourceObjects": 28
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | blue",
+      "vertices": 624,
+      "triangles": 1224,
+      "sourceObjects": 2
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | wood.001",
+      "vertices": 2364,
+      "triangles": 2116,
+      "sourceObjects": 25
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | wood_light",
+      "vertices": 9269,
+      "triangles": 4822,
+      "sourceObjects": 45
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | metal",
+      "vertices": 882,
+      "triangles": 1728,
+      "sourceObjects": 3
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | rope",
+      "vertices": 3528,
+      "triangles": 6912,
+      "sourceObjects": 12
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | linen",
+      "vertices": 1050,
+      "triangles": 2096,
+      "sourceObjects": 1
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 04",
+      "vertices": 1328,
+      "triangles": 664,
+      "sourceObjects": 7
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 03",
+      "vertices": 464,
+      "triangles": 232,
+      "sourceObjects": 3
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 05",
+      "vertices": 1112,
+      "triangles": 556,
+      "sourceObjects": 6
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 06",
+      "vertices": 896,
+      "triangles": 448,
+      "sourceObjects": 5
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 01",
+      "vertices": 264,
+      "triangles": 132,
+      "sourceObjects": 2
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 02",
+      "vertices": 680,
+      "triangles": 340,
+      "sourceObjects": 4
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 00",
+      "vertices": 696,
+      "triangles": 348,
+      "sourceObjects": 4
+    },
+    {
+      "category": "STATIC",
+      "material": "Burnished leather boots",
+      "vertices": 3168,
+      "triangles": 2436,
+      "sourceObjects": 15
+    },
+    {
+      "category": "STATIC",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 768,
+      "triangles": 704,
+      "sourceObjects": 16
+    },
+    {
+      "category": "STATIC",
+      "material": "Straw hat braided edge",
+      "vertices": 3174,
+      "triangles": 5568,
+      "sourceObjects": 65
+    },
+    {
+      "category": "STATIC",
+      "material": "Faded indigo work shirts",
+      "vertices": 1689,
+      "triangles": 2478,
+      "sourceObjects": 15
+    },
+    {
+      "category": "STATIC",
+      "material": "Peach hand painted skin",
+      "vertices": 5000,
+      "triangles": 8800,
+      "sourceObjects": 60
+    },
+    {
+      "category": "STATIC",
+      "material": "Golden woven hat",
+      "vertices": 5541,
+      "triangles": 9630,
+      "sourceObjects": 43
+    },
+    {
+      "category": "STATIC",
+      "material": "Natural cotton shirts",
+      "vertices": 1876,
+      "triangles": 2368,
+      "sourceObjects": 32
+    },
+    {
+      "category": "STATIC",
+      "material": "Chestnut hair",
+      "vertices": 572,
+      "triangles": 984,
+      "sourceObjects": 16
+    },
+    {
+      "category": "STATIC",
+      "material": "Eyes ink",
+      "vertices": 1313,
+      "triangles": 2574,
+      "sourceObjects": 13
+    },
+    {
+      "category": "STATIC",
+      "material": "Dockworkers navy cap",
+      "vertices": 761,
+      "triangles": 1026,
+      "sourceObjects": 6
+    },
+    {
+      "category": "BOAT",
+      "material": "Burnished leather boots",
+      "vertices": 840,
+      "triangles": 704,
+      "sourceObjects": 4
+    },
+    {
+      "category": "BOAT",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 192,
+      "triangles": 176,
+      "sourceObjects": 4
+    },
+    {
+      "category": "BOAT",
+      "material": "Straw hat braided edge",
+      "vertices": 1050,
+      "triangles": 1848,
+      "sourceObjects": 21
+    },
+    {
+      "category": "BOAT",
+      "material": "Faded indigo work shirts",
+      "vertices": 710,
+      "triangles": 980,
+      "sourceObjects": 6
+    },
+    {
+      "category": "BOAT",
+      "material": "Peach hand painted skin",
+      "vertices": 1250,
+      "triangles": 2200,
+      "sourceObjects": 15
+    },
+    {
+      "category": "BOAT",
+      "material": "Golden woven hat",
+      "vertices": 967,
+      "triangles": 1590,
+      "sourceObjects": 6
+    },
+    {
+      "category": "BOAT",
+      "material": "Natural cotton shirts",
+      "vertices": 114,
+      "triangles": 102,
+      "sourceObjects": 5
+    },
+    {
+      "category": "BOAT",
+      "material": "Chestnut hair",
+      "vertices": 143,
+      "triangles": 246,
+      "sourceObjects": 4
+    },
+    {
+      "category": "BOAT",
+      "material": "Eyes ink",
+      "vertices": 202,
+      "triangles": 396,
+      "sourceObjects": 2
+    },
+    {
+      "category": "STATIC",
+      "material": "Dog warm white coat",
+      "vertices": 1018,
+      "triangles": 1784,
+      "sourceObjects": 13
+    },
+    {
+      "category": "STATIC",
+      "material": "Dog tan patches",
+      "vertices": 404,
+      "triangles": 792,
+      "sourceObjects": 4
+    },
+    {
+      "category": "STATIC",
+      "material": "Little orange sea star",
+      "vertices": 389,
+      "triangles": 462,
+      "sourceObjects": 7
+    },
+    {
+      "category": "STATIC",
+      "material": "Deep weathered sign boards",
+      "vertices": 1728,
+      "triangles": 864,
+      "sourceObjects": 8
+    },
+    {
+      "category": "STATIC",
+      "material": "Chalk painted lettering",
+      "vertices": 36735,
+      "triangles": 55110,
+      "sourceObjects": 12
+    },
+    {
+      "category": "STATIC",
+      "material": "Seabird ochre beak and feet",
+      "vertices": 432,
+      "triangles": 396,
+      "sourceObjects": 9
+    },
+    {
+      "category": "STATIC",
+      "material": "Seagull soft gray wings",
+      "vertices": 586,
+      "triangles": 748,
+      "sourceObjects": 10
+    },
+    {
+      "category": "STATIC",
+      "material": "Ivory sea foam",
+      "vertices": 8352,
+      "triangles": 14088,
+      "sourceObjects": 218
+    },
+    {
+      "category": "FOAM",
+      "material": "Ivory sea foam",
+      "vertices": 6720,
+      "triangles": 12480,
+      "sourceObjects": 240
+    },
+    {
+      "category": "STATIC",
+      "material": "Fine turquoise plinth underside",
+      "vertices": 768,
+      "triangles": 764,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | weathered stone fissures",
+      "vertices": 714,
+      "triangles": 1224,
+      "sourceObjects": 17
+    },
+    {
+      "category": "SEABED",
+      "material": "Sea floor | warm white fine coral sand",
+      "vertices": 7700,
+      "triangles": 15142,
+      "sourceObjects": 1
+    },
+    {
+      "category": "SEABED",
+      "material": "White sand cut edge",
+      "vertices": 512,
+      "triangles": 512,
+      "sourceObjects": 1
+    },
+    {
+      "category": "SEABED",
+      "material": "Tiny ivory sea floor shells",
+      "vertices": 2835,
+      "triangles": 5490,
+      "sourceObjects": 45
+    },
+    {
+      "category": "CLOUDS",
+      "material": "Cloud | soft warm ivory.001",
+      "vertices": 9575,
+      "triangles": 19134,
+      "sourceObjects": 4
+    }
+  ],
+  "excluded": [
+    "Sea — single closed wavy volume",
+    "Seamless blue ground"
+  ],
+  "reductions": [
+    {
+      "name": "Shop map caption",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Shop small business name",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Boat painted hull name",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Sol receiving supplies parcel shipping stencil",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Beach delivery porter parcel shipping stencil",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Dock hand parcel shipping stencil",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Beach destination crate shipping stencil",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Hilltop Small Goods text 0",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Hilltop Small Goods text 1",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Hilltop Small Goods text 2",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Hilltop Small Goods text 3",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Smaller Brighter Tomorrow text 0",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Smaller Brighter Tomorrow text 1",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Smaller Brighter Tomorrow text 2",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Smaller Brighter Tomorrow text 3",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Asymmetric island summit soil",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 03",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 06",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 07",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 08",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 09",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 10",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 11",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 12",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 13",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 14",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 15",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Summit weathered outcrop 16",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 03",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 06",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 07",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 08",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 09",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 10",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 11",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 12",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Coastal granite boulder 13",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Harbor palm frond sheath 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm frond sheath 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm frond sheath 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm frond sheath 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm frond sheath 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm frond sheath 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm frond sheath 06",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm frond sheath 07",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm frond sheath 08",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm coconut 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm coconut 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm coconut 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor palm coconut 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 06",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 07",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm frond sheath 08",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm coconut 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm coconut 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm coconut 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Summit palm coconut 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 06",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 07",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm frond sheath 08",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm coconut 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm coconut 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm coconut 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Back grove palm coconut 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 06",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 07",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 08",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 09",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 10",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 11",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 12",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Feather fern colony 13",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 00 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 01 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 02 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 03 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 04 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 05 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 06 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 07 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 08 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dense island shrub 09 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 06",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 07",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 08",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 09",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 10",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 11",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 12",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 13",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 14",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 15",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 16",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 17",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 18",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 19",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 20",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 21",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 22",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Creeping ground cover 23",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 fine stem 0",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 pollen 0",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 00 fine stem 1",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 pollen 1",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 00 fine stem 2",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 pollen 2",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 00 fine stem 3",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 pollen 3",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 00 fine stem 4",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 pollen 4",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 00 fine stem 5",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 pollen 5",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 00 fine stem 6",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 pollen 6",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 00 fine stem 7",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 00 pollen 7",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 01 fine stem 0",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 01 pollen 0",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 01 fine stem 1",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 01 pollen 1",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 01 fine stem 2",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 01 pollen 2",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 01 fine stem 3",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 01 pollen 3",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 01 fine stem 4",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 01 pollen 4",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 01 fine stem 5",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 01 pollen 5",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 01 fine stem 6",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 01 pollen 6",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 01 fine stem 7",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 01 pollen 7",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 02 fine stem 0",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 02 pollen 0",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 02 fine stem 1",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 02 pollen 1",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 02 fine stem 2",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 02 pollen 2",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 02 fine stem 3",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 02 pollen 3",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 02 fine stem 4",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 02 pollen 4",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 02 fine stem 5",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 02 pollen 5",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 02 fine stem 6",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 02 pollen 6",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 02 fine stem 7",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 02 pollen 7",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 03 fine stem 0",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 03 pollen 0",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 03 fine stem 1",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 03 pollen 1",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 03 fine stem 2",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 03 pollen 2",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 03 fine stem 3",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 03 pollen 3",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 03 fine stem 4",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 03 pollen 4",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 03 fine stem 5",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 03 pollen 5",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 03 fine stem 6",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 03 pollen 6",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 03 fine stem 7",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 03 pollen 7",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 04 fine stem 0",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 04 pollen 0",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 04 fine stem 1",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 04 pollen 1",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 04 fine stem 2",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 04 pollen 2",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 04 fine stem 3",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 04 pollen 3",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 04 fine stem 4",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 04 pollen 4",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 04 fine stem 5",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 04 pollen 5",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 04 fine stem 6",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 04 pollen 6",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 04 fine stem 7",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 04 pollen 7",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 05 fine stem 0",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 05 pollen 0",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 05 fine stem 1",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 05 pollen 1",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 05 fine stem 2",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 05 pollen 2",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 05 fine stem 3",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 05 pollen 3",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 05 fine stem 4",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 05 pollen 4",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 05 fine stem 5",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 05 pollen 5",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 05 fine stem 6",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 05 pollen 6",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Tiny warm wildflowers 05 fine stem 7",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Tiny warm wildflowers 05 pollen 7",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Lagoon stone satellite 00 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 00 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 01 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 01 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 02 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 02 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 03 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 03 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 04 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 04 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 05 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 05 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 06 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 06 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 07",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 07 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 07 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 08",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 08 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 08 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 09 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 09 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 10",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 10 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 10 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 11",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 11 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 11 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 12 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 12 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 13",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 13 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 13 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 14",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 14 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 14 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 15 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 15 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 16",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 16 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 16 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Submerged dark stone 17",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 17 0",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Lagoon stone satellite 17 1",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "Shop door bronze latch",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.004",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.005",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.006",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.007",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.008",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.009",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.010",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop ceramic provisions jar.011",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop map tiny drawn island",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop map tiny drawn island.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop map tiny drawn island.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop hanging hurricane lantern amber glass",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop hanging hurricane lantern amber glass.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Shop counter pottery vessel",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock amber lantern amber glass",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Boat brass flagstaff finial",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper shirt button",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper shirt button.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper shirt button.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper rounded shoulder",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper elbow",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper hand",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper thumb",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper rounded shoulder.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper elbow.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper hand.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper thumb.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper head",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper hair at nape",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper ear",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper eye",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper ear.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper eye.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Mara the shopkeeper nose",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies shirt button",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies shirt button.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies shirt button.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies rounded shoulder",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies elbow",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies hand",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies thumb",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies rounded shoulder.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies elbow.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies hand.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies thumb.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies parcel black square nail",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies parcel black square nail.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies parcel black square nail.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies parcel black square nail.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies parcel black square nail.004",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies parcel black square nail.005",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies parcel black square nail.006",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies parcel black square nail.007",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies head",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies hair at nape",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies ear",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies eye",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies ear.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies eye.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sol receiving supplies nose",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter shirt button",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter shirt button.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter shirt button.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter rounded shoulder",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter elbow",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter hand",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter thumb",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter rounded shoulder.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter elbow.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter hand.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter thumb.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter parcel black square nail",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter parcel black square nail.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter parcel black square nail.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter parcel black square nail.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter parcel black square nail.004",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter parcel black square nail.005",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter parcel black square nail.006",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter parcel black square nail.007",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter head",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter hair at nape",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter ear",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter eye",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter ear.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter eye.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach delivery porter nose",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand shirt button",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand shirt button.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand shirt button.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand rounded shoulder",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand elbow",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand hand",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand thumb",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand rounded shoulder.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand elbow.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand hand.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand thumb.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand parcel black square nail",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand parcel black square nail.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand parcel black square nail.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand parcel black square nail.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand parcel black square nail.004",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand parcel black square nail.005",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand parcel black square nail.006",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand parcel black square nail.007",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand head",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand hair at nape",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand ear",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand eye",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand ear.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand eye.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand nose",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand work cap dome",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Dock hand cap button",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper shirt button",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper shirt button.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper shirt button.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper rounded shoulder",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper elbow",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper hand",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper thumb",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper rounded shoulder.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper elbow.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper hand.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper thumb.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper head",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper hair at nape",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper ear",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper eye",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper ear.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper eye.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Little Tide skipper nose",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach destination crate black square nail",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach destination crate black square nail.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach destination crate black square nail.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach destination crate black square nail.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach destination crate black square nail.004",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach destination crate black square nail.005",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach destination crate black square nail.006",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Beach destination crate black square nail.007",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog body",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog tan saddle",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog paw",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog paw.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog paw.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog paw.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog chest",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog head",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog right face patch",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog muzzle",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog nose",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog eye",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog folded ear",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog eye.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog folded ear.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Harbor dog brass collar tag",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Hilltop Small Goods nail",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Hilltop Small Goods nail.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Hilltop Small Goods nail.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Hilltop Small Goods nail.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Hilltop Small Goods nail.004",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Hilltop Small Goods nail.005",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Hilltop Small Goods nail.006",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Hilltop Small Goods nail.007",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Smaller Brighter Tomorrow nail",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Smaller Brighter Tomorrow nail.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Smaller Brighter Tomorrow nail.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Smaller Brighter Tomorrow nail.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Smaller Brighter Tomorrow nail.004",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Smaller Brighter Tomorrow nail.005",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Smaller Brighter Tomorrow nail.006",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Smaller Brighter Tomorrow nail.007",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Gull pear shaped body",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Gull raised neck",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Gull head",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Gull eye",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Gull folded wing",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Gull eye.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Gull folded wing.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star central body",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.001",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.002",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.003",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.004",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.005",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.006",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.007",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.008",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.009",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.010",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.011",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.012",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.013",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.014",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.015",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.016",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.017",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.018",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Sea star small nodule.019",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Foam pearl",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.001",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.002",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.003",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.004",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.005",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.006",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.007",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.008",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.009",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.010",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.011",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.012",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.013",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.014",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.015",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.016",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.017",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.018",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.019",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.020",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.021",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.022",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.023",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.024",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.025",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.026",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.027",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.028",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.029",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.030",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.031",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.032",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.033",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.034",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.035",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.036",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.037",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.038",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.039",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.040",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.041",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.042",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.043",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.044",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.045",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.046",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.047",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.048",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.049",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.050",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.051",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.052",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.053",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.054",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.055",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.056",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.057",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.058",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.059",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.060",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.061",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.062",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.063",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.064",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.065",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.066",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.067",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.068",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.069",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.070",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.071",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.072",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.073",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.074",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.075",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.076",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.077",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.078",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.079",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.080",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.081",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.082",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.083",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.084",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.085",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.086",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.087",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.088",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.089",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.090",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.091",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.092",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.093",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.094",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.095",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.096",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.097",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.098",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.099",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.100",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.101",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.102",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.103",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.104",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.105",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.106",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.107",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.108",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.109",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.110",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.111",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.112",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.113",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.114",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.115",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.116",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.117",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.118",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.119",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.120",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.121",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.122",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.123",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.124",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.125",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.126",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.127",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.128",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.129",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.130",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.131",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.132",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.133",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.134",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.135",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.136",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.137",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.138",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.139",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.140",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.141",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.142",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.143",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.144",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.145",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.146",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.147",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.148",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.149",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.150",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.151",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.152",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.153",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.154",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.155",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.156",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.157",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.158",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.159",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.160",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.161",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.162",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.163",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.164",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.165",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.166",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.167",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.168",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.169",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.170",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.171",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.172",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.173",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.174",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.175",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.176",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.177",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.178",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.179",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.180",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.181",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.182",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.183",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.184",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.185",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.186",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.187",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.188",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.189",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.190",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.191",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.192",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.193",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.194",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.195",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.196",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.197",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.198",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.199",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.200",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.201",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.202",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.203",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.204",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.205",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.206",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.207",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.208",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.209",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.210",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.211",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.212",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.213",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.214",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.215",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.216",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.217",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.218",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.219",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.220",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.221",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.222",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.223",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.224",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.225",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.226",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.227",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.228",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.229",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.230",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.231",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.232",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.233",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.234",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.235",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.236",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.237",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.238",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "Foam pearl.239",
+      "decimateRatio": 0.12
+    },
+    {
+      "name": "REFINED dense tropical shrub 00 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 01 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 02 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 03 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 04 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 05 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 06 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 07 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 08 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 09 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 10 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED dense tropical shrub 11 waxy leaves",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED large fern bank 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED large fern bank 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED large fern bank 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED large fern bank 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED large fern bank 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED large fern bank 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED large fern bank 06",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED large fern bank 07",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 06",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 07",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 08",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 09",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 10",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED carpet of creeping leaves 11",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "REFINED angular granite fragment 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 03",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 06",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 07",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 08",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 09",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 10",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 11",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 12",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 13",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 14",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "REFINED angular granite fragment 15",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "POLISH Harbor palm coherent notched fronds",
+      "decimateRatio": 0.7
+    },
+    {
+      "name": "POLISH Summit palm coherent notched fronds",
+      "decimateRatio": 0.7
+    },
+    {
+      "name": "POLISH Back grove palm coherent notched fronds",
+      "decimateRatio": 0.7
+    },
+    {
+      "name": "POLISH upper front mineral face 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "POLISH upper front mineral face 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "POLISH upper front mineral face 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "POLISH upper cliff creeping leaves 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH upper cliff creeping leaves 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH upper cliff creeping leaves 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH upper cliff creeping leaves 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH cliff pocket fern 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH cliff pocket fern 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH cliff pocket fern 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH cliff pocket fern 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH cliff pocket fern 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH cliff pocket fern 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH low coastal broad leaves 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH low coastal broad leaves 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "POLISH low coastal broad leaves 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Warm white rippled sand bed",
+      "decimateRatio": 0.65
+    },
+    {
+      "name": "Ivory shell on sand 00",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 01",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 02",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 03",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 04",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 05",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 06",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 07",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 08",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 09",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 10",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 11",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 12",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 13",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 14",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 15",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 16",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 17",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 18",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 19",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 20",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 21",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 22",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 23",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 24",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 25",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 26",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 27",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 28",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 29",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 30",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 31",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 32",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 33",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 34",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 35",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 36",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 37",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 38",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 39",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 40",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 41",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 42",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 43",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "Ivory shell on sand 44",
+      "decimateRatio": 0.28
+    },
+    {
+      "name": "FOOTHILL | root slab 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | broken ledge 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 00 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 00 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | crevice fern 00",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "FOOTHILL | root slab 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | broken ledge 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 01 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | creeping pocket 01",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "FOOTHILL | root slab 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | broken ledge 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 02 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 02 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 02 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | crevice fern 02",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "FOOTHILL | root slab 03",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | broken ledge 03",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 03 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 03 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | creeping pocket 03",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "FOOTHILL | root slab 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | broken ledge 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | fallen shard 04 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | crevice fern 04",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "FOOTHILL | root slab 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | broken ledge 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "FOOTHILL | creeping pocket 05",
+      "decimateRatio": 0.45
+    },
+    {
+      "name": "Central cloud | continuous soft silhouette",
+      "decimateRatio": 0.5
+    },
+    {
+      "name": "Left companion cloud | continuous soft silhouette",
+      "decimateRatio": 0.5
+    },
+    {
+      "name": "Right companion cloud | continuous soft silhouette",
+      "decimateRatio": 0.5
+    },
+    {
+      "name": "Front floating cloud | continuous soft silhouette",
+      "decimateRatio": 0.5
+    }
+  ],
+  "seconds": 4.25,
+  "uncompressedBytes": 20793936,
+  "compression": "KHR_draco_mesh_compression",
+  "compressionSeconds": 2.32
+}

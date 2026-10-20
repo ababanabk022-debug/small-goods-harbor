@@ -1,0 +1,798 @@
+{
+  "sourceScene": "Small Goods · Reference Harbor",
+  "generatedAt": "2026-10-20T19:42:13",
+  "coordinateSystem": "glTF right-handed Y-up: Blender (x,y,z) to (x,z,-y)",
+  "groupNames": [
+    "STATIC",
+    "BOAT",
+    "SEABED",
+    "FOAM",
+    "CLOUDS"
+  ],
+  "boatPivot": [
+    3.4700000286102295,
+    0.20000000298023224,
+    3.4800000190734863
+  ],
+  "water": {
+    "radius": 6.2,
+    "surfaceY": 0,
+    "bottomY": -1.64,
+    "loopSeconds": 6
+  },
+  "camera": {
+    "position": [
+      5.5,
+      13.300000190734863,
+      16.0
+    ],
+    "target": [
+      0,
+      1.25,
+      0
+    ],
+    "orthographicScale": 17.200000762939453
+  },
+  "sourceObjectCount": 2737,
+  "drawCalls": 86,
+  "triangles": 1129029,
+  "vertices": 1244824,
+  "bytes": 8865512,
+  "sha256": "c3da55e423b4a37851a5c25319a9d04ece9c2e62cdd15d96fad958f2faa2309f",
+  "materialMode": "Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Fine procedural bumps remain real-time approximations.",
+  "clouds": [
+    {
+      "name": "Central cloud | continuous soft silhouette",
+      "category": "CLOUDS",
+      "vertices": 5710,
+      "triangles": 11416,
+      "min": [
+        -1.56782066822052,
+        7.081112861633301,
+        -1.215193510055542
+      ],
+      "max": [
+        1.0743283033370972,
+        7.921725749969482,
+        -0.14015334844589233
+      ]
+    },
+    {
+      "name": "Left companion cloud | continuous soft silhouette",
+      "category": "CLOUDS",
+      "vertices": 4894,
+      "triangles": 9784,
+      "min": [
+        -4.809024810791016,
+        4.69264554977417,
+        -0.5729695558547974
+      ],
+      "max": [
+        -3.5398924350738525,
+        5.185356616973877,
+        -0.05217958986759186
+      ]
+    },
+    {
+      "name": "Right companion cloud | continuous soft silhouette",
+      "category": "CLOUDS",
+      "vertices": 3644,
+      "triangles": 7284,
+      "min": [
+        2.185321807861328,
+        4.965124130249023,
+        -2.134079933166504
+      ],
+      "max": [
+        3.273181200027466,
+        5.388308048248291,
+        -1.6880120038986206
+      ]
+    },
+    {
+      "name": "Front floating cloud | continuous soft silhouette",
+      "category": "CLOUDS",
+      "vertices": 4894,
+      "triangles": 9784,
+      "min": [
+        -3.3540101051330566,
+        3.858027458190918,
+        -3.533022880554199
+      ],
+      "max": [
+        -1.805668592453003,
+        4.459135055541992,
+        -2.8976590633392334
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "category": "STATIC",
+      "material": "Harbor | wood_dark",
+      "vertices": 17080,
+      "triangles": 20812,
+      "sourceObjects": 114
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • warm painted ivory",
+      "vertices": 4266,
+      "triangles": 7484,
+      "sourceObjects": 18
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • warm painted ivory",
+      "vertices": 3168,
+      "triangles": 5304,
+      "sourceObjects": 14
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | sand",
+      "vertices": 3467,
+      "triangles": 3134,
+      "sourceObjects": 18
+    },
+    {
+      "category": "STATIC",
+      "material": "Wet ivory sand on submerged beach slope",
+      "vertices": 290,
+      "triangles": 470,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "Earth",
+      "vertices": 352,
+      "triangles": 186,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | warm weathered granite",
+      "vertices": 569166,
+      "triangles": 284682,
+      "sourceObjects": 72
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | rock",
+      "vertices": 8344,
+      "triangles": 4472,
+      "sourceObjects": 74
+    },
+    {
+      "category": "STATIC",
+      "material": "Palm Bark",
+      "vertices": 936,
+      "triangles": 1860,
+      "sourceObjects": 3
+    },
+    {
+      "category": "STATIC",
+      "material": "Palm Ring",
+      "vertices": 8736,
+      "triangles": 16128,
+      "sourceObjects": 84
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | deep palm green",
+      "vertices": 67326,
+      "triangles": 72564,
+      "sourceObjects": 145
+    },
+    {
+      "category": "STATIC",
+      "material": "Coconut",
+      "vertices": 2664,
+      "triangles": 5280,
+      "sourceObjects": 12
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | living palm green",
+      "vertices": 86211,
+      "triangles": 106188,
+      "sourceObjects": 193
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | sunlit palm green",
+      "vertices": 32352,
+      "triangles": 37244,
+      "sourceObjects": 87
+    },
+    {
+      "category": "STATIC",
+      "material": "Twig",
+      "vertices": 7392,
+      "triangles": 6776,
+      "sourceObjects": 154
+    },
+    {
+      "category": "STATIC",
+      "material": "Pollen",
+      "vertices": 10656,
+      "triangles": 21120,
+      "sourceObjects": 48
+    },
+    {
+      "category": "STATIC",
+      "material": "Flower Yellow",
+      "vertices": 1440,
+      "triangles": 1440,
+      "sourceObjects": 6
+    },
+    {
+      "category": "STATIC",
+      "material": "Flower White",
+      "vertices": 1440,
+      "triangles": 1440,
+      "sourceObjects": 6
+    },
+    {
+      "category": "SEABED",
+      "material": "Harbor | rock",
+      "vertices": 5628,
+      "triangles": 2836,
+      "sourceObjects": 6
+    },
+    {
+      "category": "SEABED",
+      "material": "Harbor | rock_dark",
+      "vertices": 44872,
+      "triangles": 22618,
+      "sourceObjects": 48
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 04",
+      "vertices": 6456,
+      "triangles": 3228,
+      "sourceObjects": 34
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 01",
+      "vertices": 5520,
+      "triangles": 2760,
+      "sourceObjects": 31
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 06",
+      "vertices": 5424,
+      "triangles": 2712,
+      "sourceObjects": 30
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 05",
+      "vertices": 4980,
+      "triangles": 2490,
+      "sourceObjects": 26
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 00",
+      "vertices": 6252,
+      "triangles": 3126,
+      "sourceObjects": 34
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 02",
+      "vertices": 4644,
+      "triangles": 2322,
+      "sourceObjects": 26
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • cedar grain 03",
+      "vertices": 8316,
+      "triangles": 4158,
+      "sourceObjects": 43
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | wood_light",
+      "vertices": 37911,
+      "triangles": 21049,
+      "sourceObjects": 181
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | wood.001",
+      "vertices": 20504,
+      "triangles": 12960,
+      "sourceObjects": 108
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • recessed interior",
+      "vertices": 432,
+      "triangles": 216,
+      "sourceObjects": 2
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | metal",
+      "vertices": 23230,
+      "triangles": 36688,
+      "sourceObjects": 201
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • aged map paper",
+      "vertices": 864,
+      "triangles": 432,
+      "sourceObjects": 4
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • watercolor sea",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "Architecture • watercolor islands",
+      "vertices": 666,
+      "triangles": 1320,
+      "sourceObjects": 3
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | linen",
+      "vertices": 5066,
+      "triangles": 7128,
+      "sourceObjects": 11
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | rope",
+      "vertices": 13928,
+      "triangles": 27152,
+      "sourceObjects": 44
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | glow",
+      "vertices": 666,
+      "triangles": 1320,
+      "sourceObjects": 3
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • faded navy blue",
+      "vertices": 776,
+      "triangles": 1300,
+      "sourceObjects": 3
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | wood_dark",
+      "vertices": 2112,
+      "triangles": 2328,
+      "sourceObjects": 28
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | blue",
+      "vertices": 624,
+      "triangles": 1224,
+      "sourceObjects": 2
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | wood.001",
+      "vertices": 2544,
+      "triangles": 2444,
+      "sourceObjects": 25
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | wood_light",
+      "vertices": 9390,
+      "triangles": 5064,
+      "sourceObjects": 45
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | metal",
+      "vertices": 1176,
+      "triangles": 2304,
+      "sourceObjects": 3
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | rope",
+      "vertices": 4704,
+      "triangles": 9216,
+      "sourceObjects": 12
+    },
+    {
+      "category": "BOAT",
+      "material": "Harbor | linen",
+      "vertices": 1050,
+      "triangles": 2096,
+      "sourceObjects": 1
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 04",
+      "vertices": 1328,
+      "triangles": 664,
+      "sourceObjects": 7
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 03",
+      "vertices": 464,
+      "triangles": 232,
+      "sourceObjects": 3
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 05",
+      "vertices": 1112,
+      "triangles": 556,
+      "sourceObjects": 6
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 06",
+      "vertices": 896,
+      "triangles": 448,
+      "sourceObjects": 5
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 01",
+      "vertices": 264,
+      "triangles": 132,
+      "sourceObjects": 2
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 02",
+      "vertices": 680,
+      "triangles": 340,
+      "sourceObjects": 4
+    },
+    {
+      "category": "BOAT",
+      "material": "Architecture • cedar grain 00",
+      "vertices": 696,
+      "triangles": 348,
+      "sourceObjects": 4
+    },
+    {
+      "category": "STATIC",
+      "material": "Burnished leather boots",
+      "vertices": 3168,
+      "triangles": 2436,
+      "sourceObjects": 15
+    },
+    {
+      "category": "STATIC",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 768,
+      "triangles": 704,
+      "sourceObjects": 16
+    },
+    {
+      "category": "STATIC",
+      "material": "Straw hat braided edge",
+      "vertices": 4232,
+      "triangles": 7424,
+      "sourceObjects": 65
+    },
+    {
+      "category": "STATIC",
+      "material": "Faded indigo work shirts",
+      "vertices": 2302,
+      "triangles": 3700,
+      "sourceObjects": 15
+    },
+    {
+      "category": "STATIC",
+      "material": "Peach hand painted skin",
+      "vertices": 9840,
+      "triangles": 18480,
+      "sourceObjects": 60
+    },
+    {
+      "category": "STATIC",
+      "material": "Golden woven hat",
+      "vertices": 9534,
+      "triangles": 17616,
+      "sourceObjects": 43
+    },
+    {
+      "category": "STATIC",
+      "material": "Natural cotton shirts",
+      "vertices": 2376,
+      "triangles": 3352,
+      "sourceObjects": 32
+    },
+    {
+      "category": "STATIC",
+      "material": "Chestnut hair",
+      "vertices": 1112,
+      "triangles": 2016,
+      "sourceObjects": 16
+    },
+    {
+      "category": "STATIC",
+      "material": "Eyes ink",
+      "vertices": 2886,
+      "triangles": 5720,
+      "sourceObjects": 13
+    },
+    {
+      "category": "STATIC",
+      "material": "Dockworkers navy cap",
+      "vertices": 882,
+      "triangles": 1268,
+      "sourceObjects": 6
+    },
+    {
+      "category": "BOAT",
+      "material": "Burnished leather boots",
+      "vertices": 840,
+      "triangles": 704,
+      "sourceObjects": 4
+    },
+    {
+      "category": "BOAT",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 192,
+      "triangles": 176,
+      "sourceObjects": 4
+    },
+    {
+      "category": "BOAT",
+      "material": "Straw hat braided edge",
+      "vertices": 1400,
+      "triangles": 2464,
+      "sourceObjects": 21
+    },
+    {
+      "category": "BOAT",
+      "material": "Faded indigo work shirts",
+      "vertices": 952,
+      "triangles": 1464,
+      "sourceObjects": 6
+    },
+    {
+      "category": "BOAT",
+      "material": "Peach hand painted skin",
+      "vertices": 2460,
+      "triangles": 4620,
+      "sourceObjects": 15
+    },
+    {
+      "category": "BOAT",
+      "material": "Golden woven hat",
+      "vertices": 1330,
+      "triangles": 2316,
+      "sourceObjects": 6
+    },
+    {
+      "category": "BOAT",
+      "material": "Natural cotton shirts",
+      "vertices": 118,
+      "triangles": 106,
+      "sourceObjects": 5
+    },
+    {
+      "category": "BOAT",
+      "material": "Chestnut hair",
+      "vertices": 278,
+      "triangles": 504,
+      "sourceObjects": 4
+    },
+    {
+      "category": "BOAT",
+      "material": "Eyes ink",
+      "vertices": 444,
+      "triangles": 880,
+      "sourceObjects": 2
+    },
+    {
+      "category": "STATIC",
+      "material": "Dog warm white coat",
+      "vertices": 1992,
+      "triangles": 3728,
+      "sourceObjects": 13
+    },
+    {
+      "category": "STATIC",
+      "material": "Dog tan patches",
+      "vertices": 888,
+      "triangles": 1760,
+      "sourceObjects": 4
+    },
+    {
+      "category": "STATIC",
+      "material": "Little orange sea star",
+      "vertices": 510,
+      "triangles": 704,
+      "sourceObjects": 7
+    },
+    {
+      "category": "STATIC",
+      "material": "Deep weathered sign boards",
+      "vertices": 1728,
+      "triangles": 864,
+      "sourceObjects": 8
+    },
+    {
+      "category": "STATIC",
+      "material": "Chalk painted lettering",
+      "vertices": 37098,
+      "triangles": 55836,
+      "sourceObjects": 12
+    },
+    {
+      "category": "STATIC",
+      "material": "Seabird ochre beak and feet",
+      "vertices": 432,
+      "triangles": 396,
+      "sourceObjects": 9
+    },
+    {
+      "category": "STATIC",
+      "material": "Seagull soft gray wings",
+      "vertices": 828,
+      "triangles": 1232,
+      "sourceObjects": 10
+    },
+    {
+      "category": "STATIC",
+      "material": "Ivory sea foam",
+      "vertices": 11136,
+      "triangles": 18784,
+      "sourceObjects": 218
+    },
+    {
+      "category": "FOAM",
+      "material": "Ivory sea foam",
+      "vertices": 53280,
+      "triangles": 105600,
+      "sourceObjects": 240
+    },
+    {
+      "category": "STATIC",
+      "material": "Fine turquoise plinth underside",
+      "vertices": 768,
+      "triangles": 764,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "REFINED | weathered stone fissures",
+      "vertices": 952,
+      "triangles": 1632,
+      "sourceObjects": 17
+    },
+    {
+      "category": "SEABED",
+      "material": "Sea floor | warm white fine coral sand",
+      "vertices": 11777,
+      "triangles": 23296,
+      "sourceObjects": 1
+    },
+    {
+      "category": "SEABED",
+      "material": "White sand cut edge",
+      "vertices": 512,
+      "triangles": 512,
+      "sourceObjects": 1
+    },
+    {
+      "category": "SEABED",
+      "material": "Tiny ivory sea floor shells",
+      "vertices": 9990,
+      "triangles": 19800,
+      "sourceObjects": 45
+    },
+    {
+      "category": "CLOUDS",
+      "material": "Cloud | soft warm ivory.001",
+      "vertices": 19142,
+      "triangles": 38268,
+      "sourceObjects": 4
+    }
+  ],
+  "excluded": [
+    "Sea — single closed wavy volume",
+    "Seamless blue ground"
+  ],
+  "reductions": [
+    {
+      "name": "Shop map caption",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Shop small business name",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Boat painted hull name",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Sol receiving supplies parcel shipping stencil",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Beach delivery porter parcel shipping stencil",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Dock hand parcel shipping stencil",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Beach destination crate shipping stencil",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Hilltop Small Goods text 0",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Hilltop Small Goods text 1",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Hilltop Small Goods text 2",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Hilltop Small Goods text 3",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Smaller Brighter Tomorrow text 0",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Smaller Brighter Tomorrow text 1",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Smaller Brighter Tomorrow text 2",
+      "font_resolution_before": 12,
+      "after": 3
+    },
+    {
+      "name": "Smaller Brighter Tomorrow text 3",
+      "font_resolution_before": 12,
+      "after": 3
+    }
+  ],
+  "seconds": 6.41,
+  "uncompressedBytes": 39540816,
+  "compression": "KHR_draco_mesh_compression",
+  "compressionSeconds": 5.12
+}
