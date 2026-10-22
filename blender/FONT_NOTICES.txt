@@ -1,0 +1,16 @@
+Embedded font notice
+
+Font: Georgia Regular, Version 5.59
+Designer: Matthew Carter
+Manufacturer name stored in the font: Carter & Cone
+Copyright: © 2016 Microsoft Corporation. All Rights Reserved.
+
+License notice copied from the embedded font's name table:
+Microsoft supplied font. You may use this font to create, display, and print content as permitted by the license terms or terms of use, of the Microsoft product, service, or content in which this font was included. You may only (i) embed this font in content as permitted by the embedding restrictions included in this font; and (ii) temporarily download this font to a printer or other output device to help print content. Any other use is prohibited.
+
+License information URL stored in the font:
+http://www.microsoft.com/typography/fonts/
+
+The OS/2 fsType value is 8 (Editable Embedding). The font remains packed
+inside the editable Blender content. No standalone font file is distributed
+in this repository or archive. This notice does not grant broader font rights.

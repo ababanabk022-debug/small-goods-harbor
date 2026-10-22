@@ -1,0 +1,91 @@
+{
+  "format": "Portable editable Blender scene",
+  "blenderVersion": "5.2.0 LTS",
+  "packagedDate": "2026-10-22",
+  "file": {
+    "name": "small-goods-harbor.blend",
+    "bytes": 44421696,
+    "sha256": "71e4e3839748e57f7dd5171a61f4d3da3da85c819126d07c4c034108698a09ba"
+  },
+  "scene": {
+    "scene": "Small Goods · Reference Harbor",
+    "sceneObjects": 2962,
+    "meshObjects": 2215,
+    "curveObjects": 717,
+    "textObjects": 16,
+    "materialCount": 66,
+    "cameraCount": 2,
+    "activeCamera": "Camera | reference hero",
+    "lightCount": 9,
+    "visibleClouds": [
+      "Central cloud | continuous soft silhouette",
+      "Left companion cloud | continuous soft silhouette",
+      "Right companion cloud | continuous soft silhouette",
+      "Front floating cloud | continuous soft silhouette"
+    ],
+    "driverCount": 469,
+    "shapeKeys": [
+      "Basis",
+      "Harbor traveling wave 1 | spatial sine",
+      "Harbor traveling wave 1 | spatial cosine",
+      "Harbor traveling wave 2 | spatial sine",
+      "Harbor traveling wave 2 | spatial cosine",
+      "Harbor traveling wave 3 | spatial sine",
+      "Harbor traveling wave 3 | spatial cosine"
+    ],
+    "frames": [
+      1,
+      144
+    ],
+    "fps": 24,
+    "renderEngine": "CYCLES"
+  },
+  "animation": {
+    "periodSeconds": 6,
+    "exportFrames": [
+      1,
+      144
+    ],
+    "matchingNextFrame": 145,
+    "sampledFrames": [
+      1,
+      37,
+      145
+    ],
+    "waterMaxMovementMeters": 0.1373216062784195,
+    "waterLoopDifferenceMeters": 0.0,
+    "boatLoopDifference": 5.21808732814632e-18,
+    "invalidDrivers": 0,
+    "sourceSampleDifferences": 0
+  },
+  "validation": {
+    "independentBackgroundReopen": true,
+    "geometryFingerprintMatchesSource": true,
+    "materialGraphFingerprintMatchesSource": true,
+    "driverFingerprintMatchesSource": true,
+    "noExternalTextureFiles": true,
+    "noLinkedLibraries": true,
+    "noEmbeddedTextScripts": true,
+    "knownPersonalPathAndTokenScanMatches": 0
+  },
+  "portableResources": {
+    "font": {
+      "name": "Georgia Regular",
+      "version": "5.59",
+      "packed": true,
+      "relativeReference": "//fonts/georgia.ttf",
+      "fsType": 8,
+      "noticeFile": "FONT_NOTICES.txt"
+    },
+    "renderOutput": "//renders/harbor-"
+  },
+  "privacyChanges": [
+    "Scene-only copy; unrelated startup scene and original editor state excluded",
+    "Removed unused editor brush asset references",
+    "Removed local preview/reference authoring links and obsolete audit note",
+    "Packed font path and render output replaced with portable relative references",
+    "Saved editor directory reset; unused fixed-string tail containing an old directory zeroed",
+    "No original filesystem paths, access tokens, or private audit logs included"
+  ],
+  "scope": "Editable source matching the standalone web-export snapshot. No main project integration and no website deployment performed by this packaging step."
+}

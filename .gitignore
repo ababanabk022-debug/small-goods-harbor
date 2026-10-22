@@ -2,3 +2,12 @@ node_modules/
 .DS_Store
 *.log
 .openai/.hosting-*/
+
+# Keep credentials and local Blender work files out of future commits.
+.env
+.env.*
+!.env.example
+__pycache__/
+blender/*.blend
+blender/*.blend[0-9]
+blender/renders/
