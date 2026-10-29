@@ -1,45 +1,415 @@
 {
   "sourceScene": "Small Goods · Reference Harbor",
-  "generatedAt": "2026-10-20T19:51:14",
+  "sourceFile": "small-goods-harbor-expanded.blend",
+  "sourceBlendSha256": "616a9bffc749111c83cdca37f386ba0f732089237f3606a0739a401dd245b44b",
+  "generatedAt": "2026-10-27T19:34:44",
   "coordinateSystem": "glTF right-handed Y-up: Blender (x,y,z) to (x,z,-y)",
   "groupNames": [
     "STATIC",
     "BOAT",
     "SEABED",
     "FOAM",
-    "CLOUDS"
+    "CLOUDS",
+    "ACTOR_mara",
+    "ACTOR_sol",
+    "ACTOR_porter",
+    "ACTOR_dockhand",
+    "ACTOR_dog"
   ],
   "boatPivot": [
-    3.4700000286102295,
+    5.699999809265137,
     0.20000000298023224,
-    3.4800000190734863
+    4.800000190734863
   ],
   "water": {
-    "radius": 6.2,
+    "radius": 9.0,
     "surfaceY": 0,
     "bottomY": -1.64,
-    "loopSeconds": 6
+    "depth": 1.64,
+    "loopSeconds": 6,
+    "shoreline": [
+      [
+        4.857002258300781,
+        -0.3346734642982483
+      ],
+      [
+        4.952651500701904,
+        -0.5393804311752319
+      ],
+      [
+        5.023375511169434,
+        -0.7611396312713623
+      ],
+      [
+        5.101473808288574,
+        -1.0124520063400269
+      ],
+      [
+        5.191098690032959,
+        -1.3070865869522095
+      ],
+      [
+        5.279098987579346,
+        -1.6566951274871826
+      ],
+      [
+        5.290359973907471,
+        -2.0720860958099365
+      ],
+      [
+        5.223420143127441,
+        -2.5427663326263428
+      ],
+      [
+        4.970162391662598,
+        -2.968040943145752
+      ],
+      [
+        4.680898189544678,
+        -3.352149248123169
+      ],
+      [
+        4.405518531799316,
+        -3.6908230781555176
+      ],
+      [
+        4.144491672515869,
+        -3.9953808784484863
+      ],
+      [
+        3.842369556427002,
+        -4.25242280960083
+      ],
+      [
+        3.5252630710601807,
+        -4.489338397979736
+      ],
+      [
+        3.1965229511260986,
+        -4.722374439239502
+      ],
+      [
+        2.8461456298828125,
+        -4.95690393447876
+      ],
+      [
+        2.454118251800537,
+        -5.203145980834961
+      ],
+      [
+        2.0121030807495117,
+        -5.461904525756836
+      ],
+      [
+        1.5184046030044556,
+        -5.694919109344482
+      ],
+      [
+        0.9784429669380188,
+        -5.83042049407959
+      ],
+      [
+        0.44514453411102295,
+        -5.931475639343262
+      ],
+      [
+        -0.09362082183361053,
+        -6.015445709228516
+      ],
+      [
+        -0.6579542756080627,
+        -6.0329084396362305
+      ],
+      [
+        -1.211302399635315,
+        -5.893970966339111
+      ],
+      [
+        -1.7396550178527832,
+        -5.738729953765869
+      ],
+      [
+        -2.2414042949676514,
+        -5.57321310043335
+      ],
+      [
+        -2.728436231613159,
+        -5.352654457092285
+      ],
+      [
+        -3.1027398109436035,
+        -4.8859477043151855
+      ],
+      [
+        -3.4217731952667236,
+        -4.40170955657959
+      ],
+      [
+        -3.649303436279297,
+        -3.9002115726470947
+      ],
+      [
+        -3.7524895668029785,
+        -3.399096727371216
+      ],
+      [
+        -3.8194446563720703,
+        -2.9924092292785645
+      ],
+      [
+        -3.8209891319274902,
+        -2.6114661693573
+      ],
+      [
+        -3.9485702514648438,
+        -2.3434362411499023
+      ],
+      [
+        -4.068480014801025,
+        -2.065885543823242
+      ],
+      [
+        -4.198550701141357,
+        -1.776221513748169
+      ],
+      [
+        -4.346689224243164,
+        -1.4734296798706055
+      ],
+      [
+        -4.498382568359375,
+        -1.1632411479949951
+      ],
+      [
+        -4.638360023498535,
+        -0.8534380197525024
+      ],
+      [
+        -4.753039360046387,
+        -0.5494871735572815
+      ],
+      [
+        -4.829808235168457,
+        -0.2545887529850006
+      ],
+      [
+        -4.87385368347168,
+        0.03410012274980545
+      ],
+      [
+        -4.896376609802246,
+        0.32112687826156616
+      ],
+      [
+        -4.89856481552124,
+        0.6071738004684448
+      ],
+      [
+        -4.8814697265625,
+        0.8925995826721191
+      ],
+      [
+        -4.846014976501465,
+        1.1774652004241943
+      ],
+      [
+        -4.791015148162842,
+        1.470499038696289
+      ],
+      [
+        -4.714140892028809,
+        1.7735352516174316
+      ],
+      [
+        -4.6145853996276855,
+        2.0758285522460938
+      ],
+      [
+        -4.491876602172852,
+        2.366412401199341
+      ],
+      [
+        -4.346095085144043,
+        2.6343226432800293
+      ],
+      [
+        -4.171907424926758,
+        2.880627393722534
+      ],
+      [
+        -3.958901882171631,
+        3.13531494140625
+      ],
+      [
+        -3.70306134223938,
+        3.4015212059020996
+      ],
+      [
+        -3.423814296722412,
+        3.638099193572998
+      ],
+      [
+        -3.191681385040283,
+        4.394911766052246
+      ],
+      [
+        -2.8822054862976074,
+        4.670046806335449
+      ],
+      [
+        -2.5556559562683105,
+        4.895793914794922
+      ],
+      [
+        -2.219052791595459,
+        5.075172424316406
+      ],
+      [
+        -1.879596471786499,
+        5.213883876800537
+      ],
+      [
+        -1.5454390048980713,
+        5.319199085235596
+      ],
+      [
+        -1.217780590057373,
+        5.401127815246582
+      ],
+      [
+        -0.8934019804000854,
+        5.460469722747803
+      ],
+      [
+        -0.5736360549926758,
+        5.491635322570801
+      ],
+      [
+        -0.2579634189605713,
+        5.495996952056885
+      ],
+      [
+        0.05685180425643921,
+        5.468228340148926
+      ],
+      [
+        0.37777748703956604,
+        5.394077777862549
+      ],
+      [
+        0.7411340475082397,
+        5.271891117095947
+      ],
+      [
+        1.1043158769607544,
+        5.108767509460449
+      ],
+      [
+        1.453768014907837,
+        4.913433074951172
+      ],
+      [
+        1.7745118141174316,
+        4.698753356933594
+      ],
+      [
+        2.0737431049346924,
+        4.462738037109375
+      ],
+      [
+        2.355651378631592,
+        4.198938369750977
+      ],
+      [
+        2.6103973388671875,
+        3.9159927368164062
+      ],
+      [
+        2.8303518295288086,
+        3.6243200302124023
+      ],
+      [
+        3.0101888179779053,
+        3.335256814956665
+      ],
+      [
+        3.1441903114318848,
+        3.055032730102539
+      ],
+      [
+        3.241150379180908,
+        2.779080390930176
+      ],
+      [
+        3.316807270050049,
+        2.5026535987854004
+      ],
+      [
+        3.3844566345214844,
+        2.221977710723877
+      ],
+      [
+        3.4555773735046387,
+        1.9354512691497803
+      ],
+      [
+        3.5284476280212402,
+        1.6431996822357178
+      ],
+      [
+        3.5956621170043945,
+        1.3503544330596924
+      ],
+      [
+        3.659811496734619,
+        1.0652649402618408
+      ],
+      [
+        3.635540008544922,
+        0.7014822959899902
+      ],
+      [
+        3.7123517990112305,
+        0.46998894214630127
+      ],
+      [
+        3.8097903728485107,
+        0.27118170261383057
+      ],
+      [
+        4.104936122894287,
+        0.17538286745548248
+      ],
+      [
+        4.419854640960693,
+        0.024019792675971985
+      ],
+      [
+        4.673497200012207,
+        -0.14466723799705505
+      ]
+    ]
   },
   "camera": {
     "position": [
-      5.5,
-      13.300000190734863,
-      16.0
+      7.5,
+      18.100000381469727,
+      21.799999237060547
     ],
     "target": [
       0,
       1.25,
       0
     ],
-    "orthographicScale": 17.200000762939453
+    "orthographicScale": 23.5
   },
-  "sourceObjectCount": 2737,
-  "drawCalls": 86,
-  "triangles": 588520,
-  "vertices": 691228,
-  "bytes": 5355208,
-  "sha256": "e2e51c38a6a5c93eb3c0b65032ffe364fd58c04cb240f57b520afd78b589f3e3",
-  "materialMode": "Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Fine procedural bumps remain real-time approximations.",
+  "sourceObjectCount": 2848,
+  "drawCalls": 191,
+  "triangles": 602242,
+  "vertices": 731735,
+  "bytes": 7192524,
+  "sha256": "9a982451a8ee9602b03f476ca8ed7ef3dd374ee0806cb06f6a03e2787048abbf",
+  "materialMode": "Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Embedded normal and roughness maps preserve fine surface response as procedural approximations.",
   "clouds": [
     {
       "name": "Central cloud | continuous soft silhouette",
@@ -110,9 +480,9 @@
     {
       "category": "STATIC",
       "material": "Harbor | wood_dark",
-      "vertices": 15080,
-      "triangles": 17068,
-      "sourceObjects": 114
+      "vertices": 18093,
+      "triangles": 15880,
+      "sourceObjects": 103
     },
     {
       "category": "STATIC",
@@ -130,21 +500,21 @@
     },
     {
       "category": "STATIC",
-      "material": "Harbor | sand",
-      "vertices": 3467,
-      "triangles": 3134,
-      "sourceObjects": 18
+      "material": "V3 | fine even ivory beach sand",
+      "vertices": 764,
+      "triangles": 1148,
+      "sourceObjects": 1
     },
     {
       "category": "STATIC",
       "material": "Wet ivory sand on submerged beach slope",
-      "vertices": 290,
+      "vertices": 351,
       "triangles": 470,
       "sourceObjects": 1
     },
     {
       "category": "STATIC",
-      "material": "Earth",
+      "material": "V3 | neutral grey weathered rock core",
       "vertices": 155,
       "triangles": 63,
       "sourceObjects": 1
@@ -152,9 +522,16 @@
     {
       "category": "STATIC",
       "material": "REFINED | warm weathered granite",
-      "vertices": 234977,
-      "triangles": 93863,
-      "sourceObjects": 72
+      "vertices": 235395,
+      "triangles": 94055,
+      "sourceObjects": 74
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | sand",
+      "vertices": 2838,
+      "triangles": 1986,
+      "sourceObjects": 17
     },
     {
       "category": "STATIC",
@@ -166,7 +543,7 @@
     {
       "category": "STATIC",
       "material": "Palm Bark",
-      "vertices": 936,
+      "vertices": 1600,
       "triangles": 1860,
       "sourceObjects": 3
     },
@@ -299,16 +676,16 @@
     {
       "category": "STATIC",
       "material": "Harbor | wood_light",
-      "vertices": 37185,
-      "triangles": 19597,
-      "sourceObjects": 181
+      "vertices": 27201,
+      "triangles": 14413,
+      "sourceObjects": 133
     },
     {
       "category": "STATIC",
       "material": "Harbor | wood.001",
-      "vertices": 20112,
-      "triangles": 12192,
-      "sourceObjects": 108
+      "vertices": 12800,
+      "triangles": 7980,
+      "sourceObjects": 69
     },
     {
       "category": "STATIC",
@@ -320,9 +697,9 @@
     {
       "category": "STATIC",
       "material": "Harbor | metal",
-      "vertices": 16205,
-      "triangles": 22694,
-      "sourceObjects": 201
+      "vertices": 13781,
+      "triangles": 17942,
+      "sourceObjects": 177
     },
     {
       "category": "STATIC",
@@ -348,16 +725,16 @@
     {
       "category": "STATIC",
       "material": "Harbor | linen",
-      "vertices": 5066,
+      "vertices": 5513,
       "triangles": 7128,
       "sourceObjects": 11
     },
     {
       "category": "STATIC",
       "material": "Harbor | rope",
-      "vertices": 10446,
-      "triangles": 20364,
-      "sourceObjects": 44
+      "vertices": 10410,
+      "triangles": 20316,
+      "sourceObjects": 42
     },
     {
       "category": "STATIC",
@@ -376,7 +753,7 @@
     {
       "category": "BOAT",
       "material": "Harbor | wood_dark",
-      "vertices": 1872,
+      "vertices": 2446,
       "triangles": 1920,
       "sourceObjects": 28
     },
@@ -390,14 +767,14 @@
     {
       "category": "BOAT",
       "material": "Harbor | wood.001",
-      "vertices": 2364,
+      "vertices": 2906,
       "triangles": 2116,
       "sourceObjects": 25
     },
     {
       "category": "BOAT",
       "material": "Harbor | wood_light",
-      "vertices": 9269,
+      "vertices": 9338,
       "triangles": 4822,
       "sourceObjects": 45
     },
@@ -418,7 +795,7 @@
     {
       "category": "BOAT",
       "material": "Harbor | linen",
-      "vertices": 1050,
+      "vertices": 1252,
       "triangles": 2096,
       "sourceObjects": 1
     },
@@ -472,74 +849,683 @@
       "sourceObjects": 4
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_mara:LEFT_LEG",
       "material": "Burnished leather boots",
-      "vertices": 3168,
-      "triangles": 2436,
-      "sourceObjects": 15
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_mara:LEFT_LEG",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_mara:LEFT_LEG",
       "material": "Cinnamon canvas trousers",
-      "vertices": 768,
-      "triangles": 704,
-      "sourceObjects": 16
+      "vertices": 112,
+      "triangles": 88,
+      "sourceObjects": 2
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_mara:LEFT_LEG",
       "material": "Straw hat braided edge",
-      "vertices": 3174,
-      "triangles": 5568,
-      "sourceObjects": 65
+      "vertices": 12,
+      "triangles": 12,
+      "sourceObjects": 1
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_mara:RIGHT_LEG",
+      "material": "Burnished leather boots",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_mara:RIGHT_LEG",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_mara:RIGHT_LEG",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 112,
+      "triangles": 88,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_mara:RIGHT_LEG",
+      "material": "Straw hat braided edge",
+      "vertices": 12,
+      "triangles": 12,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_mara:BODY",
       "material": "Faded indigo work shirts",
-      "vertices": 1689,
-      "triangles": 2478,
-      "sourceObjects": 15
+      "vertices": 412,
+      "triangles": 496,
+      "sourceObjects": 2
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_mara:BODY",
       "material": "Peach hand painted skin",
-      "vertices": 5000,
-      "triangles": 8800,
-      "sourceObjects": 60
+      "vertices": 452,
+      "triangles": 836,
+      "sourceObjects": 5
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_mara:BODY",
+      "material": "Burnished leather boots",
+      "vertices": 408,
+      "triangles": 488,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_mara:BODY",
       "material": "Golden woven hat",
-      "vertices": 5541,
-      "triangles": 9630,
-      "sourceObjects": 43
+      "vertices": 967,
+      "triangles": 1590,
+      "sourceObjects": 6
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_mara:BODY",
       "material": "Natural cotton shirts",
-      "vertices": 1876,
-      "triangles": 2368,
-      "sourceObjects": 32
+      "vertices": 26,
+      "triangles": 14,
+      "sourceObjects": 3
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_mara:LEFT_ARM",
+      "material": "Faded indigo work shirts",
+      "vertices": 149,
+      "triangles": 242,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_mara:LEFT_ARM",
+      "material": "Natural cotton shirts",
+      "vertices": 56,
+      "triangles": 44,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_mara:LEFT_ARM",
+      "material": "Peach hand painted skin",
+      "vertices": 399,
+      "triangles": 682,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_mara:RIGHT_ARM",
+      "material": "Faded indigo work shirts",
+      "vertices": 149,
+      "triangles": 242,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_mara:RIGHT_ARM",
+      "material": "Natural cotton shirts",
+      "vertices": 56,
+      "triangles": 44,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_mara:RIGHT_ARM",
+      "material": "Peach hand painted skin",
+      "vertices": 399,
+      "triangles": 682,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_mara:BODY",
       "material": "Chestnut hair",
-      "vertices": 572,
-      "triangles": 984,
+      "vertices": 143,
+      "triangles": 246,
+      "sourceObjects": 4
+    },
+    {
+      "category": "ACTOR_mara:BODY",
+      "material": "Eyes ink",
+      "vertices": 202,
+      "triangles": 396,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_mara:BODY",
+      "material": "Straw hat braided edge",
+      "vertices": 1026,
+      "triangles": 1824,
+      "sourceObjects": 19
+    },
+    {
+      "category": "ACTOR_sol:LEFT_LEG",
+      "material": "Burnished leather boots",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_sol:LEFT_LEG",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_sol:LEFT_LEG",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 112,
+      "triangles": 88,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_sol:LEFT_LEG",
+      "material": "Straw hat braided edge",
+      "vertices": 12,
+      "triangles": 12,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_sol:RIGHT_LEG",
+      "material": "Burnished leather boots",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_sol:RIGHT_LEG",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_sol:RIGHT_LEG",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 112,
+      "triangles": 88,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_sol:RIGHT_LEG",
+      "material": "Straw hat braided edge",
+      "vertices": 12,
+      "triangles": 12,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Natural cotton shirts",
+      "vertices": 524,
+      "triangles": 510,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Peach hand painted skin",
+      "vertices": 452,
+      "triangles": 836,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Burnished leather boots",
+      "vertices": 408,
+      "triangles": 488,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Golden woven hat",
+      "vertices": 967,
+      "triangles": 1590,
+      "sourceObjects": 6
+    },
+    {
+      "category": "ACTOR_sol:LEFT_ARM",
+      "material": "Natural cotton shirts",
+      "vertices": 266,
+      "triangles": 286,
+      "sourceObjects": 3
+    },
+    {
+      "category": "ACTOR_sol:LEFT_ARM",
+      "material": "Peach hand painted skin",
+      "vertices": 399,
+      "triangles": 682,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_sol:RIGHT_ARM",
+      "material": "Natural cotton shirts",
+      "vertices": 266,
+      "triangles": 286,
+      "sourceObjects": 3
+    },
+    {
+      "category": "ACTOR_sol:RIGHT_ARM",
+      "material": "Peach hand painted skin",
+      "vertices": 399,
+      "triangles": 682,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Harbor | wood_light",
+      "vertices": 3456,
+      "triangles": 1728,
       "sourceObjects": 16
     },
     {
-      "category": "STATIC",
-      "material": "Eyes ink",
-      "vertices": 1313,
-      "triangles": 2574,
+      "category": "ACTOR_sol:BODY",
+      "material": "Harbor | wood.001",
+      "vertices": 2808,
+      "triangles": 1404,
       "sourceObjects": 13
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_sol:BODY",
+      "material": "Harbor | metal",
+      "vertices": 808,
+      "triangles": 1584,
+      "sourceObjects": 8
+    },
+    {
+      "category": "ACTOR_sol:BODY",
       "material": "Dockworkers navy cap",
-      "vertices": 761,
-      "triangles": 1026,
+      "vertices": 128,
+      "triangles": 192,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Chestnut hair",
+      "vertices": 143,
+      "triangles": 246,
+      "sourceObjects": 4
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Eyes ink",
+      "vertices": 202,
+      "triangles": 396,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_sol:BODY",
+      "material": "Straw hat braided edge",
+      "vertices": 1026,
+      "triangles": 1824,
+      "sourceObjects": 19
+    },
+    {
+      "category": "ACTOR_porter:LEFT_LEG",
+      "material": "Burnished leather boots",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:LEFT_LEG",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:LEFT_LEG",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 112,
+      "triangles": 88,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_porter:LEFT_LEG",
+      "material": "Straw hat braided edge",
+      "vertices": 12,
+      "triangles": 12,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:RIGHT_LEG",
+      "material": "Burnished leather boots",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:RIGHT_LEG",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:RIGHT_LEG",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 112,
+      "triangles": 88,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_porter:RIGHT_LEG",
+      "material": "Straw hat braided edge",
+      "vertices": 12,
+      "triangles": 12,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Faded indigo work shirts",
+      "vertices": 412,
+      "triangles": 496,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Peach hand painted skin",
+      "vertices": 452,
+      "triangles": 836,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Burnished leather boots",
+      "vertices": 408,
+      "triangles": 488,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Golden woven hat",
+      "vertices": 967,
+      "triangles": 1590,
       "sourceObjects": 6
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Natural cotton shirts",
+      "vertices": 26,
+      "triangles": 14,
+      "sourceObjects": 3
+    },
+    {
+      "category": "ACTOR_porter:LEFT_ARM",
+      "material": "Faded indigo work shirts",
+      "vertices": 149,
+      "triangles": 242,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_porter:LEFT_ARM",
+      "material": "Natural cotton shirts",
+      "vertices": 56,
+      "triangles": 44,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:LEFT_ARM",
+      "material": "Peach hand painted skin",
+      "vertices": 399,
+      "triangles": 682,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_porter:RIGHT_ARM",
+      "material": "Faded indigo work shirts",
+      "vertices": 149,
+      "triangles": 242,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_porter:RIGHT_ARM",
+      "material": "Natural cotton shirts",
+      "vertices": 56,
+      "triangles": 44,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:RIGHT_ARM",
+      "material": "Peach hand painted skin",
+      "vertices": 399,
+      "triangles": 682,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Harbor | wood_light",
+      "vertices": 3456,
+      "triangles": 1728,
+      "sourceObjects": 16
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Harbor | wood.001",
+      "vertices": 2808,
+      "triangles": 1404,
+      "sourceObjects": 13
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Harbor | metal",
+      "vertices": 808,
+      "triangles": 1584,
+      "sourceObjects": 8
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Dockworkers navy cap",
+      "vertices": 128,
+      "triangles": 192,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Chestnut hair",
+      "vertices": 143,
+      "triangles": 246,
+      "sourceObjects": 4
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Eyes ink",
+      "vertices": 202,
+      "triangles": 396,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_porter:BODY",
+      "material": "Straw hat braided edge",
+      "vertices": 1026,
+      "triangles": 1824,
+      "sourceObjects": 19
+    },
+    {
+      "category": "ACTOR_dockhand:LEFT_LEG",
+      "material": "Burnished leather boots",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dockhand:LEFT_LEG",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dockhand:LEFT_LEG",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 112,
+      "triangles": 88,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_dockhand:LEFT_LEG",
+      "material": "Straw hat braided edge",
+      "vertices": 12,
+      "triangles": 12,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dockhand:RIGHT_LEG",
+      "material": "Burnished leather boots",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dockhand:RIGHT_LEG",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dockhand:RIGHT_LEG",
+      "material": "Cinnamon canvas trousers",
+      "vertices": 112,
+      "triangles": 88,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_dockhand:RIGHT_LEG",
+      "material": "Straw hat braided edge",
+      "vertices": 12,
+      "triangles": 12,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Natural cotton shirts",
+      "vertices": 518,
+      "triangles": 510,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Peach hand painted skin",
+      "vertices": 452,
+      "triangles": 836,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Burnished leather boots",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Golden woven hat",
+      "vertices": 519,
+      "triangles": 702,
+      "sourceObjects": 4
+    },
+    {
+      "category": "ACTOR_dockhand:LEFT_ARM",
+      "material": "Natural cotton shirts",
+      "vertices": 266,
+      "triangles": 286,
+      "sourceObjects": 3
+    },
+    {
+      "category": "ACTOR_dockhand:LEFT_ARM",
+      "material": "Peach hand painted skin",
+      "vertices": 399,
+      "triangles": 682,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_dockhand:RIGHT_ARM",
+      "material": "Natural cotton shirts",
+      "vertices": 266,
+      "triangles": 286,
+      "sourceObjects": 3
+    },
+    {
+      "category": "ACTOR_dockhand:RIGHT_ARM",
+      "material": "Peach hand painted skin",
+      "vertices": 399,
+      "triangles": 682,
+      "sourceObjects": 5
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Harbor | wood_dark",
+      "vertices": 216,
+      "triangles": 108,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Harbor | wood_light",
+      "vertices": 3456,
+      "triangles": 1728,
+      "sourceObjects": 16
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Harbor | wood.001",
+      "vertices": 2808,
+      "triangles": 1404,
+      "sourceObjects": 13
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Harbor | metal",
+      "vertices": 808,
+      "triangles": 1584,
+      "sourceObjects": 8
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Dockworkers navy cap",
+      "vertices": 377,
+      "triangles": 450,
+      "sourceObjects": 3
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Chestnut hair",
+      "vertices": 143,
+      "triangles": 246,
+      "sourceObjects": 4
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Eyes ink",
+      "vertices": 202,
+      "triangles": 396,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_dockhand:BODY",
+      "material": "Faded indigo work shirts",
+      "vertices": 269,
+      "triangles": 518,
+      "sourceObjects": 3
     },
     {
       "category": "BOAT",
@@ -551,7 +1537,7 @@
     {
       "category": "BOAT",
       "material": "Cinnamon canvas trousers",
-      "vertices": 192,
+      "vertices": 224,
       "triangles": 176,
       "sourceObjects": 4
     },
@@ -586,7 +1572,7 @@
     {
       "category": "BOAT",
       "material": "Natural cotton shirts",
-      "vertices": 114,
+      "vertices": 138,
       "triangles": 102,
       "sourceObjects": 5
     },
@@ -606,24 +1592,94 @@
     },
     {
       "category": "STATIC",
+      "material": "Dockworkers navy cap",
+      "vertices": 128,
+      "triangles": 192,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dog:BODY",
       "material": "Dog warm white coat",
-      "vertices": 1018,
-      "triangles": 1784,
-      "sourceObjects": 13
+      "vertices": 202,
+      "triangles": 396,
+      "sourceObjects": 2
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_dog:BODY",
       "material": "Dog tan patches",
-      "vertices": 404,
-      "triangles": 792,
-      "sourceObjects": 4
+      "vertices": 101,
+      "triangles": 198,
+      "sourceObjects": 1
     },
     {
-      "category": "STATIC",
+      "category": "ACTOR_dog:FRONT_LEFT_LEG",
+      "material": "Dog warm white coat",
+      "vertices": 149,
+      "triangles": 242,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_dog:BACK_LEFT_LEG",
+      "material": "Dog warm white coat",
+      "vertices": 149,
+      "triangles": 242,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_dog:FRONT_RIGHT_LEG",
+      "material": "Dog warm white coat",
+      "vertices": 149,
+      "triangles": 242,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_dog:BACK_RIGHT_LEG",
+      "material": "Dog warm white coat",
+      "vertices": 149,
+      "triangles": 242,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_dog:HEAD",
+      "material": "Dog warm white coat",
+      "vertices": 202,
+      "triangles": 396,
+      "sourceObjects": 2
+    },
+    {
+      "category": "ACTOR_dog:HEAD",
+      "material": "Dog tan patches",
+      "vertices": 303,
+      "triangles": 594,
+      "sourceObjects": 3
+    },
+    {
+      "category": "ACTOR_dog:HEAD",
+      "material": "Eyes ink",
+      "vertices": 303,
+      "triangles": 594,
+      "sourceObjects": 3
+    },
+    {
+      "category": "ACTOR_dog:BODY",
       "material": "Little orange sea star",
-      "vertices": 389,
-      "triangles": 462,
-      "sourceObjects": 7
+      "vertices": 48,
+      "triangles": 44,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dog:BODY",
+      "material": "Golden woven hat",
+      "vertices": 101,
+      "triangles": 198,
+      "sourceObjects": 1
+    },
+    {
+      "category": "ACTOR_dog:TAIL",
+      "material": "Dog warm white coat",
+      "vertices": 18,
+      "triangles": 24,
+      "sourceObjects": 1
     },
     {
       "category": "STATIC",
@@ -648,10 +1704,31 @@
     },
     {
       "category": "STATIC",
+      "material": "Eyes ink",
+      "vertices": 202,
+      "triangles": 396,
+      "sourceObjects": 2
+    },
+    {
+      "category": "STATIC",
       "material": "Seagull soft gray wings",
       "vertices": 586,
       "triangles": 748,
       "sourceObjects": 10
+    },
+    {
+      "category": "STATIC",
+      "material": "Little orange sea star",
+      "vertices": 341,
+      "triangles": 418,
+      "sourceObjects": 6
+    },
+    {
+      "category": "STATIC",
+      "material": "Golden woven hat",
+      "vertices": 2020,
+      "triangles": 3960,
+      "sourceObjects": 20
     },
     {
       "category": "STATIC",
@@ -677,7 +1754,7 @@
     {
       "category": "STATIC",
       "material": "REFINED | weathered stone fissures",
-      "vertices": 714,
+      "vertices": 1458,
       "triangles": 1224,
       "sourceObjects": 17
     },
@@ -691,7 +1768,7 @@
     {
       "category": "SEABED",
       "material": "White sand cut edge",
-      "vertices": 512,
+      "vertices": 520,
       "triangles": 512,
       "sourceObjects": 1
     },
@@ -708,6 +1785,34 @@
       "vertices": 9575,
       "triangles": 19134,
       "sourceObjects": 4
+    },
+    {
+      "category": "STATIC",
+      "material": "Cutaway | pale limestone sand",
+      "vertices": 8120,
+      "triangles": 3634,
+      "sourceObjects": 41
+    },
+    {
+      "category": "STATIC",
+      "material": "Cutaway | warm compact mineral soil",
+      "vertices": 6936,
+      "triangles": 3104,
+      "sourceObjects": 36
+    },
+    {
+      "category": "STATIC",
+      "material": "Cutaway | deep weathered sandstone",
+      "vertices": 5696,
+      "triangles": 2914,
+      "sourceObjects": 1
+    },
+    {
+      "category": "STATIC",
+      "material": "Cutaway | fine sediment seam",
+      "vertices": 8352,
+      "triangles": 3926,
+      "sourceObjects": 36
     }
   ],
   "excluded": [
@@ -4197,10 +5302,2388 @@
     {
       "name": "Front floating cloud | continuous soft silhouette",
       "decimateRatio": 0.5
+    },
+    {
+      "name": "V4 | lower weathered front seam rock",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V4 | upper weathered front seam rock",
+      "decimateRatio": 0.33
     }
   ],
-  "seconds": 4.25,
-  "uncompressedBytes": 20793936,
+  "seconds": 4.81,
+  "schemaVersion": 2,
+  "embeddedMicroTextures": {
+    "imageCount": 10,
+    "materialCount": 29,
+    "kinds": [
+      "wood",
+      "sand",
+      "rock",
+      "fabric",
+      "soil"
+    ],
+    "resolution": 128,
+    "mode": "Embedded repeating micro-normal and roughness maps supplement the sampled source palette; no baked lighting and no external image paths."
+  },
+  "shoreline": [
+    [
+      4.857002258300781,
+      -0.3346734642982483
+    ],
+    [
+      4.952651500701904,
+      -0.5393804311752319
+    ],
+    [
+      5.023375511169434,
+      -0.7611396312713623
+    ],
+    [
+      5.101473808288574,
+      -1.0124520063400269
+    ],
+    [
+      5.191098690032959,
+      -1.3070865869522095
+    ],
+    [
+      5.279098987579346,
+      -1.6566951274871826
+    ],
+    [
+      5.290359973907471,
+      -2.0720860958099365
+    ],
+    [
+      5.223420143127441,
+      -2.5427663326263428
+    ],
+    [
+      4.970162391662598,
+      -2.968040943145752
+    ],
+    [
+      4.680898189544678,
+      -3.352149248123169
+    ],
+    [
+      4.405518531799316,
+      -3.6908230781555176
+    ],
+    [
+      4.144491672515869,
+      -3.9953808784484863
+    ],
+    [
+      3.842369556427002,
+      -4.25242280960083
+    ],
+    [
+      3.5252630710601807,
+      -4.489338397979736
+    ],
+    [
+      3.1965229511260986,
+      -4.722374439239502
+    ],
+    [
+      2.8461456298828125,
+      -4.95690393447876
+    ],
+    [
+      2.454118251800537,
+      -5.203145980834961
+    ],
+    [
+      2.0121030807495117,
+      -5.461904525756836
+    ],
+    [
+      1.5184046030044556,
+      -5.694919109344482
+    ],
+    [
+      0.9784429669380188,
+      -5.83042049407959
+    ],
+    [
+      0.44514453411102295,
+      -5.931475639343262
+    ],
+    [
+      -0.09362082183361053,
+      -6.015445709228516
+    ],
+    [
+      -0.6579542756080627,
+      -6.0329084396362305
+    ],
+    [
+      -1.211302399635315,
+      -5.893970966339111
+    ],
+    [
+      -1.7396550178527832,
+      -5.738729953765869
+    ],
+    [
+      -2.2414042949676514,
+      -5.57321310043335
+    ],
+    [
+      -2.728436231613159,
+      -5.352654457092285
+    ],
+    [
+      -3.1027398109436035,
+      -4.8859477043151855
+    ],
+    [
+      -3.4217731952667236,
+      -4.40170955657959
+    ],
+    [
+      -3.649303436279297,
+      -3.9002115726470947
+    ],
+    [
+      -3.7524895668029785,
+      -3.399096727371216
+    ],
+    [
+      -3.8194446563720703,
+      -2.9924092292785645
+    ],
+    [
+      -3.8209891319274902,
+      -2.6114661693573
+    ],
+    [
+      -3.9485702514648438,
+      -2.3434362411499023
+    ],
+    [
+      -4.068480014801025,
+      -2.065885543823242
+    ],
+    [
+      -4.198550701141357,
+      -1.776221513748169
+    ],
+    [
+      -4.346689224243164,
+      -1.4734296798706055
+    ],
+    [
+      -4.498382568359375,
+      -1.1632411479949951
+    ],
+    [
+      -4.638360023498535,
+      -0.8534380197525024
+    ],
+    [
+      -4.753039360046387,
+      -0.5494871735572815
+    ],
+    [
+      -4.829808235168457,
+      -0.2545887529850006
+    ],
+    [
+      -4.87385368347168,
+      0.03410012274980545
+    ],
+    [
+      -4.896376609802246,
+      0.32112687826156616
+    ],
+    [
+      -4.89856481552124,
+      0.6071738004684448
+    ],
+    [
+      -4.8814697265625,
+      0.8925995826721191
+    ],
+    [
+      -4.846014976501465,
+      1.1774652004241943
+    ],
+    [
+      -4.791015148162842,
+      1.470499038696289
+    ],
+    [
+      -4.714140892028809,
+      1.7735352516174316
+    ],
+    [
+      -4.6145853996276855,
+      2.0758285522460938
+    ],
+    [
+      -4.491876602172852,
+      2.366412401199341
+    ],
+    [
+      -4.346095085144043,
+      2.6343226432800293
+    ],
+    [
+      -4.171907424926758,
+      2.880627393722534
+    ],
+    [
+      -3.958901882171631,
+      3.13531494140625
+    ],
+    [
+      -3.70306134223938,
+      3.4015212059020996
+    ],
+    [
+      -3.423814296722412,
+      3.638099193572998
+    ],
+    [
+      -3.191681385040283,
+      4.394911766052246
+    ],
+    [
+      -2.8822054862976074,
+      4.670046806335449
+    ],
+    [
+      -2.5556559562683105,
+      4.895793914794922
+    ],
+    [
+      -2.219052791595459,
+      5.075172424316406
+    ],
+    [
+      -1.879596471786499,
+      5.213883876800537
+    ],
+    [
+      -1.5454390048980713,
+      5.319199085235596
+    ],
+    [
+      -1.217780590057373,
+      5.401127815246582
+    ],
+    [
+      -0.8934019804000854,
+      5.460469722747803
+    ],
+    [
+      -0.5736360549926758,
+      5.491635322570801
+    ],
+    [
+      -0.2579634189605713,
+      5.495996952056885
+    ],
+    [
+      0.05685180425643921,
+      5.468228340148926
+    ],
+    [
+      0.37777748703956604,
+      5.394077777862549
+    ],
+    [
+      0.7411340475082397,
+      5.271891117095947
+    ],
+    [
+      1.1043158769607544,
+      5.108767509460449
+    ],
+    [
+      1.453768014907837,
+      4.913433074951172
+    ],
+    [
+      1.7745118141174316,
+      4.698753356933594
+    ],
+    [
+      2.0737431049346924,
+      4.462738037109375
+    ],
+    [
+      2.355651378631592,
+      4.198938369750977
+    ],
+    [
+      2.6103973388671875,
+      3.9159927368164062
+    ],
+    [
+      2.8303518295288086,
+      3.6243200302124023
+    ],
+    [
+      3.0101888179779053,
+      3.335256814956665
+    ],
+    [
+      3.1441903114318848,
+      3.055032730102539
+    ],
+    [
+      3.241150379180908,
+      2.779080390930176
+    ],
+    [
+      3.316807270050049,
+      2.5026535987854004
+    ],
+    [
+      3.3844566345214844,
+      2.221977710723877
+    ],
+    [
+      3.4555773735046387,
+      1.9354512691497803
+    ],
+    [
+      3.5284476280212402,
+      1.6431996822357178
+    ],
+    [
+      3.5956621170043945,
+      1.3503544330596924
+    ],
+    [
+      3.659811496734619,
+      1.0652649402618408
+    ],
+    [
+      3.635540008544922,
+      0.7014822959899902
+    ],
+    [
+      3.7123517990112305,
+      0.46998894214630127
+    ],
+    [
+      3.8097903728485107,
+      0.27118170261383057
+    ],
+    [
+      4.104936122894287,
+      0.17538286745548248
+    ],
+    [
+      4.419854640960693,
+      0.024019792675971985
+    ],
+    [
+      4.673497200012207,
+      -0.14466723799705505
+    ]
+  ],
+  "landBoundary": [
+    [
+      4.197004795074463,
+      -0.33659765124320984
+    ],
+    [
+      4.293064117431641,
+      -0.5160437822341919
+    ],
+    [
+      4.365263938903809,
+      -0.7112489342689514
+    ],
+    [
+      4.446207523345947,
+      -0.9335490465164185
+    ],
+    [
+      4.540561676025391,
+      -1.1957272291183472
+    ],
+    [
+      4.6359052658081055,
+      -1.5087037086486816
+    ],
+    [
+      4.65865421295166,
+      -1.8809115886688232
+    ],
+    [
+      4.608514308929443,
+      -2.302993059158325
+    ],
+    [
+      4.376907825469971,
+      -2.6788196563720703
+    ],
+    [
+      4.112676620483398,
+      -3.016404628753662
+    ],
+    [
+      3.863607406616211,
+      -3.3140835762023926
+    ],
+    [
+      3.629659652709961,
+      -3.582406520843506
+    ],
+    [
+      3.3566231727600098,
+      -3.805600166320801
+    ],
+    [
+      3.0711209774017334,
+      -4.010428428649902
+    ],
+    [
+      2.777252197265625,
+      -4.2126569747924805
+    ],
+    [
+      2.4659879207611084,
+      -4.417387008666992
+    ],
+    [
+      2.1195502281188965,
+      -4.634245872497559
+    ],
+    [
+      1.7305009365081787,
+      -4.865113258361816
+    ],
+    [
+      1.2956650257110596,
+      -5.074338436126709
+    ],
+    [
+      0.8181766867637634,
+      -5.193232536315918
+    ],
+    [
+      0.347825825214386,
+      -5.288766384124756
+    ],
+    [
+      -0.1277976632118225,
+      -5.383460998535156
+    ],
+    [
+      -0.6308834552764893,
+      -5.436519145965576
+    ],
+    [
+      -1.1337478160858154,
+      -5.364007949829102
+    ],
+    [
+      -1.6310269832611084,
+      -5.301776885986328
+    ],
+    [
+      -2.1238017082214355,
+      -5.23962926864624
+    ],
+    [
+      -2.6182351112365723,
+      -5.11588716506958
+    ],
+    [
+      -3.002758741378784,
+      -4.718152046203613
+    ],
+    [
+      -3.3126211166381836,
+      -4.255354404449463
+    ],
+    [
+      -3.496300458908081,
+      -3.7330398559570312
+    ],
+    [
+      -3.52785325050354,
+      -3.1947898864746094
+    ],
+    [
+      -3.515061855316162,
+      -2.757194757461548
+    ],
+    [
+      -3.516615152359009,
+      -2.4102582931518555
+    ],
+    [
+      -3.581385612487793,
+      -2.137167453765869
+    ],
+    [
+      -3.644709587097168,
+      -1.867672085762024
+    ],
+    [
+      -3.7239959239959717,
+      -1.5980430841445923
+    ],
+    [
+      -3.8271801471710205,
+      -1.3255507946014404
+    ],
+    [
+      -3.94145131111145,
+      -1.0527293682098389
+    ],
+    [
+      -4.051083087921143,
+      -0.7836804389953613
+    ],
+    [
+      -4.142143249511719,
+      -0.5214916467666626
+    ],
+    [
+      -4.202975273132324,
+      -0.26808977127075195
+    ],
+    [
+      -4.238062381744385,
+      -0.020485367625951767
+    ],
+    [
+      -4.256294250488281,
+      0.22558856010437012
+    ],
+    [
+      -4.258397102355957,
+      0.47096332907676697
+    ],
+    [
+      -4.245049476623535,
+      0.71613609790802
+    ],
+    [
+      -4.216835021972656,
+      0.9613053798675537
+    ],
+    [
+      -4.172627925872803,
+      1.2141178846359253
+    ],
+    [
+      -4.110313415527344,
+      1.4763152599334717
+    ],
+    [
+      -4.028992176055908,
+      1.7387734651565552
+    ],
+    [
+      -3.928100109100342,
+      1.9921467304229736
+    ],
+    [
+      -3.8076252937316895,
+      2.227092742919922
+    ],
+    [
+      -3.663097858428955,
+      2.444833278656006
+    ],
+    [
+      -3.48416805267334,
+      2.7205581665039062
+    ],
+    [
+      -3.2655224800109863,
+      3.080112934112549
+    ],
+    [
+      -3.02529239654541,
+      3.404937267303467
+    ],
+    [
+      -2.8569982051849365,
+      3.826064109802246
+    ],
+    [
+      -2.589670181274414,
+      4.0784196853637695
+    ],
+    [
+      -2.3047966957092285,
+      4.285327911376953
+    ],
+    [
+      -2.0092360973358154,
+      4.449411392211914
+    ],
+    [
+      -1.7099785804748535,
+      4.576051712036133
+    ],
+    [
+      -1.4147299528121948,
+      4.672271728515625
+    ],
+    [
+      -1.1248666048049927,
+      4.7477006912231445
+    ],
+    [
+      -0.837558388710022,
+      4.8028364181518555
+    ],
+    [
+      -0.5540269613265991,
+      4.8319268226623535
+    ],
+    [
+      -0.2739943265914917,
+      4.8361921310424805
+    ],
+    [
+      0.005187124013900757,
+      4.810254096984863
+    ],
+    [
+      0.28921830654144287,
+      4.74004602432251
+    ],
+    [
+      0.6098443269729614,
+      4.625081539154053
+    ],
+    [
+      0.9289706945419312,
+      4.4724860191345215
+    ],
+    [
+      1.23451828956604,
+      4.290914058685303
+    ],
+    [
+      1.5134339332580566,
+      4.092586040496826
+    ],
+    [
+      1.772026538848877,
+      3.875739336013794
+    ],
+    [
+      2.013688564300537,
+      3.6344375610351562
+    ],
+    [
+      2.2298617362976074,
+      3.3767409324645996
+    ],
+    [
+      2.4140660762786865,
+      3.11216139793396
+    ],
+    [
+      2.561927318572998,
+      2.8508381843566895
+    ],
+    [
+      2.6682496070861816,
+      2.5977792739868164
+    ],
+    [
+      2.740591526031494,
+      2.348917007446289
+    ],
+    [
+      2.7932381629943848,
+      2.100813388824463
+    ],
+    [
+      2.838587760925293,
+      1.8509962558746338
+    ],
+    [
+      2.8878278732299805,
+      1.5989091396331787
+    ],
+    [
+      2.9398725032806396,
+      1.3445708751678467
+    ],
+    [
+      2.9883639812469482,
+      1.091918706893921
+    ],
+    [
+      3.0365939140319824,
+      0.8480089902877808
+    ],
+    [
+      3.072896957397461,
+      0.6151494979858398
+    ],
+    [
+      3.1366193294525146,
+      0.4097503423690796
+    ],
+    [
+      3.216541290283203,
+      0.23325802385807037
+    ],
+    [
+      3.4493789672851562,
+      0.09892930090427399
+    ],
+    [
+      3.7618329524993896,
+      -0.027042582631111145
+    ],
+    [
+      4.014037132263184,
+      -0.17135664820671082
+    ]
+  ],
+  "boatObstacles": [
+    {
+      "polygon": [
+        [
+          2.65,
+          3.18
+        ],
+        [
+          5.85,
+          3.18
+        ],
+        [
+          5.85,
+          1.58
+        ],
+        [
+          2.65,
+          1.58
+        ]
+      ]
+    }
+  ],
+  "boatForward": [
+    -0.6441357457827797,
+    0,
+    0.7649111981170509
+  ],
+  "actors": [
+    {
+      "id": "mara",
+      "node": "ACTOR_mara",
+      "pivot": [
+        -1.2200000286102295,
+        0.5956947207450867,
+        1.5
+      ],
+      "route": [
+        [
+          -1.2200000286102295,
+          0.5961775183677673,
+          1.5
+        ],
+        [
+          -1.2232509851455688,
+          0.5960134863853455,
+          1.4752000570297241
+        ],
+        [
+          -1.2329481840133667,
+          0.5958341956138611,
+          1.4508243799209595
+        ],
+        [
+          -1.248925805091858,
+          0.5956472754478455,
+          1.4272902011871338
+        ],
+        [
+          -1.270910382270813,
+          0.5954861044883728,
+          1.4049999713897705
+        ],
+        [
+          -1.2985256910324097,
+          0.59530109167099,
+          1.3843352794647217
+        ],
+        [
+          -1.3312994241714478,
+          0.5951198935508728,
+          1.365649700164795
+        ],
+        [
+          -1.3686707019805908,
+          0.594944417476654,
+          1.3492628335952759
+        ],
+        [
+          -1.409999966621399,
+          0.5948538184165955,
+          1.3354551792144775
+        ],
+        [
+          -1.454580307006836,
+          0.5948337912559509,
+          1.324462890625
+        ],
+        [
+          -1.5016487836837769,
+          0.5946993231773376,
+          1.3164740800857544
+        ],
+        [
+          -1.5504000186920166,
+          0.5946001410484314,
+          1.3116254806518555
+        ],
+        [
+          -1.600000023841858,
+          0.5945276618003845,
+          1.309999942779541
+        ],
+        [
+          -1.6495999097824097,
+          0.5944952368736267,
+          1.3116254806518555
+        ],
+        [
+          -1.698351263999939,
+          0.594477117061615,
+          1.3164740800857544
+        ],
+        [
+          -1.7454197406768799,
+          0.5944790244102478,
+          1.324462890625
+        ],
+        [
+          -1.7899999618530273,
+          0.5945104956626892,
+          1.3354551792144775
+        ],
+        [
+          -1.831329345703125,
+          0.5945667624473572,
+          1.3492628335952759
+        ],
+        [
+          -1.868700623512268,
+          0.5946382880210876,
+          1.365649700164795
+        ],
+        [
+          -1.9014742374420166,
+          0.5947250723838806,
+          1.3843352794647217
+        ],
+        [
+          -1.9290896654129028,
+          0.5948261618614197,
+          1.4049999713897705
+        ],
+        [
+          -1.951074242591858,
+          0.5949377417564392,
+          1.4272902011871338
+        ],
+        [
+          -1.9670518636703491,
+          0.5950579047203064,
+          1.4508243799209595
+        ],
+        [
+          -1.976749062538147,
+          0.5951876044273376,
+          1.4752000570297241
+        ],
+        [
+          -1.9800000190734863,
+          0.5953230261802673,
+          1.5
+        ],
+        [
+          -1.976749062538147,
+          0.5954613089561462,
+          1.5247999429702759
+        ],
+        [
+          -1.9670518636703491,
+          0.5955995917320251,
+          1.5491756200790405
+        ],
+        [
+          -1.951074242591858,
+          0.595737874507904,
+          1.5727097988128662
+        ],
+        [
+          -1.9290896654129028,
+          0.5958790183067322,
+          1.5950000286102295
+        ],
+        [
+          -1.9014742374420166,
+          0.5960239768028259,
+          1.6156647205352783
+        ],
+        [
+          -1.868700623512268,
+          0.5961593985557556,
+          1.634350299835205
+        ],
+        [
+          -1.831329345703125,
+          0.596287190914154,
+          1.6507371664047241
+        ],
+        [
+          -1.7899999618530273,
+          0.5964035391807556,
+          1.6645448207855225
+        ],
+        [
+          -1.7454197406768799,
+          0.5965303778648376,
+          1.675537109375
+        ],
+        [
+          -1.698351263999939,
+          0.5966715216636658,
+          1.6835259199142456
+        ],
+        [
+          -1.6495999097824097,
+          0.5968021750450134,
+          1.6883745193481445
+        ],
+        [
+          -1.600000023841858,
+          0.5967869162559509,
+          1.690000057220459
+        ],
+        [
+          -1.5504000186920166,
+          0.5968193411827087,
+          1.6883745193481445
+        ],
+        [
+          -1.5016487836837769,
+          0.5968326926231384,
+          1.6835259199142456
+        ],
+        [
+          -1.454580307006836,
+          0.5968698859214783,
+          1.675537109375
+        ],
+        [
+          -1.409999966621399,
+          0.596883237361908,
+          1.6645448207855225
+        ],
+        [
+          -1.3686707019805908,
+          0.5968460440635681,
+          1.6507371664047241
+        ],
+        [
+          -1.3312994241714478,
+          0.5967745184898376,
+          1.634350299835205
+        ],
+        [
+          -1.2985256910324097,
+          0.5967153906822205,
+          1.6156647205352783
+        ],
+        [
+          -1.270910382270813,
+          0.5966505408287048,
+          1.5950000286102295
+        ],
+        [
+          -1.248925805091858,
+          0.5965656638145447,
+          1.5727097988128662
+        ],
+        [
+          -1.2329481840133667,
+          0.596455991268158,
+          1.5491756200790405
+        ],
+        [
+          -1.2232509851455688,
+          0.5963253378868103,
+          1.5247999429702759
+        ]
+      ],
+      "speed": 0.16,
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "pose": "walk",
+      "closed": true,
+      "phase": 0.0,
+      "limbs": {
+        "LEFT_ARM": {
+          "node": "ACTOR_mara_LEFT_ARM",
+          "pivot": [
+            0.14689993858337402,
+            0.5683898329734802,
+            1.1920928955078125e-07
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "LEFT_LEG": {
+          "node": "ACTOR_mara_LEFT_LEG",
+          "pivot": [
+            0.06683945655822754,
+            0.3199999928474426,
+            0.011299967765808105
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "RIGHT_ARM": {
+          "node": "ACTOR_mara_RIGHT_ARM",
+          "pivot": [
+            -0.14690005779266357,
+            0.5683898329734802,
+            -1.1920928955078125e-07
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "RIGHT_LEG": {
+          "node": "ACTOR_mara_RIGHT_LEG",
+          "pivot": [
+            -0.06683945655822754,
+            0.3199999928474426,
+            -0.00847482681274414
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "sol",
+      "node": "ACTOR_sol",
+      "pivot": [
+        1.0,
+        0.5992081165313721,
+        2.2300000190734863
+      ],
+      "route": [
+        [
+          1.0,
+          0.6018747687339783,
+          2.2300000190734863
+        ],
+        [
+          0.9438737630844116,
+          0.6018499732017517,
+          2.2344486713409424
+        ],
+        [
+          0.8887078166007996,
+          0.6017984747886658,
+          2.247718572616577
+        ],
+        [
+          0.8354461193084717,
+          0.6016268134117126,
+          2.269582748413086
+        ],
+        [
+          0.7850000262260437,
+          0.6014389395713806,
+          2.2996668815612793
+        ],
+        [
+          0.7382326126098633,
+          0.601252019405365,
+          2.337456226348877
+        ],
+        [
+          0.69594407081604,
+          0.6011146903038025,
+          2.3823044300079346
+        ],
+        [
+          0.658858060836792,
+          0.6009554266929626,
+          2.433444023132324
+        ],
+        [
+          0.6276090741157532,
+          0.6007017493247986,
+          2.490000009536743
+        ],
+        [
+          0.6027318239212036,
+          0.6004804968833923,
+          2.551004648208618
+        ],
+        [
+          0.5846518874168396,
+          0.6002430319786072,
+          2.6154141426086426
+        ],
+        [
+          0.573678731918335,
+          0.5999826788902283,
+          2.68212628364563
+        ],
+        [
+          0.5699999928474426,
+          0.5997089743614197,
+          2.75
+        ],
+        [
+          0.573678731918335,
+          0.5994228720664978,
+          2.81787371635437
+        ],
+        [
+          0.5846518874168396,
+          0.5991310477256775,
+          2.8845858573913574
+        ],
+        [
+          0.6027318239212036,
+          0.5988392233848572,
+          2.948995351791382
+        ],
+        [
+          0.6276090741157532,
+          0.5985512137413025,
+          3.009999990463257
+        ],
+        [
+          0.658858060836792,
+          0.5982727408409119,
+          3.066555976867676
+        ],
+        [
+          0.69594407081604,
+          0.5980085730552673,
+          3.1176955699920654
+        ],
+        [
+          0.7382326126098633,
+          0.5977615714073181,
+          3.162543773651123
+        ],
+        [
+          0.7850000262260437,
+          0.5975374579429626,
+          3.2003331184387207
+        ],
+        [
+          0.8354461193084717,
+          0.5973400473594666,
+          3.230417251586914
+        ],
+        [
+          0.8887078166007996,
+          0.5971207022666931,
+          3.252281427383423
+        ],
+        [
+          0.9438737630844116,
+          0.5968517661094666,
+          3.2655513286590576
+        ],
+        [
+          1.0,
+          0.596608579158783,
+          3.2699999809265137
+        ],
+        [
+          1.0561262369155884,
+          0.5964292883872986,
+          3.2655513286590576
+        ],
+        [
+          1.1112922430038452,
+          0.5964445471763611,
+          3.252281427383423
+        ],
+        [
+          1.1645538806915283,
+          0.5964693427085876,
+          3.230417251586914
+        ],
+        [
+          1.215000033378601,
+          0.5964741110801697,
+          3.2003331184387207
+        ],
+        [
+          1.2617673873901367,
+          0.5965208411216736,
+          3.162543773651123
+        ],
+        [
+          1.30405592918396,
+          0.5966762900352478,
+          3.1176955699920654
+        ],
+        [
+          1.341141939163208,
+          0.5969499945640564,
+          3.066555976867676
+        ],
+        [
+          1.372390866279602,
+          0.5972265601158142,
+          3.009999990463257
+        ],
+        [
+          1.3972681760787964,
+          0.597524106502533,
+          2.948995351791382
+        ],
+        [
+          1.4153480529785156,
+          0.5978464484214783,
+          2.8845858573913574
+        ],
+        [
+          1.426321268081665,
+          0.5982345938682556,
+          2.81787371635437
+        ],
+        [
+          1.4299999475479126,
+          0.5986542105674744,
+          2.75
+        ],
+        [
+          1.426321268081665,
+          0.5990719199180603,
+          2.68212628364563
+        ],
+        [
+          1.4153480529785156,
+          0.5994810461997986,
+          2.6154141426086426
+        ],
+        [
+          1.3972681760787964,
+          0.5998758673667908,
+          2.551004648208618
+        ],
+        [
+          1.372390866279602,
+          0.6002525687217712,
+          2.490000009536743
+        ],
+        [
+          1.341141939163208,
+          0.6006016135215759,
+          2.433444023132324
+        ],
+        [
+          1.30405592918396,
+          0.6009191870689392,
+          2.3823044300079346
+        ],
+        [
+          1.2617673873901367,
+          0.6011986136436462,
+          2.337456226348877
+        ],
+        [
+          1.215000033378601,
+          0.601435124874115,
+          2.2996668815612793
+        ],
+        [
+          1.1645538806915283,
+          0.6016239523887634,
+          2.269582748413086
+        ],
+        [
+          1.1112922430038452,
+          0.6017603278160095,
+          2.247718572616577
+        ],
+        [
+          1.0561262369155884,
+          0.6018452048301697,
+          2.2344486713409424
+        ]
+      ],
+      "speed": 0.24,
+      "forward": [
+        -1.0,
+        0.0,
+        -7.404841434235899e-17
+      ],
+      "pose": "carry",
+      "closed": true,
+      "phase": 0.0,
+      "limbs": {
+        "LEFT_ARM": {
+          "node": "ACTOR_sol_LEFT_ARM",
+          "pivot": [
+            0.0,
+            0.568389892578125,
+            -0.14689993858337402
+          ],
+          "axis": [
+            -7.404841434235899e-17,
+            0.0,
+            1.0
+          ]
+        },
+        "LEFT_LEG": {
+          "node": "ACTOR_sol_LEFT_LEG",
+          "pivot": [
+            0.011300086975097656,
+            0.3199999928474426,
+            -0.06683945655822754
+          ],
+          "axis": [
+            -7.404841434235899e-17,
+            0.0,
+            1.0
+          ]
+        },
+        "RIGHT_ARM": {
+          "node": "ACTOR_sol_RIGHT_ARM",
+          "pivot": [
+            0.0,
+            0.568389892578125,
+            0.14689993858337402
+          ],
+          "axis": [
+            -7.404841434235899e-17,
+            0.0,
+            1.0
+          ]
+        },
+        "RIGHT_LEG": {
+          "node": "ACTOR_sol_RIGHT_LEG",
+          "pivot": [
+            -0.008475005626678467,
+            0.3199999928474426,
+            0.06683945655822754
+          ],
+          "axis": [
+            -7.404841434235899e-17,
+            0.0,
+            1.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "porter",
+      "node": "ACTOR_porter",
+      "pivot": [
+        0.6700000762939453,
+        0.6022331118583679,
+        3.7200000286102295
+      ],
+      "route": [
+        [
+          0.6700000166893005,
+          0.5965952277183533,
+          3.7200000286102295
+        ],
+        [
+          0.6612737774848938,
+          0.5967735648155212,
+          3.6677894592285156
+        ],
+        [
+          0.6352443695068359,
+          0.596984326839447,
+          3.6164724826812744
+        ],
+        [
+          0.5923570990562439,
+          0.5972208380699158,
+          3.5669267177581787
+        ],
+        [
+          0.5333459377288818,
+          0.59755939245224,
+          3.5199999809265137
+        ],
+        [
+          0.45922040939331055,
+          0.5981325507164001,
+          3.4764955043792725
+        ],
+        [
+          0.37124893069267273,
+          0.5988048911094666,
+          3.437157392501831
+        ],
+        [
+          0.27093666791915894,
+          0.5991176962852478,
+          3.402658700942993
+        ],
+        [
+          0.1599999964237213,
+          0.5997423529624939,
+          3.3735897541046143
+        ],
+        [
+          0.04033710062503815,
+          0.6003775000572205,
+          3.3504481315612793
+        ],
+        [
+          -0.0860045775771141,
+          0.6010307669639587,
+          3.333629608154297
+        ],
+        [
+          -0.21686328947544098,
+          0.6015018820762634,
+          3.3234219551086426
+        ],
+        [
+          -0.3499999940395355,
+          0.6022409796714783,
+          3.319999933242798
+        ],
+        [
+          -0.48313671350479126,
+          0.6027979254722595,
+          3.3234219551086426
+        ],
+        [
+          -0.6139954328536987,
+          0.6032328009605408,
+          3.333629608154297
+        ],
+        [
+          -0.740337073802948,
+          0.6039289832115173,
+          3.3504481315612793
+        ],
+        [
+          -0.8600000143051147,
+          0.6042560935020447,
+          3.3735897541046143
+        ],
+        [
+          -0.97093665599823,
+          0.6048635840415955,
+          3.402658700942993
+        ],
+        [
+          -1.0712488889694214,
+          0.6051439642906189,
+          3.437157392501831
+        ],
+        [
+          -1.1592204570770264,
+          0.6057361960411072,
+          3.4764955043792725
+        ],
+        [
+          -1.233345866203308,
+          0.6060308814048767,
+          3.5199999809265137
+        ],
+        [
+          -1.292357087135315,
+          0.6062635779380798,
+          3.5669267177581787
+        ],
+        [
+          -1.3352442979812622,
+          0.6065887808799744,
+          3.6164724826812744
+        ],
+        [
+          -1.3612737655639648,
+          0.6068806052207947,
+          3.6677894592285156
+        ],
+        [
+          -1.3700000047683716,
+          0.607111394405365,
+          3.7200000286102295
+        ],
+        [
+          -1.3612737655639648,
+          0.6072782874107361,
+          3.7722103595733643
+        ],
+        [
+          -1.3352442979812622,
+          0.6073784232139587,
+          3.8235275745391846
+        ],
+        [
+          -1.292357087135315,
+          0.6075262427330017,
+          3.8730733394622803
+        ],
+        [
+          -1.233345866203308,
+          0.6075424551963806,
+          3.9200000762939453
+        ],
+        [
+          -1.1592204570770264,
+          0.6072868704795837,
+          3.9635045528411865
+        ],
+        [
+          -1.0712488889694214,
+          0.6070131659507751,
+          4.002842903137207
+        ],
+        [
+          -0.97093665599823,
+          0.6067261099815369,
+          4.037341117858887
+        ],
+        [
+          -0.8600000143051147,
+          0.6060604453086853,
+          4.066410064697266
+        ],
+        [
+          -0.740337073802948,
+          0.6056131720542908,
+          4.08955192565918
+        ],
+        [
+          -0.6139954328536987,
+          0.6046814322471619,
+          4.106370449066162
+        ],
+        [
+          -0.48313671350479126,
+          0.6040224432945251,
+          4.116578102111816
+        ],
+        [
+          -0.3499999940395355,
+          0.6029381155967712,
+          4.119999885559082
+        ],
+        [
+          -0.21686328947544098,
+          0.6021618247032166,
+          4.116578102111816
+        ],
+        [
+          -0.0860045775771141,
+          0.6011795401573181,
+          4.106370449066162
+        ],
+        [
+          0.04033710062503815,
+          0.6003078818321228,
+          4.08955192565918
+        ],
+        [
+          0.1599999964237213,
+          0.5994238257408142,
+          4.066410064697266
+        ],
+        [
+          0.27093666791915894,
+          0.5987381339073181,
+          4.037341117858887
+        ],
+        [
+          0.37124893069267273,
+          0.5979275107383728,
+          4.002842903137207
+        ],
+        [
+          0.45922040939331055,
+          0.5975603461265564,
+          3.9635045528411865
+        ],
+        [
+          0.5333459377288818,
+          0.5971540808677673,
+          3.9200000762939453
+        ],
+        [
+          0.5923570990562439,
+          0.5967783331871033,
+          3.8730733394622803
+        ],
+        [
+          0.6352443695068359,
+          0.5965227484703064,
+          3.8235275745391846
+        ],
+        [
+          0.6612737774848938,
+          0.5964502692222595,
+          3.7722103595733643
+        ]
+      ],
+      "speed": 0.24,
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "pose": "carry",
+      "closed": true,
+      "phase": 0.0,
+      "limbs": {
+        "LEFT_ARM": {
+          "node": "ACTOR_porter_LEFT_ARM",
+          "pivot": [
+            0.14820003509521484,
+            0.573419988155365,
+            2.384185791015625e-07
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "LEFT_LEG": {
+          "node": "ACTOR_porter_LEFT_LEG",
+          "pivot": [
+            0.06743091344833374,
+            0.3199999928474426,
+            0.01139974594116211
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "RIGHT_ARM": {
+          "node": "ACTOR_porter_RIGHT_ARM",
+          "pivot": [
+            -0.1481999158859253,
+            0.573419988155365,
+            0.0
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "RIGHT_LEG": {
+          "node": "ACTOR_porter_RIGHT_LEG",
+          "pivot": [
+            -0.06743091344833374,
+            0.3199999928474426,
+            -0.008549928665161133
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "dockhand",
+      "node": "ACTOR_dockhand",
+      "pivot": [
+        3.5299999713897705,
+        0.7260000109672546,
+        2.430000066757202
+      ],
+      "route": [
+        [
+          3.5299999713897705,
+          0.7260000109672546,
+          2.430000066757202
+        ],
+        [
+          3.5288877487182617,
+          0.7260000109672546,
+          2.3973684310913086
+        ],
+        [
+          3.5255703926086426,
+          0.7260000109672546,
+          2.365295171737671
+        ],
+        [
+          3.52010440826416,
+          0.7260000109672546,
+          2.334329128265381
+        ],
+        [
+          3.5125832557678223,
+          0.7260000109672546,
+          2.305000066757202
+        ],
+        [
+          3.503135919570923,
+          0.7260000109672546,
+          2.2778096199035645
+        ],
+        [
+          3.4919238090515137,
+          0.7260000109672546,
+          2.253223419189453
+        ],
+        [
+          3.4791390895843506,
+          0.7260000109672546,
+          2.231661558151245
+        ],
+        [
+          3.4649999141693115,
+          0.7260000109672546,
+          2.213493585586548
+        ],
+        [
+          3.4497487545013428,
+          0.7260000109672546,
+          2.1990301609039307
+        ],
+        [
+          3.4336464405059814,
+          0.7260000109672546,
+          2.188518524169922
+        ],
+        [
+          3.41696834564209,
+          0.7260000109672546,
+          2.182138681411743
+        ],
+        [
+          3.4000000953674316,
+          0.7260000109672546,
+          2.180000066757202
+        ],
+        [
+          3.3830316066741943,
+          0.7260000109672546,
+          2.182138681411743
+        ],
+        [
+          3.3663535118103027,
+          0.7260000109672546,
+          2.188518524169922
+        ],
+        [
+          3.3502511978149414,
+          0.7260000109672546,
+          2.1990301609039307
+        ],
+        [
+          3.3350000381469727,
+          0.7260000109672546,
+          2.213493585586548
+        ],
+        [
+          3.3208611011505127,
+          0.7260000109672546,
+          2.231661558151245
+        ],
+        [
+          3.3080761432647705,
+          0.7260000109672546,
+          2.253223419189453
+        ],
+        [
+          3.2968640327453613,
+          0.7260000109672546,
+          2.2778096199035645
+        ],
+        [
+          3.287416696548462,
+          0.7260000109672546,
+          2.305000066757202
+        ],
+        [
+          3.279895544052124,
+          0.7260000109672546,
+          2.334329128265381
+        ],
+        [
+          3.2744295597076416,
+          0.7260000109672546,
+          2.365295171737671
+        ],
+        [
+          3.2711122035980225,
+          0.7260000109672546,
+          2.3973684310913086
+        ],
+        [
+          3.2699999809265137,
+          0.7260000109672546,
+          2.430000066757202
+        ],
+        [
+          3.2711122035980225,
+          0.7260000109672546,
+          2.4626314640045166
+        ],
+        [
+          3.2744295597076416,
+          0.7260000109672546,
+          2.4947047233581543
+        ],
+        [
+          3.279895544052124,
+          0.7260000109672546,
+          2.5256707668304443
+        ],
+        [
+          3.287416696548462,
+          0.7260000109672546,
+          2.555000066757202
+        ],
+        [
+          3.2968640327453613,
+          0.7260000109672546,
+          2.5821902751922607
+        ],
+        [
+          3.3080761432647705,
+          0.7260000109672546,
+          2.606776714324951
+        ],
+        [
+          3.3208611011505127,
+          0.7260000109672546,
+          2.62833833694458
+        ],
+        [
+          3.3350000381469727,
+          0.7260000109672546,
+          2.6465063095092773
+        ],
+        [
+          3.3502511978149414,
+          0.7260000109672546,
+          2.6609699726104736
+        ],
+        [
+          3.3663535118103027,
+          0.7260000109672546,
+          2.6714813709259033
+        ],
+        [
+          3.3830316066741943,
+          0.7260000109672546,
+          2.677861213684082
+        ],
+        [
+          3.4000000953674316,
+          0.7260000109672546,
+          2.680000066757202
+        ],
+        [
+          3.41696834564209,
+          0.7260000109672546,
+          2.677861213684082
+        ],
+        [
+          3.4336464405059814,
+          0.7260000109672546,
+          2.6714813709259033
+        ],
+        [
+          3.4497487545013428,
+          0.7260000109672546,
+          2.6609699726104736
+        ],
+        [
+          3.4649999141693115,
+          0.7260000109672546,
+          2.6465063095092773
+        ],
+        [
+          3.4791390895843506,
+          0.7260000109672546,
+          2.62833833694458
+        ],
+        [
+          3.4919238090515137,
+          0.7260000109672546,
+          2.606776714324951
+        ],
+        [
+          3.503135919570923,
+          0.7260000109672546,
+          2.5821902751922607
+        ],
+        [
+          3.5125832557678223,
+          0.7260000109672546,
+          2.555000066757202
+        ],
+        [
+          3.52010440826416,
+          0.7260000109672546,
+          2.5256707668304443
+        ],
+        [
+          3.5255703926086426,
+          0.7260000109672546,
+          2.4947047233581543
+        ],
+        [
+          3.5288877487182617,
+          0.7260000109672546,
+          2.4626314640045166
+        ]
+      ],
+      "speed": 0.24,
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "pose": "carry",
+      "closed": true,
+      "phase": 0.0,
+      "limbs": {
+        "LEFT_ARM": {
+          "node": "ACTOR_dockhand_LEFT_ARM",
+          "pivot": [
+            0.14689993858337402,
+            0.5683899521827698,
+            -2.384185791015625e-07
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "LEFT_LEG": {
+          "node": "ACTOR_dockhand_LEFT_LEG",
+          "pivot": [
+            0.06683921813964844,
+            0.3199999928474426,
+            0.011299848556518555
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "RIGHT_ARM": {
+          "node": "ACTOR_dockhand_RIGHT_ARM",
+          "pivot": [
+            -0.14690017700195312,
+            0.5683899521827698,
+            0.0
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "RIGHT_LEG": {
+          "node": "ACTOR_dockhand_RIGHT_LEG",
+          "pivot": [
+            -0.06683969497680664,
+            0.3199999928474426,
+            -0.008475065231323242
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "dog",
+      "node": "ACTOR_dog",
+      "pivot": [
+        -1.8799999952316284,
+        0.6063714623451233,
+        4.0
+      ],
+      "route": [
+        [
+          -1.8799999952316284,
+          0.6063487529754639,
+          4.0
+        ],
+        [
+          -1.8818820714950562,
+          0.6062743663787842,
+          3.985642194747925
+        ],
+        [
+          -1.8874963521957397,
+          0.6061999797821045,
+          3.971529960632324
+        ],
+        [
+          -1.8967465162277222,
+          0.6061265468597412,
+          3.957904815673828
+        ],
+        [
+          -1.9094743728637695,
+          0.606062650680542,
+          3.944999933242798
+        ],
+        [
+          -1.925462245941162,
+          0.6060082912445068,
+          3.9330363273620605
+        ],
+        [
+          -1.9444365501403809,
+          0.6059606075286865,
+          3.9222183227539062
+        ],
+        [
+          -1.9660724401474,
+          0.6059186458587646,
+          3.912731170654297
+        ],
+        [
+          -1.9900000095367432,
+          0.6058881282806396,
+          3.9047372341156006
+        ],
+        [
+          -2.0158095359802246,
+          0.6058642864227295,
+          3.8983733654022217
+        ],
+        [
+          -2.043059825897217,
+          0.6058509349822998,
+          3.8937480449676514
+        ],
+        [
+          -2.071284294128418,
+          0.6058471202850342,
+          3.8909411430358887
+        ],
+        [
+          -2.0999999046325684,
+          0.6058528423309326,
+          3.890000104904175
+        ],
+        [
+          -2.128715753555298,
+          0.6058681011199951,
+          3.8909411430358887
+        ],
+        [
+          -2.156940221786499,
+          0.6058785915374756,
+          3.8937480449676514
+        ],
+        [
+          -2.184190273284912,
+          0.6058833599090576,
+          3.8983733654022217
+        ],
+        [
+          -2.2100000381469727,
+          0.6058976650238037,
+          3.9047372341156006
+        ],
+        [
+          -2.2339274883270264,
+          0.6059186458587646,
+          3.912731170654297
+        ],
+        [
+          -2.255563497543335,
+          0.6059520244598389,
+          3.9222183227539062
+        ],
+        [
+          -2.2745378017425537,
+          0.6059939861297607,
+          3.9330363273620605
+        ],
+        [
+          -2.2905256748199463,
+          0.6060454845428467,
+          3.944999933242798
+        ],
+        [
+          -2.303253412246704,
+          0.6061055660247803,
+          3.957904815673828
+        ],
+        [
+          -2.3125035762786865,
+          0.6061732769012451,
+          3.971529960632324
+        ],
+        [
+          -2.31811785697937,
+          0.6062467098236084,
+          3.985642194747925
+        ],
+        [
+          -2.319999933242798,
+          0.6063258647918701,
+          4.0
+        ],
+        [
+          -2.31811785697937,
+          0.606407880783081,
+          4.014358043670654
+        ],
+        [
+          -2.3125035762786865,
+          0.6064908504486084,
+          4.028470039367676
+        ],
+        [
+          -2.303253412246704,
+          0.6065747737884521,
+          4.042095184326172
+        ],
+        [
+          -2.2905256748199463,
+          0.6066586971282959,
+          4.054999828338623
+        ],
+        [
+          -2.2745378017425537,
+          0.6067407131195068,
+          4.0669636726379395
+        ],
+        [
+          -2.255563497543335,
+          0.6068189144134521,
+          4.077781677246094
+        ],
+        [
+          -2.2339274883270264,
+          0.6068894863128662,
+          4.087268829345703
+        ],
+        [
+          -2.2100000381469727,
+          0.6069324016571045,
+          4.0952630043029785
+        ],
+        [
+          -2.184190273284912,
+          0.6069533824920654,
+          4.101626873016357
+        ],
+        [
+          -2.156940221786499,
+          0.6069676876068115,
+          4.1062517166137695
+        ],
+        [
+          -2.128715753555298,
+          0.6069724559783936,
+          4.109058856964111
+        ],
+        [
+          -2.0999999046325684,
+          0.6069667339324951,
+          4.110000133514404
+        ],
+        [
+          -2.071284294128418,
+          0.6069514751434326,
+          4.109058856964111
+        ],
+        [
+          -2.043059825897217,
+          0.6069257259368896,
+          4.1062517166137695
+        ],
+        [
+          -2.0158095359802246,
+          0.6068933010101318,
+          4.101626873016357
+        ],
+        [
+          -1.9900000095367432,
+          0.60685133934021,
+          4.0952630043029785
+        ],
+        [
+          -1.9660724401474,
+          0.6068027019500732,
+          4.087268829345703
+        ],
+        [
+          -1.9444365501403809,
+          0.6067473888397217,
+          4.077781677246094
+        ],
+        [
+          -1.925462245941162,
+          0.6066854000091553,
+          4.0669636726379395
+        ],
+        [
+          -1.9094743728637695,
+          0.6066272258758545,
+          4.054999828338623
+        ],
+        [
+          -1.8967465162277222,
+          0.6065633296966553,
+          4.042095184326172
+        ],
+        [
+          -1.8874963521957397,
+          0.606494665145874,
+          4.028470039367676
+        ],
+        [
+          -1.8818820714950562,
+          0.6064231395721436,
+          4.014358043670654
+        ]
+      ],
+      "speed": 0.15985894811157622,
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "pose": "dog",
+      "closed": true,
+      "phase": 0.0,
+      "limbs": {
+        "BACK_LEFT_LEG": {
+          "node": "ACTOR_dog_BACK_LEFT_LEG",
+          "pivot": [
+            0.07458007335662842,
+            0.19401001930236816,
+            0.11864995956420898
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "BACK_RIGHT_LEG": {
+          "node": "ACTOR_dog_BACK_RIGHT_LEG",
+          "pivot": [
+            -0.07457995414733887,
+            0.19401001930236816,
+            0.11864995956420898
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "FRONT_LEFT_LEG": {
+          "node": "ACTOR_dog_FRONT_LEFT_LEG",
+          "pivot": [
+            0.07458007335662842,
+            0.19401001930236816,
+            -0.12430000305175781
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "FRONT_RIGHT_LEG": {
+          "node": "ACTOR_dog_FRONT_RIGHT_LEG",
+          "pivot": [
+            -0.07457995414733887,
+            0.19401001930236816,
+            -0.12430000305175781
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "HEAD": {
+          "node": "ACTOR_dog_HEAD",
+          "pivot": [
+            0.0,
+            0.2785450220108032,
+            -0.1802349090576172
+          ],
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "TAIL": {
+          "node": "ACTOR_dog_TAIL",
+          "pivot": [
+            0.0,
+            0.25651001930236816,
+            0.1807999610900879
+          ],
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      }
+    }
+  ],
+  "tray": {
+    "top": -1.59,
+    "bottom": -2.64,
+    "radius": 9.025,
+    "style": "geological cutaway"
+  },
+  "animationMode": "Web runtime animates actor routes and limbs, boat buoyancy and navigation, and the interactive height-field water. GLB contains geometry and named pivots, not baked animation tracks.",
+  "uncompressedBytes": 25896052,
   "compression": "KHR_draco_mesh_compression",
-  "compressionSeconds": 2.32
+  "compressionSeconds": 2.91
 }

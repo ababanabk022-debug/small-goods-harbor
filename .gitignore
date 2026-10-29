@@ -11,3 +11,7 @@ __pycache__/
 blender/*.blend
 blender/*.blend[0-9]
 blender/renders/
+
+# Local browser checks.
+.playwright-cli/
+output/

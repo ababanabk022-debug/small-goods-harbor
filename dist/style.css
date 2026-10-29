@@ -204,3 +204,9 @@ h1 { margin: 0; font-size: 22px; font-weight: 550; letter-spacing: .09em; line-h
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
 }
+
+.look-controls {position:absolute;z-index:3;right:32px;top:90px;display:flex;gap:10px;padding:10px 13px;border:1px solid #ffffff85;border-radius:13px;background:rgba(248,251,248,.79);backdrop-filter:blur(16px);box-shadow:0 3px 18px #2948580c}
+.look-controls label {display:flex;align-items:center;gap:7px;font-size:10px;color:#627c8b}
+.look-controls select {font:inherit;font-size:11px;border:0;color:#315f64;background:transparent;padding:5px;max-width:110px;outline-offset:3px;cursor:pointer}
+@media(max-width:590px){.look-controls{top:98px;left:21px;right:auto;padding:6px 9px;gap:9px}.look-controls label{font-size:9px}.look-controls select{font-size:10px}}
+@media(max-height:520px) and (min-width:591px){.look-controls{top:65px;right:23px;padding:4px 9px}}

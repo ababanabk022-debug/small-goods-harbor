@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#b8cddd" />
-    <meta name="description" content="在小岛上停留片刻。旋转视角，看看码头、山坡与流动的海水。" />
+    <meta name="description" content="在小岛上停留片刻。摇动清透海水，看小船巡游，跟随居民走过沙滩。" />
     <title>小岛 · 自由漫游</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='.9em' font-size='56'%3E%F0%9F%8C%B4%3C/text%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style.css?v=20261027-v6" />
     <script type="importmap">
       {
         "imports": {
@@ -34,14 +34,23 @@
         </div>
       </header>
 
+      <div class="look-controls" aria-label="水面与画质">
+        <label>海的颜色<select id="water-style" aria-label="海水风格">
+          <option value="lagoon">浅碧海湾</option><option value="azure">深蓝海水</option><option value="glass">清透水光</option>
+        </select></label>
+        <label>画质<select id="image-quality" aria-label="画面清晰度">
+          <option value="clear">清晰</option><option value="ultra">精细</option><option value="smooth">流畅</option>
+        </select></label>
+      </div>
       <aside id="help-panel" class="help-panel" aria-label="操作说明" hidden>
         <p class="panel-title">换个角度，慢慢看</p>
         <dl>
-          <div><dt>旋转</dt><dd>鼠标左键拖动 / 单指拖动</dd></div>
+          <div><dt>旋转 / 摇水</dt><dd>鼠标左键拖动 / 单指拖动，海水会随之回荡</dd></div>
+          <div><dt>涟漪 / 引航</dt><dd>轻点水面激起涟漪；宽阔水域可指定小船目的地</dd></div>
           <div><dt>缩放</dt><dd>滚动鼠标滚轮 / 双指开合</dd></div>
           <div><dt>平移</dt><dd>鼠标右键拖动 / 双指拖动</dd></div>
         </dl>
-        <p class="help-note">点击「复位」即可回到初始视角。</p>
+        <p class="help-note">小船会自动巡游，小狗在沙滩散步。点击「小岛生活」暂停或继续；点击「复位」回到初始视角。</p>
       </aside>
 
       <div id="loading" class="loading-overlay" role="status" aria-live="polite">
@@ -80,9 +89,9 @@
           </div>
           <span class="control-divider" aria-hidden="true"></span>
           <div class="motion-controls" role="group" aria-label="动画控制">
-            <button id="motion-toggle" type="button" class="control-button is-active" aria-pressed="true" title="暂停水面动画">
+            <button id="motion-toggle" type="button" class="control-button is-active" aria-pressed="true" title="暂停小岛生活">
               <svg class="water-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7c1.5-1.8 3-1.8 4.5 0S10.5 8.8 12 7s3-1.8 4.5 0S19.5 8.8 21 7M3 12c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4.5 0 3 1.8 4.5 0M3 17c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4.5 0 3 1.8 4.5 0"/></svg>
-              <span class="control-label" id="motion-label">海水流动</span>
+              <span class="control-label" id="motion-label">小岛生活</span>
               <span class="toggle-indicator" aria-hidden="true"></span>
             </button>
             <button id="auto-rotate" type="button" class="control-button" aria-pressed="false" title="开启自动环绕">
@@ -102,9 +111,9 @@
             </button>
           </div>
         </nav>
-        <p class="interaction-hint"><span class="desktop-hint">拖动旋转 <span aria-hidden="true">·</span> 滚轮缩放</span><span class="touch-hint">单指旋转 <span aria-hidden="true">·</span> 双指缩放</span></p>
+        <p class="interaction-hint"><span class="desktop-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点水面引航 <span aria-hidden="true">·</span> 滚轮缩放</span><span class="touch-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点引航 <span aria-hidden="true">·</span> 双指缩放</span></p>
       </div>
     </main>
-    <script type="module" src="./viewer.js"></script>
+    <script type="module" src="./viewer.js?v=13.1"></script>
   </body>
 </html>
