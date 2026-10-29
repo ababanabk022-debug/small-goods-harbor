@@ -1,0 +1,127 @@
+{
+  "format": "Portable editable Blender scene - local POV edition",
+  "packagedDate": "2026-10-29",
+  "blenderVersion": "5.2.0 LTS",
+  "file": {
+    "name": "small-goods-harbor-pov.blend",
+    "bytes": 46974854,
+    "sha256": "972c21c164dd07421c826ff62596dd4204f78858c8b2c7a0ad8992486416b84c"
+  },
+  "scene": {
+    "scene": "Small Goods · Reference Harbor",
+    "objects": 3119,
+    "meshObjects": 2342,
+    "curveObjects": 717,
+    "textObjects": 16,
+    "cameraCount": 2,
+    "lightCount": 9,
+    "materials": 77,
+    "activeCamera": "Camera | reference hero",
+    "frames": [
+      1,
+      2880
+    ],
+    "fps": 24,
+    "driverCount": 496,
+    "driverHash": "caecbfe445b64f40442c254d0f6de17037fd2cbbdf3ac4bc607e80aa96c4d865",
+    "objectStateHash": "c57dcfc5f3c3d8a59dee754498f9479f4b38bd8b229981971fcf0abd198bb0c0",
+    "geometryHash": "d61307be36f76421e3e0d3c8351832288b89b58545fbe7aeecfda0fa05fdae4f",
+    "materialHash": "80ad8baebc0bd0658f9a024e43ffb2a3ee5fc450aff000fa78afc603737c6cdb",
+    "environmentObjects": 17,
+    "environmentHidden": {
+      "viewport": true,
+      "render": true
+    }
+  },
+  "content": {
+    "mainIslandObjects": 3102,
+    "horizonObjects": 17,
+    "distantIslandGroups": 6,
+    "reefGroups": 4,
+    "cloudGroups": 5,
+    "sailboats": 3,
+    "horizonCollection": "POV_ENVIRONMENT",
+    "horizonHiddenByDefault": true,
+    "movableSailboatRoots": [
+      "HORIZON_BOAT_01",
+      "HORIZON_BOAT_02",
+      "HORIZON_BOAT_03"
+    ]
+  },
+  "validation": {
+    "independentBackgroundReopen": true,
+    "sourceWorkingFileUnchanged": true,
+    "sceneObjectStateMatches": true,
+    "geometryAndShapeKeysMatch": true,
+    "materialGraphAndInputValuesMatch": true,
+    "sceneDependencyDriverFingerprintMatches": true,
+    "noLinkedLibraries": true,
+    "noExternalTextureFiles": true,
+    "noEmbeddedTextScripts": true,
+    "knownPersonalPathAndTokenMatches": 0,
+    "validAbsoluteWindowsPathMatches": 0,
+    "asciiAndBothUtf16AlignmentsScanned": true,
+    "noRenderPerformed": true
+  },
+  "portableResources": {
+    "font": {
+      "name": "Georgia Regular",
+      "packed": true,
+      "reference": "//fonts\\georgia.ttf",
+      "bytes": 219712,
+      "sha256": "38dffcaf1fac89492f7c56c600a14daf36ae42f7c21985cd4134ae113124a58f",
+      "fsType": 8,
+      "noticeFile": "FONT_NOTICES.txt",
+      "standaloneFontDistributed": false
+    },
+    "renderOutput": "//renders/harbor-"
+  },
+  "privacyChanges": [
+    "Scene-only copy excludes unrelated scenes, original editor state and unused authoring data",
+    "Fresh factory editor layout opens the harbor scene directly",
+    "Removed embedded text scripts and unused editor brushes",
+    "Sanitized private custom-property strings and asset author metadata",
+    "Packed all used external resources and replaced paths with portable relative references",
+    "Cleared stale bytes only inside the SDNA-identified FileSelectParams directory string buffer",
+    "Archive contains no source filesystem paths or original diagnostic logs"
+  ],
+  "verificationScope": [
+    "Static editable scene, geometry, shape-key coordinates, transforms, hierarchy, material nodes and scene dependency drivers were compared before and after packaging",
+    "Scene-only dependencies retain 496 drivers; 24 drivers on unused source data were excluded",
+    "Privacy scan covers known personal/workspace/token strings, printable absolute Windows paths, common Unix home/workspace path prefixes, UNC paths, ASCII and both UTF-16LE alignments",
+    "Public font license and certificate URLs remain embedded with their legal notices",
+    "No render, playback performance benchmark or full frame-by-frame animation comparison was performed",
+    "Website sky, expanded water, fog, and runtime boat animation remain separate JavaScript features"
+  ],
+  "publication": "Local archive only; this packaging step does not deploy or publish the project",
+  "archive": {
+    "name": "small-goods-harbor-pov.blend.zip",
+    "bytes": 10678383,
+    "sha256": "d4607d3ab206b411882c34c8565937fe332705955a97f6e683d42c888da836d1",
+    "crcIntegrityPassed": true,
+    "extractedModelHashMatches": true,
+    "members": [
+      {
+        "name": "small-goods-harbor-pov.blend",
+        "bytes": 46974854,
+        "sha256": "972c21c164dd07421c826ff62596dd4204f78858c8b2c7a0ad8992486416b84c"
+      },
+      {
+        "name": "manifest.json",
+        "bytes": 4000,
+        "sha256": "305264884fcb5d7355fa2059a66de8907914df3debb013e0b84c507649c9a99c"
+      },
+      {
+        "name": "FONT_NOTICES.txt",
+        "bytes": 1044,
+        "sha256": "8e55f64763835660e40d88896119690584444e9140e2f733b914d377f92347bb"
+      },
+      {
+        "name": "README.txt",
+        "bytes": 807,
+        "sha256": "da09b957f2be8138f998c29a812449f0cb072c9bf41fb4efe295634cbfdac931"
+      }
+    ],
+    "extractedArchiveIndependentReopenPassed": true
+  }
+}

@@ -1,5 +1,15 @@
 # 可编辑 Blender 模型
 
+## 最新本地版本（V14.1 · 2026-10-29）
+
+[small-goods-harbor-pov.blend.zip](small-goods-harbor-pov.blend.zip) 包含扩建主岛和独立 `POV_ENVIRONMENT` 远景集合。压缩包约 10.68 MB，含模型、清单、字体许可和说明。解压后可在 Blender 5.2 中打开；远景集合默认隐藏，可从 Outliner 开启。当前直接编辑的 `small-goods-harbor-pov.blend` 工作文件与 ZIP 便携副本分开保存。
+
+归档已解压并由独立 Blender 后台进程重开：3,119 对象、2,342 个 mesh 数据块、77 材质、496 条场景依赖驱动及几何/材质/形态键/层级校验一致。字体已内嵌，无外部贴图或链接库；已清理保存的本机路径字段，并完成路径与常见令牌模式检查。此轮没有离线渲染或对全部动画逐帧复核。
+
+详见[便携模型清单](pov-model-manifest.json)与[网页第一视角说明](../docs/pov-v14.md)。本地归档没有上传；网页中的自动跟随、远船航行、扩展海面与水下表现由 JavaScript 实时实现。
+
+## 原已发布版本（2026-10-22）
+
 下载 [small-goods-harbor.blend.zip](small-goods-harbor.blend.zip)，解压后直接打开根目录中的 `small-goods-harbor.blend`。归档还包含 `manifest.json` 和 `FONT_NOTICES.txt`。
 
 模型来自与网页 GLB 对应的场景快照，独立保存；未修改原场景或合并主项目。使用 Blender 5.2.0 LTS 完成保存与后台重开验证。

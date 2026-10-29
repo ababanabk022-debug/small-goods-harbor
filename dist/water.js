@@ -8,6 +8,7 @@ import { createWaterPhysics } from './water-physics.js?v=12.1';
 
 const TAU = Math.PI * 2;
 const DEFAULT_RADIUS = 9.0;
+const IMMERSIVE_RADIUS = 100;
 const DEPTH = 1.80;
 const DURATION = 6;
 const WAVES = [
@@ -49,9 +50,24 @@ vec4 harborFieldAt(vec2 p) {
 }
 `;
 
+// Render-only open sea: much longer and lower waves than the densely sampled
+// lagoon. Also evaluated per fragment, so sparse radial rings never dictate the
+// reflection normal or turn short wavelengths into triangular reflection fans.
+const OCEAN_WAVE_GLSL = `
+vec3 harborOceanWave(vec2 p, float seconds) {
+  float phaseA=dot(p,vec2(.17,.11))-seconds*1.0471975512;
+  float phaseB=dot(p,vec2(-.10,.14))+seconds*1.0471975512;
+  return vec3(.012*sin(phaseA)+.006*sin(phaseB),
+    .012*cos(phaseA)*.17-.006*cos(phaseB)*.10,
+    .012*cos(phaseA)*.11+.006*cos(phaseB)*.14);
+}
+`;
+
 const WAVE_GLSL = `
 ${PHYSICS_GLSL}
+${OCEAN_WAVE_GLSL}
 uniform float harborTime;
+uniform float harborImmersive;
 vec3 harborAmbientWave(vec2 p) {
   float t = harborTime * 1.0471975512;
   vec3 result = vec3(0.0);
@@ -70,7 +86,16 @@ vec3 harborAmbientWave(vec2 p) {
 }
 vec3 harborWave(vec2 p) {
   vec4 field = harborFieldAt(p);
-  return (harborAmbientWave(p) + field.xyz) * step(0.001, field.w);
+  vec3 ambient = harborAmbientWave(p);
+  vec3 bounded = (ambient + field.xyz) * step(0.001, field.w);
+  if(harborImmersive<.5)return bounded;
+  // Only the render extension uses ambient ocean waves. The interactive field
+  // stays bounded; shared edge vertices use exactly the same blended height.
+  float offshore = smoothstep(harborRadius - 0.20, harborRadius + 0.50, length(p)) * harborImmersive;
+  vec3 shelf=mix(bounded, ambient, offshore);
+  float openSea=smoothstep(harborRadius,harborRadius+3.0,length(p))*harborImmersive;
+  if(openSea<=0.0)return shelf;
+  return mix(shelf,harborOceanWave(p,harborTime),openSea);
 }
 `;
 
@@ -90,6 +115,9 @@ uniform mat4 harborOpticalViewToLocal;
 uniform vec3 harborAbsorptionCoefficients;
 uniform vec3 harborOpticalTint;
 uniform float harborRadius;
+uniform float harborOpticalRadius;
+uniform float harborOpticalDepth;
+uniform float harborImmersive;
 vec3 harborViewPoint(vec2 uv, float depth) {
   vec4 p = harborOpticalInverseProjection * vec4(uv * 2.0 - 1.0, depth * 2.0 - 1.0, 1.0);
   return p.xyz / p.w;
@@ -110,7 +138,7 @@ vec3 harborRefractedScene(vec3 waterViewPosition, vec3 waterNormal, float fresne
   float gap = max(0.0, waterViewPosition.z - behind.z);
   vec3 incident = isOrthographic ? vec3(0.0, 0.0, -1.0) : normalize(waterViewPosition);
   vec3 localWater = (harborOpticalViewToLocal * vec4(waterViewPosition,1.0)).xyz;
-  float cutBlend=1.0-smoothstep(0.0,0.70,harborRadius-length(localWater.xz));
+  float cutBlend=(1.0-smoothstep(0.0,0.70,harborRadius-length(localWater.xz)))*(1.0-harborImmersive);
   // Only wave-induced refraction is reliable in a single scene capture. The
   // bulk flat-water offset cannot reveal hidden surfaces and duplicates thin
   // objects when its displaced ray falls back at an occlusion boundary.
@@ -149,9 +177,9 @@ vec3 harborRefractedScene(vec3 waterViewPosition, vec3 waterNormal, float fresne
   vec3 localRay=(mat3(harborOpticalViewToLocal)*segment)/max(pathLength,0.00001);
   float cylinderA=max(0.00001,dot(localRay.xz,localRay.xz));
   float cylinderB=dot(localWater.xz,localRay.xz);
-  float cylinderC=dot(localWater.xz,localWater.xz)-harborRadius*harborRadius;
+  float cylinderC=dot(localWater.xz,localWater.xz)-harborOpticalRadius*harborOpticalRadius;
   float sideExit=max(0.0,(-cylinderB+sqrt(max(0.0,cylinderB*cylinderB-cylinderA*cylinderC)))/cylinderA);
-  float bottomExit=localRay.y< -0.0001?max(0.0,(-1.80-localWater.y)/localRay.y):20.0;
+  float bottomExit=localRay.y< -0.0001?max(0.0,(-harborOpticalDepth-localWater.y)/localRay.y):20.0;
   float opticalDistance=min(min(sideExit,bottomExit),min(pathLength,6.0));
   opticalDistance=mix(opticalDistance,1.50,cutBlend);
   vec3 transmittance = exp(-(harborAbsorptionCoefficients + vec3(0.15)) * opticalDistance);
@@ -350,6 +378,30 @@ function volumeSide(THREE, segments, radius) {
   return geometry;
 }
 
+// Dense only at the shared shoreline-side boundary. Far rings need no fluid
+// simulation and share the near surface's 256 angular samples without overlap.
+function oceanRing(THREE, radius, outerRadius) {
+  const segments=256;
+  const rings=[radius,radius+.25,radius+.5,radius+1,radius+1.75,radius+3,radius+6,radius+11,radius+19,radius+31,radius+51,outerRadius];
+  const positions=[],uvs=[],indices=[];
+  for(const ring of rings){
+    for(let i=0;i<segments;i++){
+      const a=TAU*i/segments,x=Math.cos(a)*ring,z=Math.sin(a)*ring;
+      positions.push(x,0,z);uvs.push(x/(radius*2)+.5,z/(radius*2)+.5);
+    }
+  }
+  for(let ring=0;ring<rings.length-1;ring++)for(let i=0;i<segments;i++){
+    const next=(i+1)%segments,a=ring*segments+i,b=ring*segments+next,c=(ring+1)*segments+i,d=(ring+1)*segments+next;
+    indices.push(a,b,d,a,d,c);
+  }
+  const geometry=new THREE.BufferGeometry();
+  geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+  geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
+  geometry.setIndex(indices);geometry.computeVertexNormals();
+  geometry.boundingSphere=new THREE.Sphere(new THREE.Vector3(),outerRadius+1.1);
+  return geometry;
+}
+
 /** Pass the same THREE namespace used by the viewer. */
 export function createHarborWater(THREE, options = {}) {
   const radius = Number(options.radius) || DEFAULT_RADIUS;
@@ -374,6 +426,11 @@ export function createHarborWater(THREE, options = {}) {
     harborTime: time,
     harborField: { value: fieldTexture },
     harborRadius: { value: radius },
+    harborOpticalRadius: { value: radius },
+    harborOpticalDepth: { value: DEPTH },
+    harborImmersive: { value: 0 },
+    harborUnderwaterHaze: { value: new THREE.Color('#398c98') },
+    harborUnderwaterHazeRange: { value: new THREE.Vector2(6,15) },
     harborFieldSize: { value: physics.size },
     harborCausticPattern: { value: causticPattern },
     harborCausticDrift: { value: new THREE.Vector4(0, .040, .032, 0) },
@@ -403,8 +460,9 @@ export function createHarborWater(THREE, options = {}) {
   group.name = 'Harbor · bounded interactive water';
   group.userData.harborWater = true;
   let quality = 'balanced';
+  let immersiveView=false,underwaterView=false,sideVisibilityBeforeImmersive=true;
   let appearance = APPEARANCES[options.appearance] ? options.appearance : 'lagoon';
-  const shaderStatus = { surface: false, side: false, causticMaterials: 0 };
+  const shaderStatus = { surface: false, side: false, underside: false, causticMaterials: 0 };
 
   const material = new THREE.MeshPhysicalMaterial({
     name: 'Harbor · transparent moving surface',
@@ -439,10 +497,15 @@ export function createHarborWater(THREE, options = {}) {
         vHarborWaterXZ = position.xz;
       `);
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', `#include <common>\n${OPTICAL_GLSL}\nuniform float harborTime;\nuniform mat4 harborContainerMatrix;\nvarying vec2 vHarborWaterXZ;`)
+      .replace('#include <common>', `#include <common>\n${OPTICAL_GLSL}\n${OCEAN_WAVE_GLSL}\nuniform float harborTime;\nuniform mat4 harborContainerMatrix;\nvarying vec2 vHarborWaterXZ;`)
       .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
         if(length(vHarborWaterXZ)<harborRadius-0.5 && texture2D(harborField,vHarborWaterXZ/(2.0*harborRadius)+0.5).w < 0.99) discard;
         harborProtectDryScene();`)
+      .replace('#include <roughnessmap_fragment>', `
+        #include <roughnessmap_fragment>
+        float harborOffshoreBlend=smoothstep(harborRadius,harborRadius+3.0,length(vHarborWaterXZ))*harborImmersive;
+        roughnessFactor=mix(roughnessFactor,max(roughnessFactor,.24),harborOffshoreBlend);
+      `)
       .replace('#include <normal_fragment_maps>', `
         #include <normal_fragment_maps>
         // Small wind ripples affect reflections, rather than painting white lines on the water.
@@ -454,7 +517,30 @@ export function createHarborWater(THREE, options = {}) {
           sin(dot(harborP, vec2(11.3, -18.5)) + cos(harborP.x * 1.3) * 0.6 - harborPhase * 3.0) * 0.007 +
           cos(dot(harborP, vec2(26.0, 17.0)) + harborPhase * 5.0) * 0.003
         );
+        float harborPixelFootprint=max(length(dFdx(harborP)),length(dFdy(harborP)));
+        if(harborOffshoreBlend>0.0){
+          vec2 harborOceanGradient=harborOceanWave(harborP,harborTime).yz;
+          vec3 harborOceanNormal=normalize(mat3(viewMatrix*harborContainerMatrix)*vec3(-harborOceanGradient.x,1.0,-harborOceanGradient.y));
+          normal=normalize(mix(normal,harborOceanNormal,harborOffshoreBlend));
+          // Suppress subpixel wind ripples offshore instead of aliasing them into
+          // a sawtooth horizon. The overview/near-water detail remains unchanged.
+          float harborDetailAA=1.0-smoothstep(.035,.12,harborPixelFootprint);
+          harborDetail*=mix(1.0,.18*harborDetailAA,harborOffshoreBlend);
+        }
         normal = normalize(normal + mat3(viewMatrix * harborContainerMatrix) * vec3(-harborDetail.x, 0.0, -harborDetail.y));
+      `)
+      .replace('#include <clearcoat_normal_fragment_maps>', `
+        #include <clearcoat_normal_fragment_maps>
+        #ifdef USE_CLEARCOAT
+          if(harborOffshoreBlend>0.0)clearcoatNormal=normalize(mix(clearcoatNormal,normal,harborOffshoreBlend));
+        #endif
+      `)
+      .replace('#include <lights_physical_fragment>', `
+        #include <lights_physical_fragment>
+        #ifdef USE_CLEARCOAT
+          material.clearcoat=mix(material.clearcoat,.04,harborOffshoreBlend);
+          material.clearcoatRoughness=mix(material.clearcoatRoughness,.24,harborOffshoreBlend);
+        #endif
       `)
       .replace('#include <transmission_fragment>', `
         // Clear water has negligible diffuse scattering. Keep a tiny colored term
@@ -479,7 +565,7 @@ export function createHarborWater(THREE, options = {}) {
       `);
     shaderStatus.surface = true;
   };
-  material.customProgramCacheKey = () => 'harbor-silhouette-safe-microrefraction-v15';
+  material.customProgramCacheKey = () => 'harbor-silhouette-safe-microrefraction-immersive-v17';
   const surface = new THREE.Mesh(polarSurface(THREE, 256, 112, radius), material);
   surface.name = 'Sea · interactive reflecting wave surface';
   surface.receiveShadow = true;
@@ -487,6 +573,135 @@ export function createHarborWater(THREE, options = {}) {
   surface.renderOrder = 4;
   surface.userData.harborWater = true;
   group.add(surface);
+
+  // A separate back face keeps the established above-water material and its
+  // refraction contract unchanged. One capture cannot supply reflected hidden
+  // seabed or a physically reprojected sky: use a bounded Snell-window model.
+  const undersideMaterial = new THREE.ShaderMaterial({
+    name: 'Harbor · underwater sky window',
+    uniforms: shaderUniforms,
+    side: THREE.BackSide,
+    transparent: true,
+    depthWrite: false,
+    depthTest: true,
+    vertexShader: `
+      ${WAVE_GLSL}
+      varying vec3 vUnderView;
+      varying vec3 vUnderLocal;
+      varying vec3 vUnderNormal;
+      void main(){
+        vec3 wave=harborWave(position.xz);
+        vec3 displaced=position+vec3(0.0,wave.x,0.0);
+        vec4 viewed=modelViewMatrix*vec4(displaced,1.0);
+        vUnderView=viewed.xyz;
+        vUnderLocal=displaced;
+        vUnderNormal=normalize(normalMatrix*vec3(-wave.y,1.0,-wave.z));
+        gl_Position=projectionMatrix*viewed;
+      }
+    `,
+    fragmentShader: `
+      uniform sampler2D harborField;
+      uniform sampler2D harborSceneColor;
+      uniform sampler2D harborSceneDepth;
+      uniform vec2 harborOpticalResolution;
+      uniform mat4 harborOpticalInverseProjection;
+      uniform mat4 harborOpticalViewToLocal;
+      uniform mat4 harborContainerMatrix;
+      uniform vec3 harborAbsorptionCoefficients;
+      uniform vec3 harborOpticalTint;
+      uniform float harborOpticalEnabled;
+      uniform float harborRadius;
+      uniform float harborTime;
+      uniform float harborImmersive;
+      uniform vec3 harborUnderwaterHaze;
+      uniform vec2 harborUnderwaterHazeRange;
+      varying vec3 vUnderView;
+      varying vec3 vUnderLocal;
+      varying vec3 vUnderNormal;
+      vec3 underViewPoint(vec2 uv,float depth){
+        vec4 point=harborOpticalInverseProjection*vec4(uv*2.0-1.0,depth*2.0-1.0,1.0);
+        return point.xyz/point.w;
+      }
+      void main(){
+        if(length(vUnderLocal.xz)<harborRadius-.5&&texture2D(harborField,vUnderLocal.xz/(2.0*harborRadius)+.5).w<.99)discard;
+        vec2 uv=gl_FragCoord.xy/harborOpticalResolution;
+        float baseDepth=1.0;
+        if(harborOpticalEnabled>.5){
+          baseDepth=texture2D(harborSceneDepth,uv).r;
+          if(baseDepth<gl_FragCoord.z-.000001)discard;
+        }
+        vec2 detail=vec2(sin(dot(vUnderLocal.xz,vec2(14.2,9.4))-harborTime*4.1),cos(dot(vUnderLocal.xz,vec2(11.3,-18.5))-harborTime*3.1))*.012;
+        vec3 normalUp=normalize(vUnderNormal+mat3(viewMatrix*harborContainerMatrix)*vec3(-detail.x,0.0,-detail.y));
+        vec3 incident=normalize(vUnderView);
+        float incidence=clamp(dot(incident,normalUp),0.0,1.0);
+        float transmittedSin2=1.333*1.333*(1.0-incidence*incidence);
+        float skyWindow=1.0-smoothstep(.94,1.025,transmittedSin2);
+        vec3 airRay=refract(incident,-normalUp,1.333);
+        vec3 localAirRay=mat3(harborOpticalViewToLocal)*airRay;
+        float elevation=clamp(localAirRay.y,0.0,1.0);
+        vec3 sky=mix(vec3(.65,.79,.82),vec3(.26,.53,.77),sqrt(elevation));
+        // Small soft highlights move with the real surface gradient. Beyond
+        // the critical angle, a teal reflection suggests the submerged scene.
+        float shimmer=pow(max(0.0,sin(vUnderLocal.x*.8+vUnderLocal.z*1.1+harborTime*.7)),12.0)*.035;
+        vec3 reflection=harborOpticalTint*(.24+shimmer)+vec3(.012,.032,.035);
+        vec3 transmitted=sky;
+        if(harborOpticalEnabled>.5&&baseDepth<.9999){
+          vec3 baseHit=underViewPoint(uv,baseDepth);
+          vec2 offset=normalUp.xy*.7/harborOpticalResolution;
+          offset*=1.0-smoothstep(.025,.12,length(vec2(dFdx(baseHit.z),dFdy(baseHit.z))));
+          vec2 candidateUV=clamp(uv+offset,vec2(.001),vec2(.999));
+          float candidateDepth=texture2D(harborSceneDepth,candidateUV).r;
+          vec3 candidateHit=underViewPoint(candidateUV,candidateDepth);
+          bool accepted=candidateDepth<.9999&&abs(candidateHit.z-baseHit.z)<.12&&candidateHit.z<vUnderView.z-.01;
+          transmitted=texture2D(harborSceneColor,accepted?candidateUV:uv).rgb;
+        }
+        float fresnel=.02037+.97963*pow(1.0-incidence,5.0);
+        vec3 color=mix(reflection,transmitted,skyWindow*(1.0-fresnel));
+        // Camera-to-surface distance supplies a bounded shallow-water tint.
+        // Scene fog handles underwater objects; do not fog this composite twice.
+        vec3 attenuation=exp(-harborAbsorptionCoefficients*min(length(vUnderView),8.0)*.16);
+        color=color*attenuation+harborOpticalTint*(1.0-attenuation)*.10;
+        // In POV, continue beyond the display cylinder and meet the same haze
+        // as the viewer background. Near Snell-window transmission stays clear.
+        float horizonHaze=smoothstep(harborUnderwaterHazeRange.x,harborUnderwaterHazeRange.y,length(vUnderView))*harborImmersive;
+        color=mix(color,harborUnderwaterHaze,horizonHaze);
+        gl_FragColor=vec4(color,1.0);
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+      }
+    `,
+  });
+  undersideMaterial.onBeforeCompile=()=>{shaderStatus.underside=true;};
+  const underside=new THREE.Mesh(surface.geometry,undersideMaterial);
+  underside.name='Sea · submerged surface sky window';
+  underside.userData.harborWater=true;
+  underside.renderOrder=4;
+  underside.visible=false;
+  group.add(underside);
+
+  const farGeometry=oceanRing(THREE,radius,Math.max(IMMERSIVE_RADIUS,radius+60));
+  const farSurface=new THREE.Mesh(farGeometry,material);
+  farSurface.name='Sea · immersive ambient ocean';
+  farSurface.userData.harborWater=true;
+  farSurface.receiveShadow=true;
+  farSurface.renderOrder=4;
+  farSurface.visible=false;
+  group.add(farSurface);
+  const farUnderside=new THREE.Mesh(farGeometry,undersideMaterial);
+  farUnderside.name='Sea · immersive submerged ocean';
+  farUnderside.userData.harborWater=true;
+  farUnderside.renderOrder=4;
+  farUnderside.visible=false;
+  group.add(farUnderside);
+  function syncUnderwaterHaze(renderer,renderScene){
+    const fog=renderScene.fog;
+    const color=fog?.color?.isColor?fog.color:renderScene.background;
+    if(color?.isColor)shaderUniforms.harborUnderwaterHaze.value.copy(color);
+    const far=Number.isFinite(fog?.far)?Math.max(12,fog.far):80;
+    shaderUniforms.harborUnderwaterHazeRange.value.set(Math.min(far*.55,Math.max(6,Number(fog?.near)||0)),far);
+  }
+  underside.onBeforeRender=syncUnderwaterHaze;
+  farUnderside.onBeforeRender=syncUnderwaterHaze;
 
   const sideMaterial = new THREE.MeshPhysicalMaterial({
     name: 'Harbor · clear deep turquoise cut edge',
@@ -552,6 +767,12 @@ export function createHarborWater(THREE, options = {}) {
   side.userData.harborWater = true;
   group.add(side);
 
+  function syncImmersiveVisibility(){
+    underside.visible=underwaterView;
+    farSurface.visible=immersiveView&&!underwaterView;
+    farUnderside.visible=immersiveView&&underwaterView;
+  }
+
   function applyAppearance() {
     const preset = APPEARANCES[appearance];
     material.color.set(preset.color);
@@ -582,6 +803,18 @@ export function createHarborWater(THREE, options = {}) {
     shaderUniforms,
     appearanceNames: Object.freeze(Object.keys(APPEARANCES)),
     get appearance() { return appearance; },
+    setUnderwaterView(enabled) { underwaterView=!!enabled;syncImmersiveVisibility(); },
+    setImmersiveView(enabled) {
+      const next=!!enabled;
+      if(next===immersiveView)return;
+      if(next)sideVisibilityBeforeImmersive=side.visible;
+      immersiveView=next;
+      side.visible=immersiveView?false:sideVisibilityBeforeImmersive;
+      shaderUniforms.harborImmersive.value=immersiveView?1:0;
+      shaderUniforms.harborOpticalRadius.value=immersiveView?Math.max(IMMERSIVE_RADIUS,radius+60):radius;
+      shaderUniforms.harborOpticalDepth.value=immersiveView?8:DEPTH;
+      syncImmersiveVisibility();
+    },
     waveGLSL: WAVE_GLSL,
     update(seconds, deltaSeconds) {
       const next = Number.isFinite(Number(seconds)) ? Number(seconds) : 0;
@@ -685,6 +918,15 @@ export function createHarborWater(THREE, options = {}) {
         appearance,
         appearanceNames: Object.keys(APPEARANCES),
         opticalRefraction: shaderUniforms.harborOpticalEnabled.value > .5,
+        underwaterView:underside.visible,
+        immersiveView,
+        opticalRadius:shaderUniforms.harborOpticalRadius.value,
+        opticalDepth:shaderUniforms.harborOpticalDepth.value,
+        farWaterVertices:farGeometry.attributes.position.count,
+        farWaterTriangles:farGeometry.index.count/3,
+        farWaterVisible:farSurface.visible||farUnderside.visible,
+        cutawaySideVisible:side.visible,
+        underwaterMethod:'back-face Snell sky window with depth-checked scene transmission; approximate internal reflection',
         opticalMethod: 'silhouette-safe wave-relative microrefraction with coherent color and depth',
         maxRefractionPixels:2.25,
         refractionDepthTolerance:0.12,
@@ -707,7 +949,9 @@ export function createHarborWater(THREE, options = {}) {
     dispose() {
       surface.geometry.dispose();
       side.geometry.dispose();
+      farGeometry.dispose();
       material.dispose();
+      undersideMaterial.dispose();
       sideMaterial.dispose();
       fieldTexture.dispose();
       causticPattern.dispose();

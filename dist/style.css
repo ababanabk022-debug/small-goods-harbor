@@ -12,6 +12,26 @@
   --line: rgba(87, 116, 129, .15);
 }
 
+.subject-controls {position:absolute;z-index:3;top:100px;left:32px;display:flex;flex-direction:column;gap:4px;padding:10px 14px;min-width:226px;border-radius:14px;background:var(--glass);border:1px solid #ffffffaa;backdrop-filter:blur(16px);box-shadow:0 4px 20px #2948580c}
+.subject-controls label {font-size:10px;letter-spacing:.06em;color:var(--muted)}
+.subject-controls select {font:inherit;font-size:13px;min-height:38px;border:0;background:transparent;color:var(--ink);cursor:pointer;max-width:100%}
+.pov-actions {display:flex;gap:4px}
+.pov-actions .control-button {background:#e2ece9;color:#315f64}
+.is-pov .scene-header {text-shadow:0 1px 8px #ffffffaa}
+.is-pov .scene-identity {padding:8px 12px;margin:-8px -12px;border-radius:12px;background:#f7faf0b3;backdrop-filter:blur(8px)}
+.is-pov .scene-status {padding:6px 10px;margin-top:4px;border-radius:12px;background:var(--glass)}
+.is-pov .interaction-hint {width:fit-content;margin-left:auto;margin-right:auto;padding:4px 9px;border-radius:8px;background:var(--glass);color:#456775}
+#viewport.view-changing::after {content:'';position:absolute;inset:0;opacity:0;background:#b8cddd;pointer-events:none;animation:view-change .28s ease-out forwards}
+@keyframes view-change {from{opacity:.65}to{opacity:0}}
+@media(max-width:590px){
+  .subject-controls {top:144px;left:21px;right:21px;min-width:0;padding:6px 10px;gap:0;max-width:300px}
+  .subject-controls select {min-height:40px;font-size:12px}
+  .pov-actions {width:100%;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .pov-actions .control-button {flex:1;min-height:40px}
+  .is-pov .scene-controls > .control-divider:first-of-type {display:none}
+}
+@media(max-height:520px) and (min-width:591px){.subject-controls{top:65px;left:23px;padding:4px 9px;min-width:200px}.subject-controls label{display:none}.subject-controls select{min-height:34px}}
+
 * { box-sizing: border-box; }
 html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
 button, input { font: inherit; }

@@ -73,7 +73,46 @@ export function createUnderwaterLife(THREE,{scene,water,sampleBedHeight=()=>-1.4
   fish.forEach((f,i)=>{const c=new THREE.Color(colors[i%8===0?3:i%3]);bodies.setColorAt(i,c);tails.setColorAt(i,c.clone().multiplyScalar(.83));});
   for(const mesh of[bodies,tails,eyes,fins])mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
   const orientation=new THREE.Quaternion(),tailOrientation=new THREE.Quaternion(),axis=new THREE.Vector3(0,1,0),local=new THREE.Vector3(),scale=new THREE.Vector3();
+  const hiddenMatrix=new THREE.Matrix4().makeScale(0,0,0);
+  const cameraFacing=new THREE.Quaternion().setFromAxisAngle(axis,Math.PI),groupOrientation=new THREE.Quaternion();
+  const viewPose={position:new THREE.Vector3(),quaternion:new THREE.Quaternion(),hiddenObjects:[],fishIndex:0};
+  let viewFish=null;
   let elapsed=0,unsafe=0,bedUnsafe=0;
+  function drawFish(f,i){
+    const yaw=schools[f.school].yaw;
+    orientation.setFromAxisAngle(axis,yaw);
+    scale.set(.056*f.scale,.072*f.scale,.18*f.scale);matrix.compose(f.position,orientation,scale);bodies.setMatrixAt(i,matrix);
+    local.set(0,0,-.16*f.scale).applyQuaternion(orientation).add(f.position);
+    tailOrientation.setFromAxisAngle(axis,yaw+Math.sin(elapsed*9.0+f.phase)*.28);scale.setScalar(f.scale);matrix.compose(local,tailOrientation,scale);tails.setMatrixAt(i,matrix);
+    matrix.compose(f.position,orientation,scale);fins.setMatrixAt(i,matrix);
+    for(let side=0;side<2;side++){local.set((side===0?-1:1)*.047*f.scale,.015*f.scale,.10*f.scale).applyQuaternion(orientation).add(f.position);matrix.compose(local,orientation,scale);eyes.setMatrixAt(i*2+side,matrix);}
+    // InstancedMesh visibility would hide the entire school. Collapse only the
+    // chosen fish's five instances; navigation and stored body position continue.
+    if(i===viewFish){
+      for(const mesh of[bodies,tails,fins])mesh.setMatrixAt(i,hiddenMatrix);
+      eyes.setMatrixAt(i*2,hiddenMatrix);eyes.setMatrixAt(i*2+1,hiddenMatrix);
+    }
+  }
+  function refreshFishMatrices(){for(const mesh of[bodies,tails,eyes,fins])mesh.instanceMatrix.needsUpdate=true;}
+  function setViewFish(index=null){
+    if(index!==null&&(!Number.isInteger(index)||index<0||index>=fish.length))return false;
+    const previous=viewFish;viewFish=index;
+    // Restore immediately even while paused, without advancing any simulation.
+    if(previous!==null)drawFish(fish[previous],previous);
+    if(viewFish!==null)drawFish(fish[viewFish],viewFish);
+    refreshFishMatrices();return true;
+  }
+  function getViewPose(index=0){
+    if(!Number.isInteger(index)||index<0||index>=fish.length)return null;
+    const f=fish[index];
+    orientation.setFromAxisAngle(axis,schools[f.school].yaw);
+    group.updateWorldMatrix(true,false);
+    // Center between the two eyes. Fish geometry faces +Z; camera looks -Z.
+    viewPose.position.set(0,.015*f.scale,.10*f.scale).applyQuaternion(orientation).add(f.position).applyMatrix4(group.matrixWorld);
+    group.getWorldQuaternion(groupOrientation);
+    viewPose.quaternion.copy(groupOrientation).multiply(orientation).multiply(cameraFacing);
+    viewPose.fishIndex=index;return viewPose;
+  }
   function update(dt,time){
     if(Number.isFinite(time))elapsed=time;else elapsed+=Math.max(0,dt||0);clock.value=elapsed;
     for(const school of schools){
@@ -91,14 +130,10 @@ export function createUnderwaterLife(THREE,{scene,water,sampleBedHeight=()=>-1.4
       const y=Math.max(school.position.bed+.24,f.depth+Math.sin(elapsed*.8+f.phase)*.055);
       f.position.set(x,y,z);if(!water.isWater(x,z))unsafe++;if(y<school.position.bed+.15)bedUnsafe++;
 
-      scale.set(.056*f.scale,.072*f.scale,.18*f.scale);matrix.compose(f.position,orientation,scale);bodies.setMatrixAt(i,matrix);
-      local.set(0,0,-.16*f.scale).applyQuaternion(orientation).add(f.position);
-      tailOrientation.setFromAxisAngle(axis,yaw+Math.sin(elapsed*9.0+f.phase)*.28);scale.setScalar(f.scale);matrix.compose(local,tailOrientation,scale);tails.setMatrixAt(i,matrix);
-      matrix.compose(f.position,orientation,scale);fins.setMatrixAt(i,matrix);
-      for(let side=0;side<2;side++){local.set((side===0?-1:1)*.047*f.scale,.015*f.scale,.10*f.scale).applyQuaternion(orientation).add(f.position);matrix.compose(local,orientation,scale);eyes.setMatrixAt(i*2+side,matrix);}
+      drawFish(f,i);
     });
-    for(const mesh of[bodies,tails,eyes,fins])mesh.instanceMatrix.needsUpdate=true;
+    refreshFishMatrices();
   }
   update(0,0);
-  return {group,update,diagnostics(){return{pebbles:stones.length,grassBlades:blades.length,patches:clusters.length,fish:fish.length,schools:schools.length,drawCalls:group.children.length,unsafeSamples:unsafe,bedUnsafeSamples:bedUnsafe,time:elapsed,fishPositions:fish.slice(0,3).map(f=>f.position.toArray()),cruiseRoutes:schools.map(s=>({length:s.length,speed:s.speed,direction:s.direction,position:[s.position.x,s.position.z],distance:Math.max(0,elapsed)*s.speed,bounds:s.bounds,validated:s.routeValidated})),allFishPositions:fish.map(f=>f.position.toArray())};},dispose(){for(const g of geometries)g.dispose();for(const m of materials)m.dispose();group.removeFromParent();}};
+  return {group,update,getViewPose,setViewFish,diagnostics(){return{pebbles:stones.length,grassBlades:blades.length,patches:clusters.length,fish:fish.length,viewFish,schools:schools.length,drawCalls:group.children.length,unsafeSamples:unsafe,bedUnsafeSamples:bedUnsafe,time:elapsed,fishPositions:fish.slice(0,3).map(f=>f.position.toArray()),cruiseRoutes:schools.map(s=>({length:s.length,speed:s.speed,direction:s.direction,position:[s.position.x,s.position.z],distance:Math.max(0,elapsed)*s.speed,bounds:s.bounds,validated:s.routeValidated})),allFishPositions:fish.map(f=>f.position.toArray())};},dispose(){for(const g of geometries)g.dispose();for(const m of materials)m.dispose();group.removeFromParent();}};
 }

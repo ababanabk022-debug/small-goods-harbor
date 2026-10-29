@@ -316,6 +316,67 @@ export function createHarborMotion(THREE,{model,meta={},water,scene}){
       if(!start)actor.roaming=false;else{actor.walkPoint.x=start[0];actor.walkPoint.z=start[1];actor.walkPoint.y=landNavigator.height(...start);actor.object.position.copy(actor.walkPoint);actor.lastPosition.copy(actor.walkPoint);}
     }
   }
+  // Capture the authored eyes once in body-local space. In particular, the dog's
+  // HEAD pivot contributes to eye height, but its sniff animation never drives
+  // the camera. The GLB is already Y-up; there is no Blender axis conversion here.
+  const viewSubjects=new Map(),viewLabels={mara:'岛民 · 玛拉',sol:'岛民 · 索尔',porter:'搬运工',dockhand:'码头工人',dog:'小狗'};
+  function registerView(id,label,object,forward,baseQuaternion,hiddenObjects,isDog=false){
+    object.updateWorldMatrix(true,true);
+    const inverse=new THREE.Matrix4().copy(object.matrixWorld).invert();
+    const localMatrix=new THREE.Matrix4(),eyeBox=new THREE.Box3(),partBox=new THREE.Box3();
+    const eyes=[];
+    object.traverse(child=>{if(child.isMesh&&/Eyes[ _]+ink/i.test(child.name)&&child.geometry?.attributes.position)eyes.push(child);});
+    for(const eye of eyes){
+      eye.geometry.computeBoundingBox();
+      localMatrix.multiplyMatrices(inverse,eye.matrixWorld);
+      partBox.copy(eye.geometry.boundingBox).applyMatrix4(localMatrix);eyeBox.union(partBox);
+    }
+    const inverseRest=baseQuaternion.clone().invert();
+    const localForward=forward.clone().applyQuaternion(inverseRest).normalize();
+    const localUp=up.clone().applyQuaternion(inverseRest).normalize();
+    const eyeLocal=new THREE.Vector3();
+    if(!eyeBox.isEmpty()){
+      eyeBox.getCenter(eyeLocal);
+      // Dog ink also contains the lower, projecting nose. Use the upper eye
+      // vertices to keep the anchor between the eyes instead of in the muzzle.
+      if(isDog){
+        const cutoff=eyeBox.max.y-(eyeBox.max.y-eyeBox.min.y)*.35,upperEyes=new THREE.Box3(),point=new THREE.Vector3();
+        for(const eye of eyes){
+          localMatrix.multiplyMatrices(inverse,eye.matrixWorld);
+          const positions=eye.geometry.attributes.position;
+          for(let i=0;i<positions.count;i++){
+            point.fromBufferAttribute(positions,i).applyMatrix4(localMatrix);
+            if(point.y>=cutoff)upperEyes.expandByPoint(point);
+          }
+        }
+        if(!upperEyes.isEmpty())upperEyes.getCenter(eyeLocal);
+      }
+    }else eyeLocal.copy(localUp).multiplyScalar(isDog?.39:.75).addScaledVector(localForward,isDog?.30:.08);
+    eyeLocal.addScaledVector(localForward,.025);
+    const localQuaternion=new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(),localForward,localUp));
+    viewSubjects.set(id,{id,label,object,eyeLocal,localQuaternion,hiddenObjects,anchorSource:eyes.length?'authored-eyes':'body-fallback'});
+  }
+  for(const actor of actors)registerView(actor.spec.id||actor.object.name,viewLabels[actor.spec.id]||actor.spec.label||'岛民',
+    actor.object,actor.forwardAxis,actor.baseQuaternion,[actor.object],actor.isDog);
+  if(boat){
+    // These BOAT material batches contain only the sole crew member. Hull,
+    // rigging, wood and sails remain visible when looking around from the deck.
+    const crewObjects=[];
+    boat.traverse(child=>{
+      if(child.isMesh&&/Burnished[ _]+leather[ _]+boots|Chestnut[ _]+hair|Cinnamon[ _]+canvas[ _]+trousers|Eyes[ _]+ink|Faded[ _]+indigo[ _]+work[ _]+shirts|Golden[ _]+woven[ _]+hat|Natural[ _]+cotton[ _]+shirts|Peach[ _]+hand[ _]+painted[ _]+skin|Straw[ _]+hat[ _]+braided[ _]+edge|Dockworkers[ _]+navy[ _]+cap/i.test(child.name))crewObjects.push(child);
+    });
+    registerView('boat','船员',boat,new THREE.Vector3(forwardXZ[0],0,forwardXZ[1]),restQuaternion,crewObjects);
+  }
+  function getViewSubjects(){return Array.from(viewSubjects.values(),({id,label})=>({id,label}));}
+  function getViewPose(id){
+    const subject=viewSubjects.get(id);if(!subject)return null;
+    subject.object.updateWorldMatrix(true,false);
+    return {
+      position:subject.eyeLocal.clone().applyMatrix4(subject.object.matrixWorld),
+      quaternion:subject.object.getWorldQuaternion(new THREE.Quaternion()).multiply(subject.localQuaternion),
+      hiddenObjects:subject.hiddenObjects.slice(),
+    };
+  }
   const actorQ=new THREE.Quaternion(),limbQ=new THREE.Quaternion(),balanceQ=new THREE.Quaternion(),armQ=new THREE.Quaternion();
   const balanceEuler=new THREE.Euler(0,0,0,'XYZ'),actorPoint=new THREE.Vector3(),actorTangent=new THREE.Vector3();
   function advanceRoaming(actor,dt){
@@ -411,7 +472,7 @@ export function createHarborMotion(THREE,{model,meta={},water,scene}){
       renderWake();
 
     },
-    setDestination,setContainerTilt,
+    setDestination,setContainerTilt,getViewSubjects,getViewPose,
     exportLandGrid:()=>landNavigator?.exportGrid()||null,
     getDiagnostics:()=>({
       mode,destinationMarker:false,boatPresent:!!boat,boatPosition:boat?.position.toArray(),boatStart:boatStart?.toArray(),
@@ -425,6 +486,7 @@ export function createHarborMotion(THREE,{model,meta={},water,scene}){
       navigation:navigator.diagnostics(),wakeSegments:wakeSamples.length,foamParticles:foamPearls.count,wakeForces,
       containerTilt:[containerX,containerZ],containerAngularVelocity:[containerVX,containerVZ],
       bodyBalance:[balanceX,balanceZ],boatDriftVelocity:[driftX,driftZ],driftDistance,
+      viewSubjects:Array.from(viewSubjects.values(),s=>({id:s.id,eyeLocal:s.eyeLocal.toArray(),anchorSource:s.anchorSource,hiddenObjects:s.hiddenObjects.map(o=>o.name)})),
       landNavigation:landNavigator?.diagnostics()||null,
       actors:actors.map(a=>({name:a.object.name,position:a.object.position.toArray(),distance:a.distance,walking:(a.roaming||!!a.curve)&&a.walkFactor>.02,limbs:a.limbs.length,kind:a.isDog?'dog':'person',activity:a.activity,walkFactor:a.walkFactor,tailAngle:a.tailAngle,roaming:a.roaming,target:a.target||null,destinations:a.destinations,blockedMoves:a.blocked,landSafe:a.roaming?landNavigator.valid(a.object.position.x,a.object.position.z):null,visitedBounds:{min:a.visitedMin.slice(),max:a.visitedMax.slice()},roamingExtent:[a.visitedMax[0]-a.visitedMin[0],a.visitedMax[1]-a.visitedMin[1]]})),
     }),

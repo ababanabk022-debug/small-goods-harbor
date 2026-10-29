@@ -61,7 +61,7 @@ export function createHarborRenderer(THREE, renderer, scene, camera, water) {
     if(overlay)overlayObjects++;else solidObjects++;
   });
   renderer.info.autoReset = false;
-  function sync() {
+  function sync(camera) {
     renderer.getDrawingBufferSize(size);
     if(target.width!==size.x || target.height!==size.y) target.setSize(size.x,size.y);
     material.uniforms.texel.value.set(1/size.x,1/size.y);
@@ -74,10 +74,11 @@ export function createHarborRenderer(THREE, renderer, scene, camera, water) {
     });
   }
   return {
-    render(){
+    render(activeCamera=camera){
+      const camera=activeCamera;
       renderer.info.reset();
       if(!enabled){water.setOpticalScene(null);renderer.render(scene,camera);return;}
-      sync();
+      sync(camera);
       const mask=camera.layers.mask,background=scene.background,autoClear=renderer.autoClear;
       const previous=renderer.getRenderTarget();
       try {

@@ -7,7 +7,7 @@
     <meta name="description" content="在小岛上停留片刻。摇动清透海水，看小船巡游，跟随居民走过沙滩。" />
     <title>小岛 · 自由漫游</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='.9em' font-size='56'%3E%F0%9F%8C%B4%3C/text%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="./style.css?v=20261027-v6" />
+    <link rel="stylesheet" href="./style.css?v=14.1" />
     <script type="importmap">
       {
         "imports": {
@@ -42,13 +42,19 @@
           <option value="clear">清晰</option><option value="ultra">精细</option><option value="smooth">流畅</option>
         </select></label>
       </div>
+      <div class="subject-controls">
+        <label for="subject-view">借一双眼睛，走进小岛</label>
+        <select id="subject-view" aria-label="选择观察身份" disabled><option value="overview">整座小岛 · 自由旋转</option></select>
+      </div>
       <aside id="help-panel" class="help-panel" aria-label="操作说明" hidden>
         <p class="panel-title">换个角度，慢慢看</p>
         <dl>
-          <div><dt>旋转 / 摇水</dt><dd>鼠标左键拖动 / 单指拖动，海水会随之回荡</dd></div>
-          <div><dt>涟漪 / 引航</dt><dd>轻点水面激起涟漪；宽阔水域可指定小船目的地</dd></div>
-          <div><dt>缩放</dt><dd>滚动鼠标滚轮 / 双指开合</dd></div>
-          <div><dt>平移</dt><dd>鼠标右键拖动 / 双指拖动</dd></div>
+          <div><dt>角色视角</dt><dd>选择一位伙伴，跟着它自动行动；拖动只转头，不改变路线</dd></div>
+          <div><dt>回到俯瞰</dt><dd>点击「返回俯瞰」或按 Esc；R 恢复默认视线</dd></div>
+          <div><dt>俯瞰旋转</dt><dd>鼠标左键拖动 / 单指拖动，海水会随之回荡</dd></div>
+          <div><dt>涟漪 / 引航</dt><dd>在俯瞰模式轻点水面激起涟漪；宽阔水域可指定小船目的地</dd></div>
+          <div><dt>俯瞰缩放</dt><dd>滚动鼠标滚轮 / 双指开合</dd></div>
+          <div><dt>俯瞰平移</dt><dd>鼠标右键拖动 / 双指拖动</dd></div>
         </dl>
         <p class="help-note">小船会自动巡游，小狗在沙滩散步。点击「小岛生活」暂停或继续；点击「复位」回到初始视角。</p>
       </aside>
@@ -73,6 +79,10 @@
 
       <div class="controls-wrap">
         <nav class="scene-controls" aria-label="场景控制">
+          <div id="pov-actions" class="pov-actions" role="group" aria-label="角色视角控制" hidden>
+            <button type="button" id="pov-forward" class="control-button">看向前方</button>
+            <button type="button" id="pov-exit" class="control-button">返回俯瞰</button>
+          </div>
           <div class="view-controls" role="group" aria-label="选择视角">
             <button type="button" class="control-button view-button is-active" data-view="hero" aria-pressed="true" title="正面视角">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-5 8 5v9H4Z"/><path d="M9 19v-6h6v6"/></svg>
@@ -114,6 +124,6 @@
         <p class="interaction-hint"><span class="desktop-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点水面引航 <span aria-hidden="true">·</span> 滚轮缩放</span><span class="touch-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点引航 <span aria-hidden="true">·</span> 双指缩放</span></p>
       </div>
     </main>
-    <script type="module" src="./viewer.js?v=13.1"></script>
+    <script type="module" src="./viewer.js?v=14.1"></script>
   </body>
 </html>
