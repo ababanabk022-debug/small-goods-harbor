@@ -1,8 +1,8 @@
 {
   "sourceScene": "Small Goods · Reference Harbor",
-  "sourceFile": "small-goods-harbor-expanded.blend",
-  "sourceBlendSha256": "616a9bffc749111c83cdca37f386ba0f732089237f3606a0739a401dd245b44b",
-  "generatedAt": "2026-10-27T19:34:44",
+  "sourceFile": "small-goods-harbor-pov.blend",
+  "sourceBlendSha256": "cda53db134ff167794a7e3164151fcc534badc8c6a5c75e6ba77767694a650cf",
+  "generatedAt": "2026-10-30T23:31:19",
   "coordinateSystem": "glTF right-handed Y-up: Blender (x,y,z) to (x,z,-y)",
   "groupNames": [
     "STATIC",
@@ -403,12 +403,12 @@
     ],
     "orthographicScale": 23.5
   },
-  "sourceObjectCount": 2848,
-  "drawCalls": 191,
-  "triangles": 602242,
-  "vertices": 731735,
-  "bytes": 7192524,
-  "sha256": "9a982451a8ee9602b03f476ca8ed7ef3dd374ee0806cb06f6a03e2787048abbf",
+  "sourceObjectCount": 2866,
+  "drawCalls": 192,
+  "triangles": 603071,
+  "vertices": 735175,
+  "bytes": 7242152,
+  "sha256": "f2f6afae2b4e112de348b5afb01973cc9ccbb89147a9f2055e7f85ff708d66a2",
   "materialMode": "Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Embedded normal and roughness maps preserve fine surface response as procedural approximations.",
   "clouds": [
     {
@@ -418,12 +418,12 @@
       "triangles": 5708,
       "min": [
         -1.56782066822052,
-        7.080734729766846,
-        -1.2150477170944214
+        7.080735683441162,
+        -1.2150474786758423
       ],
       "max": [
-        1.0743283033370972,
-        7.921962738037109,
+        1.0743284225463867,
+        7.921960353851318,
         -0.14015334844589233
       ]
     },
@@ -434,12 +434,12 @@
       "triangles": 4892,
       "min": [
         -4.809024810791016,
-        4.692483901977539,
+        4.692484378814697,
         -0.5729236602783203
       ],
       "max": [
         -3.5398924350738525,
-        5.185301780700684,
+        5.185302257537842,
         -0.05217958986759186
       ]
     },
@@ -450,12 +450,12 @@
       "triangles": 3642,
       "min": [
         2.184885263442993,
-        4.965078353881836,
-        -2.1340458393096924
+        4.965077877044678,
+        -2.1340460777282715
       ],
       "max": [
         3.273181200027466,
-        5.388391017913818,
+        5.388391494750977,
         -1.6880120038986206
       ]
     },
@@ -466,7 +466,7 @@
       "triangles": 4892,
       "min": [
         -3.3540101051330566,
-        3.857830047607422,
+        3.8578310012817383,
         -3.5329668521881104
       ],
       "max": [
@@ -480,9 +480,9 @@
     {
       "category": "STATIC",
       "material": "Harbor | wood_dark",
-      "vertices": 18093,
-      "triangles": 15880,
-      "sourceObjects": 103
+      "vertices": 18310,
+      "triangles": 15988,
+      "sourceObjects": 104
     },
     {
       "category": "STATIC",
@@ -522,23 +522,9 @@
     {
       "category": "STATIC",
       "material": "REFINED | warm weathered granite",
-      "vertices": 235395,
-      "triangles": 94055,
-      "sourceObjects": 74
-    },
-    {
-      "category": "STATIC",
-      "material": "Harbor | sand",
-      "vertices": 2838,
-      "triangles": 1986,
-      "sourceObjects": 17
-    },
-    {
-      "category": "STATIC",
-      "material": "Harbor | rock",
-      "vertices": 8344,
-      "triangles": 4472,
-      "sourceObjects": 74
+      "vertices": 240281,
+      "triangles": 95723,
+      "sourceObjects": 113
     },
     {
       "category": "STATIC",
@@ -557,8 +543,8 @@
     {
       "category": "STATIC",
       "material": "REFINED | deep palm green",
-      "vertices": 40141,
-      "triangles": 37182,
+      "vertices": 40155,
+      "triangles": 37211,
       "sourceObjects": 145
     },
     {
@@ -571,15 +557,15 @@
     {
       "category": "STATIC",
       "material": "REFINED | living palm green",
-      "vertices": 51180,
-      "triangles": 56793,
+      "vertices": 51183,
+      "triangles": 56802,
       "sourceObjects": 193
     },
     {
       "category": "STATIC",
       "material": "REFINED | sunlit palm green",
-      "vertices": 19884,
-      "triangles": 19902,
+      "vertices": 19850,
+      "triangles": 19861,
       "sourceObjects": 87
     },
     {
@@ -623,6 +609,13 @@
       "vertices": 17688,
       "triangles": 7406,
       "sourceObjects": 48
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | rock",
+      "vertices": 4970,
+      "triangles": 2664,
+      "sourceObjects": 44
     },
     {
       "category": "STATIC",
@@ -1780,6 +1773,13 @@
       "sourceObjects": 45
     },
     {
+      "category": "STATIC",
+      "material": "Harbor | sand",
+      "vertices": 462,
+      "triangles": 798,
+      "sourceObjects": 6
+    },
+    {
       "category": "CLOUDS",
       "material": "Cloud | soft warm ivory.001",
       "vertices": 9575,
@@ -1813,9 +1813,33 @@
       "vertices": 8352,
       "triangles": 3926,
       "sourceObjects": 36
+    },
+    {
+      "category": "STATIC",
+      "material": "V14.2 | pale weathered stair stone",
+      "vertices": 4104,
+      "triangles": 2052,
+      "sourceObjects": 19
     }
   ],
   "excluded": [
+    "HORIZON_BOAT_01",
+    "HORIZON_BOAT_01_Hull",
+    "HORIZON_BOAT_01_Sail",
+    "HORIZON_BOAT_01_Spars",
+    "HORIZON_BOAT_02",
+    "HORIZON_BOAT_02_Hull",
+    "HORIZON_BOAT_02_Sail",
+    "HORIZON_BOAT_02_Spars",
+    "HORIZON_BOAT_03",
+    "HORIZON_BOAT_03_Hull",
+    "HORIZON_BOAT_03_Sail",
+    "HORIZON_BOAT_03_Spars",
+    "POV_Horizon_BeaconRoof",
+    "POV_Horizon_Canopy",
+    "POV_Horizon_Chalk",
+    "POV_Horizon_Cloud",
+    "POV_Horizon_Stone",
     "Sea — single closed wavy volume",
     "Seamless blue ground"
   ],
@@ -5310,13 +5334,169 @@
     {
       "name": "V4 | upper weathered front seam rock",
       "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 03",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 06",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 07",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 08",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair backing rock 09",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 03",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 06",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 07",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 08",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair outer rock 09",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 00",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 01",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 02",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 03",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 04",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 05",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 06",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 07",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 08",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 09",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 10",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 11",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 12",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 13",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 14",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 15",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 16",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 17",
+      "decimateRatio": 0.33
+    },
+    {
+      "name": "V14.2 stair rock foundation 18",
+      "decimateRatio": 0.33
     }
   ],
-  "seconds": 4.81,
+  "seconds": 5.76,
   "schemaVersion": 2,
   "embeddedMicroTextures": {
     "imageCount": 10,
-    "materialCount": 29,
+    "materialCount": 30,
     "kinds": [
       "wood",
       "sand",
@@ -7683,7 +7863,7 @@
     "style": "geological cutaway"
   },
   "animationMode": "Web runtime animates actor routes and limbs, boat buoyancy and navigation, and the interactive height-field water. GLB contains geometry and named pivots, not baked animation tracks.",
-  "uncompressedBytes": 25896052,
+  "uncompressedBytes": 26022972,
   "compression": "KHR_draco_mesh_compression",
-  "compressionSeconds": 2.91
+  "compressionSeconds": 3.87
 }

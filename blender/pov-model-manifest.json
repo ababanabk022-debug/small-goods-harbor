@@ -1,21 +1,23 @@
 {
   "format": "Portable editable Blender scene - local POV edition",
-  "packagedDate": "2026-10-29",
+  "modelVersion": "V14.3.1",
+  "packagedDate": "2026-10-30",
   "blenderVersion": "5.2.0 LTS",
   "file": {
     "name": "small-goods-harbor-pov.blend",
-    "bytes": 46974854,
-    "sha256": "972c21c164dd07421c826ff62596dd4204f78858c8b2c7a0ad8992486416b84c"
+    "bytes": 47203858,
+    "sha256": "012ce52c112bfe12ec7ee39be9fc55b57675602fef4f7ba2e1ab390652a10b7c"
   },
+  "sourceWorkingFileSha256": "cda53db134ff167794a7e3164151fcc534badc8c6a5c75e6ba77767694a650cf",
   "scene": {
     "scene": "Small Goods · Reference Harbor",
-    "objects": 3119,
-    "meshObjects": 2342,
+    "objects": 3137,
+    "meshObjects": 2360,
     "curveObjects": 717,
     "textObjects": 16,
     "cameraCount": 2,
     "lightCount": 9,
-    "materials": 77,
+    "materials": 78,
     "activeCamera": "Camera | reference hero",
     "frames": [
       1,
@@ -24,21 +26,23 @@
     "fps": 24,
     "driverCount": 496,
     "driverHash": "caecbfe445b64f40442c254d0f6de17037fd2cbbdf3ac4bc607e80aa96c4d865",
-    "objectStateHash": "c57dcfc5f3c3d8a59dee754498f9479f4b38bd8b229981971fcf0abd198bb0c0",
-    "geometryHash": "d61307be36f76421e3e0d3c8351832288b89b58545fbe7aeecfda0fa05fdae4f",
-    "materialHash": "80ad8baebc0bd0658f9a024e43ffb2a3ee5fc450aff000fa78afc603737c6cdb",
+    "objectStateHash": "61bb15d11b68d5e9e7a4474010cc3b1dc82b08327c9001c37adf3074d63690fc",
+    "geometryHash": "1d8a549f7c1c67bbf911fb91024fa2edc0e2df680f32205ce375de9b29b07a3b",
+    "materialHash": "c69ff252d411c8ab1f059046249a93cd921b9d4347a36a373a9141a697deedcd",
     "environmentObjects": 17,
     "environmentHidden": {
       "viewport": true,
       "render": true
-    }
+    },
+    "movableSailboatRoots": [
+      "HORIZON_BOAT_01",
+      "HORIZON_BOAT_02",
+      "HORIZON_BOAT_03"
+    ]
   },
   "content": {
-    "mainIslandObjects": 3102,
+    "mainIslandObjects": 3120,
     "horizonObjects": 17,
-    "distantIslandGroups": 6,
-    "reefGroups": 4,
-    "cloudGroups": 5,
     "sailboats": 3,
     "horizonCollection": "POV_ENVIRONMENT",
     "horizonHiddenByDefault": true,
@@ -86,9 +90,9 @@
     "Archive contains no source filesystem paths or original diagnostic logs"
   ],
   "verificationScope": [
-    "Static editable scene, geometry, shape-key coordinates, transforms, hierarchy, material nodes and scene dependency drivers were compared before and after packaging",
-    "Scene-only dependencies retain 496 drivers; 24 drivers on unused source data were excluded",
-    "Privacy scan covers known personal/workspace/token strings, printable absolute Windows paths, common Unix home/workspace path prefixes, UNC paths, ASCII and both UTF-16LE alignments",
+    "Static editable scene, mesh geometry, shape-key coordinates, transforms, hierarchy, material nodes and scene dependency drivers were compared before and after packaging",
+    "Scene dependency driver count and fingerprints are read dynamically from this source model",
+    "Privacy scan covers current user name, workspace/token strings, printable absolute Windows paths, common Unix home/workspace path prefixes, UNC paths, ASCII and both UTF-16LE alignments",
     "Public font license and certificate URLs remain embedded with their legal notices",
     "No render, playback performance benchmark or full frame-by-frame animation comparison was performed",
     "Website sky, expanded water, fog, and runtime boat animation remain separate JavaScript features"
@@ -96,20 +100,20 @@
   "publication": "Local archive only; this packaging step does not deploy or publish the project",
   "archive": {
     "name": "small-goods-harbor-pov.blend.zip",
-    "bytes": 10678383,
-    "sha256": "d4607d3ab206b411882c34c8565937fe332705955a97f6e683d42c888da836d1",
+    "bytes": 10694204,
+    "sha256": "ffa9b242c1a327ae8042fb14bb0516e4087c29cfb20edc48d1d8b51538fdafb3",
     "crcIntegrityPassed": true,
     "extractedModelHashMatches": true,
     "members": [
       {
         "name": "small-goods-harbor-pov.blend",
-        "bytes": 46974854,
-        "sha256": "972c21c164dd07421c826ff62596dd4204f78858c8b2c7a0ad8992486416b84c"
+        "bytes": 47203858,
+        "sha256": "012ce52c112bfe12ec7ee39be9fc55b57675602fef4f7ba2e1ab390652a10b7c"
       },
       {
         "name": "manifest.json",
-        "bytes": 4000,
-        "sha256": "305264884fcb5d7355fa2059a66de8907914df3debb013e0b84c507649c9a99c"
+        "bytes": 4177,
+        "sha256": "c7ca76795076d4cb2029b8635498d1d73e15ec07d2a21864fac9c738a6eae3e5"
       },
       {
         "name": "FONT_NOTICES.txt",
@@ -118,8 +122,8 @@
       },
       {
         "name": "README.txt",
-        "bytes": 807,
-        "sha256": "da09b957f2be8138f998c29a812449f0cb072c9bf41fb4efe295634cbfdac931"
+        "bytes": 815,
+        "sha256": "4463081ad021bc0ed26842920780e7bdd8989597534d573f1869e30edf9b404f"
       }
     ],
     "extractedArchiveIndependentReopenPassed": true

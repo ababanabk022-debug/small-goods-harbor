@@ -15,3 +15,13 @@
 - License: Apache License 2.0. The complete license is retained in `dist/vendor/draco/LICENSE`, obtained from the upstream project's `LICENSE` file.
 
 These notices describe third-party components only. They do not grant an additional license to the island scene, models, or application authored for this project.
+
+## Ambient field recordings
+
+`dist/public/audio/island-ambience.mp3` mixes three CC0 1.0 recordings from Freesound:
+
+- SamsterBirdies, [Calm ocean waves](https://freesound.org/people/SamsterBirdies/sounds/578524/).
+- DaveGould, [Seagulls-M.wav](https://freesound.org/people/DaveGould/sounds/32930/).
+- blaastaal, [murmuring](https://freesound.org/people/blaastaal/sounds/766658/).
+
+See [audio source and editing notes](dist/public/audio/SOURCES.md) and the [CC0 1.0 dedication](https://creativecommons.org/publicdomain/zero/1.0/).

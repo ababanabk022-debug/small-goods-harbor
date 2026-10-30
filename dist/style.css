@@ -230,3 +230,19 @@ h1 { margin: 0; font-size: 22px; font-weight: 550; letter-spacing: .09em; line-h
 .look-controls select {font:inherit;font-size:11px;border:0;color:#315f64;background:transparent;padding:5px;max-width:110px;outline-offset:3px;cursor:pointer}
 @media(max-width:590px){.look-controls{top:98px;left:21px;right:auto;padding:6px 9px;gap:9px}.look-controls label{font-size:9px}.look-controls select{font-size:10px}}
 @media(max-height:520px) and (min-width:591px){.look-controls{top:65px;right:23px;padding:4px 9px}}
+
+.sound-controls {display:flex;align-items:center;border:1px solid #ffffffa8;border-radius:22px;background:var(--glass);backdrop-filter:blur(16px);box-shadow:0 3px 18px #2948580a}
+.sound-controls button {display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;border:0;background:transparent;color:var(--accent);cursor:pointer;font-size:11px;white-space:nowrap}
+#sound-toggle {padding:8px 12px;border-radius:22px}
+.sound-controls svg {width:17px;height:17px}
+.sound-controls button:hover,.sound-controls button[aria-pressed="true"],.sound-controls button[aria-expanded="true"] {background:#dcebe6}
+.sound-on-mark,#sound-toggle[aria-pressed="true"] .sound-off-mark {display:none}
+#sound-toggle[aria-pressed="true"] .sound-on-mark {display:initial}
+.visually-hidden {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:850px){.header-actions{gap:9px}}
+@media(max-width:590px){
+  .header-actions{gap:6px}.scene-header{gap:10px}
+  .sound-controls button{min-height:34px;font-size:10px;gap:5px}
+  #sound-toggle{padding:7px 9px}
+}
+@media(max-width:380px){#sound-label{display:none}#sound-toggle{width:34px;padding:7px}}

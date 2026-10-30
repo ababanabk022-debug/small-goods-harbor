@@ -1,6 +1,7 @@
 /** Arc-length tables for wide, shore-aware school routes; built once at load. */
 export function createFishCruiseRoutes(THREE,{water,sampleBedHeight,schoolCount=3}){
-  const TAU=Math.PI*2,radius=water.radius||9.25,margin=.82;
+  // Reserve the entire spread-out formation, including the trailing fins.
+  const TAU=Math.PI*2,radius=water.radius||9.25,margin=1.10;
   function safe(x,z,pad=margin){
     if(Math.hypot(x,z)>radius-pad-.10||!water.isWater(x,z))return false;
     for(let i=0;i<16;i++){const a=i*TAU/16;if(!water.isWater(x+Math.cos(a)*pad,z+Math.sin(a)*pad))return false;}
@@ -26,14 +27,14 @@ export function createFishCruiseRoutes(THREE,{water,sampleBedHeight,schoolCount=
     // Check the interpolated path too. A conservative outer route is a fallback
     // for future shoreline edits, never a per-frame raycast or path search.
     let valid=true;
-    for(let j=0;j<768;j++){const p=curve.getPoint(j/768);if(!safe(p.x,p.z,.77)){valid=false;break;}}
+    for(let j=0;j<768;j++){const p=curve.getPoint(j/768);if(!safe(p.x,p.z,1.08)){valid=false;break;}}
     if(!valid){
       const outer=radius-margin-.16;
       curve=new THREE.CatmullRomCurve3(Array.from({length:64},(_,j)=>new THREE.Vector3(Math.cos(j*TAU/64)*outer,0,Math.sin(j*TAU/64)*outer)),true,'centripetal');
     }
     const count=768,x=new Float32Array(count+1),z=new Float32Array(count+1),bed=new Float32Array(count+1),distance=new Float32Array(count+1);
     for(let j=0;j<=count;j++){
-      const p=curve.getPoint(j/count);if(!safe(p.x,p.z,.76))throw Error('Unsafe fish route interpolation');
+      const p=curve.getPoint(j/count);if(!safe(p.x,p.z,1.08))throw Error('Unsafe fish route interpolation');
       x[j]=p.x;z[j]=p.z;
       if(j%16===0)bed[j]=sampleBedHeight(p.x,p.z);
       if(j)distance[j]=distance[j-1]+Math.hypot(x[j]-x[j-1],z[j]-z[j-1]);

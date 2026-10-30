@@ -4,13 +4,14 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createHarborWater, installHarborCaustics } from './water.js?v=14.1';
-import { createHarborMotion } from './harbor-motion.js?v=14.1';
+import { createHarborMotion } from './harbor-motion.js?v=14.3';
 import { createHarborRenderer } from './harbor-renderer.js?v=14.1';
-import { createUnderwaterLife } from './harbor-underwater.js?v=14.1';
+import { createUnderwaterLife } from './harbor-underwater.js?v=14.2';
 import { insetHarborSeabedEdge } from './harbor-seabed-edge.js?v=14.1';
 import { createHarborPOV } from './harbor-pov.js?v=14.1';
 import { createHarborBird } from './harbor-bird.js?v=14.1';
 import { createHarborWorld } from './harbor-world.js?v=14.1';
+import { createHarborAudio } from './harbor-audio.js?v=14.4';
 
 const $=id=>document.getElementById(id);
 const viewport=$('viewport'), errors=[];
@@ -23,6 +24,7 @@ const interactions={splashes:0,sloshes:0,destinations:0};
 let lastTime=performance.now(), averageFrame=16, causticInfo;
 let seabedEdgeInfo=null;
 let pov,bird,world,stageFloor,overviewView='hero',overviewBackground,overviewFog;
+let ambient;
 let renderDirty=true,lastShadowTime=-Infinity,shadowFrames=0;
 const presets={
   hero:{position:[7.5,18.1,21.8],target:[0,.8,0],zoom:1},
@@ -52,6 +54,7 @@ function setView(name,instant=false){
 }
 function setPlaying(value){
   state.playing=Boolean(value);renderDirty=true;
+  ambient?.setPlaying(state.playing);
   $('motion-toggle').setAttribute('aria-pressed',String(state.playing));
   $('motion-toggle').classList.toggle('is-active',state.playing);
   $('motion-label').textContent=state.playing?'小岛生活':'小岛已暂停';
@@ -70,6 +73,7 @@ function enterPOV(id){
 function resetPOVLook(){if(pov?.subject==='gull')pov.setLook(-Math.PI/2,-.72);else pov?.setLook();}
 function changePOV(id){
   const active=!!id,isFish=id==='fish';
+  ambient?.setSubject(id);
   state.view=active?'pov':overviewView;state.autoRotate=active?false:controls.autoRotate;
   underwaterLife?.setViewFish(isFish?POV_FISH_INDEX:null);water?.setUnderwaterView(isFish);
   water?.setImmersiveView(active);world?.setMode(id);
@@ -133,6 +137,15 @@ function animateFoam(root){
 }
 
 function wireControls(){
+  ambient=createHarborAudio({onChange(sound){
+    const button=$('sound-toggle');
+    button.setAttribute('aria-pressed',String(sound.enabled));
+    button.setAttribute('aria-label',sound.enabled?'关闭环境声音':'开启环境声音');
+    $('sound-label').textContent=sound.loading&&sound.enabled?'准备声音':sound.error?'重试声音':sound.enabled?'关闭声音':'开启声音';
+    button.title=sound.error?'声音暂时未加载，点击重试':sound.enabled?'关闭海浪、鸟鸣和远处人声':'开启海浪、鸟鸣和远处人声';
+    $('sound-message').textContent=sound.error?'声音暂时未加载，点击重试。':sound.loading&&sound.enabled?'正在准备小岛的声音。':!sound.enabled?'环境声音已关闭。':!sound.playing?'环境声音已随小岛暂停。':'环境声音已开启。';
+  }});
+  $('sound-toggle').addEventListener('click',()=>ambient.setEnabled(!ambient.diagnostics().enabled));
   document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
   $('reset-view').addEventListener('click',()=>{setView('hero');});
   $('subject-view').addEventListener('change',e=>enterPOV(e.target.value));
@@ -275,13 +288,13 @@ async function init(){
   wireControls();window.addEventListener('resize',resize);
   document.addEventListener('visibilitychange',()=>{lastTime=performance.now();});
 
-  const metaResponse=await fetch('./public/assets/scene-meta-lite.json');
+  const metaResponse=await fetch('./public/assets/scene-meta-lite.json?v=14.3.1');
   const useLite=metaResponse.ok;
-  meta=useLite?await metaResponse.json():await(await fetch('./public/assets/scene-meta.json')).json();
+  meta=useLite?await metaResponse.json():await(await fetch('./public/assets/scene-meta.json?v=14.3.1')).json();
   water=createHarborWater(THREE,{radius:meta.water?.radius||9,shoreline:meta.shoreline||[],maxHeight:.35,damping:.88});diorama.add(water.group);water.setSkyReflections();
   const draco=new DRACOLoader();draco.setDecoderPath('./vendor/draco/');draco.setWorkerLimit(2);
   const loader=new GLTFLoader();loader.setDRACOLoader(draco);
-  const gltf=await loader.loadAsync(`./public/assets/${useLite?'harbor-lite':'harbor'}.glb`,event=>{
+  const gltf=await loader.loadAsync(`./public/assets/${useLite?'harbor-lite':'harbor'}.glb?v=14.3.1`,event=>{
     const ratio=event.total?event.loaded/event.total:Math.min(.9,event.loaded/(meta.bytes||9000000));
     $('loading-progress').value=Math.round(ratio*88);
     $('loading-label').textContent=ratio>.98?'正在铺好沙滩、唤醒海浪…':`正在搬来这座小岛 · ${Math.round(ratio*100)}%`;
@@ -389,6 +402,7 @@ window.harborViewer={
     pov:pov?.diagnostics(),bird:bird?.diagnostics(),world:world?.diagnostics(),
     zoom:camera?.zoom,water:water?.diagnostics(),boatPosition:boat?.position.toArray(),
     motion:motion?.getDiagnostics(),appearance:$('water-style')?.value,quality:imageQuality,interactions:{...interactions},
+    audio:ambient?.diagnostics(),
     render:renderer?{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,
       pixelRatio:renderer.getPixelRatio(),width:renderer.domElement.width,height:renderer.domElement.height,shadowFrames,shadowUpdateHz:10,shadowMapSize:sun?.shadow.mapSize.x,averageFrameMs:averageFrame}:null,
     optics:harborRenderer?.diagnostics(),

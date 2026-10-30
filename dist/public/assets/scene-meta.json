@@ -1,8 +1,8 @@
 {
   "sourceScene": "Small Goods · Reference Harbor",
-  "sourceFile": "small-goods-harbor-expanded.blend",
-  "sourceBlendSha256": "616a9bffc749111c83cdca37f386ba0f732089237f3606a0739a401dd245b44b",
-  "generatedAt": "2026-10-27T19:35:47",
+  "sourceFile": "small-goods-harbor-pov.blend",
+  "sourceBlendSha256": "cda53db134ff167794a7e3164151fcc534badc8c6a5c75e6ba77767694a650cf",
+  "generatedAt": "2026-10-30T23:31:21",
   "coordinateSystem": "glTF right-handed Y-up: Blender (x,y,z) to (x,z,-y)",
   "groupNames": [
     "STATIC",
@@ -403,12 +403,12 @@
     ],
     "orthographicScale": 23.5
   },
-  "sourceObjectCount": 2848,
-  "drawCalls": 191,
-  "triangles": 1143129,
-  "vertices": 1286131,
-  "bytes": 11470648,
-  "sha256": "aad39ca119ee2e59a8428a1a14291ae84429704369212ee09d7bdaf3a025e595",
+  "sourceObjectCount": 2866,
+  "drawCalls": 192,
+  "triangles": 1147513,
+  "vertices": 1295466,
+  "bytes": 11589740,
+  "sha256": "b73d2ec5624db301ae3d1f3fa9ef4a1ea8e82039bccb09a1512f3e48fa0bfce6",
   "materialMode": "Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Embedded normal and roughness maps preserve fine surface response as procedural approximations.",
   "clouds": [
     {
@@ -419,11 +419,11 @@
       "min": [
         -1.56782066822052,
         7.081112861633301,
-        -1.215193510055542
+        -1.215193271636963
       ],
       "max": [
-        1.0743283033370972,
-        7.921725749969482,
+        1.0743284225463867,
+        7.92172384262085,
         -0.14015334844589233
       ]
     },
@@ -449,7 +449,7 @@
       "vertices": 3644,
       "triangles": 7284,
       "min": [
-        2.185321807861328,
+        2.1853220462799072,
         4.965124130249023,
         -2.134079933166504
       ],
@@ -480,9 +480,9 @@
     {
       "category": "STATIC",
       "material": "Harbor | wood_dark",
-      "vertices": 19765,
-      "triangles": 19624,
-      "sourceObjects": 103
+      "vertices": 19982,
+      "triangles": 19732,
+      "sourceObjects": 104
     },
     {
       "category": "STATIC",
@@ -522,23 +522,9 @@
     {
       "category": "STATIC",
       "material": "REFINED | warm weathered granite",
-      "vertices": 570354,
-      "triangles": 285268,
-      "sourceObjects": 74
-    },
-    {
-      "category": "STATIC",
-      "material": "Harbor | sand",
-      "vertices": 2838,
-      "triangles": 1986,
-      "sourceObjects": 17
-    },
-    {
-      "category": "STATIC",
-      "material": "Harbor | rock",
-      "vertices": 8344,
-      "triangles": 4472,
-      "sourceObjects": 74
+      "vertices": 581118,
+      "triangles": 290488,
+      "sourceObjects": 113
     },
     {
       "category": "STATIC",
@@ -623,6 +609,13 @@
       "vertices": 44872,
       "triangles": 22618,
       "sourceObjects": 48
+    },
+    {
+      "category": "STATIC",
+      "material": "Harbor | rock",
+      "vertices": 4970,
+      "triangles": 2664,
+      "sourceObjects": 44
     },
     {
       "category": "STATIC",
@@ -1780,6 +1773,13 @@
       "sourceObjects": 45
     },
     {
+      "category": "STATIC",
+      "material": "Harbor | sand",
+      "vertices": 462,
+      "triangles": 798,
+      "sourceObjects": 6
+    },
+    {
       "category": "CLOUDS",
       "material": "Cloud | soft warm ivory.001",
       "vertices": 19142,
@@ -1813,9 +1813,33 @@
       "vertices": 8352,
       "triangles": 3926,
       "sourceObjects": 36
+    },
+    {
+      "category": "STATIC",
+      "material": "V14.2 | pale weathered stair stone",
+      "vertices": 4104,
+      "triangles": 2052,
+      "sourceObjects": 19
     }
   ],
   "excluded": [
+    "HORIZON_BOAT_01",
+    "HORIZON_BOAT_01_Hull",
+    "HORIZON_BOAT_01_Sail",
+    "HORIZON_BOAT_01_Spars",
+    "HORIZON_BOAT_02",
+    "HORIZON_BOAT_02_Hull",
+    "HORIZON_BOAT_02_Sail",
+    "HORIZON_BOAT_02_Spars",
+    "HORIZON_BOAT_03",
+    "HORIZON_BOAT_03_Hull",
+    "HORIZON_BOAT_03_Sail",
+    "HORIZON_BOAT_03_Spars",
+    "POV_Horizon_BeaconRoof",
+    "POV_Horizon_Canopy",
+    "POV_Horizon_Chalk",
+    "POV_Horizon_Cloud",
+    "POV_Horizon_Stone",
     "Sea — single closed wavy volume",
     "Seamless blue ground"
   ],
@@ -1896,11 +1920,11 @@
       "after": 3
     }
   ],
-  "seconds": 7.11,
+  "seconds": 7.67,
   "schemaVersion": 2,
   "embeddedMicroTextures": {
     "imageCount": 10,
-    "materialCount": 29,
+    "materialCount": 30,
     "kinds": [
       "wood",
       "sand",
@@ -4267,7 +4291,7 @@
     "style": "geological cutaway"
   },
   "animationMode": "Web runtime animates actor routes and limbs, boat buoyancy and navigation, and the interactive height-field water. GLB contains geometry and named pivots, not baked animation tracks.",
-  "uncompressedBytes": 47633724,
+  "uncompressedBytes": 47991780,
   "compression": "KHR_draco_mesh_compression",
-  "compressionSeconds": 4.87
+  "compressionSeconds": 4.9
 }

@@ -15,3 +15,6 @@ blender/renders/
 # Local browser checks.
 .playwright-cli/
 output/
+
+# Local film renders, masters and recording intermediates; website audio is in dist/public/audio.
+/video-production/

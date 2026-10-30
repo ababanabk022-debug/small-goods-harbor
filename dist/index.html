@@ -7,7 +7,7 @@
     <meta name="description" content="在小岛上停留片刻。摇动清透海水，看小船巡游，跟随居民走过沙滩。" />
     <title>小岛 · 自由漫游</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='.9em' font-size='56'%3E%F0%9F%8C%B4%3C/text%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="./style.css?v=14.1" />
+    <link rel="stylesheet" href="./style.css?v=14.4" />
     <script type="importmap">
       {
         "imports": {
@@ -28,6 +28,13 @@
         </div>
         <div class="header-actions">
           <p class="scene-status"><span class="status-dot" aria-hidden="true"></span><span id="scene-status" role="status">正在准备小岛</span></p>
+          <div class="sound-controls">
+            <button id="sound-toggle" type="button" aria-label="开启环境声音" aria-pressed="false" title="开启海浪、鸟鸣和岛上人声">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path class="sound-off-mark" d="m16 9 5 6m0-6-5 6"/><path class="sound-on-mark" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>
+              <span id="sound-label">开启声音</span>
+            </button>
+            <span id="sound-message" class="visually-hidden" role="status" aria-live="polite"></span>
+          </div>
           <button id="help-toggle" class="icon-button" type="button" aria-label="操作说明" aria-controls="help-panel" aria-expanded="false" title="操作说明">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M9.6 9.1a2.45 2.45 0 0 1 4.8.7c0 1.9-2.4 1.9-2.4 3.7"/><path d="M12 16.5h.01"/></svg>
           </button>
@@ -51,12 +58,13 @@
         <dl>
           <div><dt>角色视角</dt><dd>选择一位伙伴，跟着它自动行动；拖动只转头，不改变路线</dd></div>
           <div><dt>回到俯瞰</dt><dd>点击「返回俯瞰」或按 Esc；R 恢复默认视线</dd></div>
+          <div><dt>听见小岛</dt><dd>右上角点击「开启声音」，一起听海浪、鸟鸣和远处人声；再次点击关闭</dd></div>
           <div><dt>俯瞰旋转</dt><dd>鼠标左键拖动 / 单指拖动，海水会随之回荡</dd></div>
           <div><dt>涟漪 / 引航</dt><dd>在俯瞰模式轻点水面激起涟漪；宽阔水域可指定小船目的地</dd></div>
           <div><dt>俯瞰缩放</dt><dd>滚动鼠标滚轮 / 双指开合</dd></div>
           <div><dt>俯瞰平移</dt><dd>鼠标右键拖动 / 双指拖动</dd></div>
         </dl>
-        <p class="help-note">小船会自动巡游，小狗在沙滩散步。点击「小岛生活」暂停或继续；点击「复位」回到初始视角。</p>
+        <p class="help-note">玛拉会沿台阶上山，在山顶看一会儿海，再慢慢走回来。选择「玛拉 · 山顶散步」即可跟随。点击「小岛生活」暂停或继续。</p>
       </aside>
 
       <div id="loading" class="loading-overlay" role="status" aria-live="polite">
@@ -124,6 +132,6 @@
         <p class="interaction-hint"><span class="desktop-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点水面引航 <span aria-hidden="true">·</span> 滚轮缩放</span><span class="touch-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点引航 <span aria-hidden="true">·</span> 双指缩放</span></p>
       </div>
     </main>
-    <script type="module" src="./viewer.js?v=14.1"></script>
+    <script type="module" src="./viewer.js?v=14.4"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 /** Small, deterministic seabed details. Six shared meshes keep the scene light. */
-import {createFishCruiseRoutes} from './harbor-fish-navigation.js?v=10';
+import {createFishCruiseRoutes} from './harbor-fish-navigation.js?v=14.2';
 export function createUnderwaterLife(THREE,{scene,water,sampleBedHeight=()=>-1.46}){
   const group=new THREE.Group();group.name='Shallow sea habitat';scene.add(group);
   let seed=270127;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
@@ -62,7 +62,10 @@ export function createUnderwaterLife(THREE,{scene,water,sampleBedHeight=()=>-1.4
   const grassColors=['#58715a','#6d8562','#4d7766'];
   blades.forEach((p,i)=>{dummy.position.set(p.x,p.y,p.z);dummy.rotation.set(0,p.a,0);dummy.scale.set(1,p.h,1);dummy.updateMatrix();grass.setMatrixAt(i,dummy.matrix);grass.setColorAt(i,new THREE.Color(grassColors[Math.floor(p.c*3)]));});grass.instanceMatrix.needsUpdate=true;
   const schools=createFishCruiseRoutes(THREE,{water,sampleBedHeight});
-  const fish=schools.flatMap((school,k)=>Array.from({length:8},(_,j)=>({school:k,lateral:(j%3-1)*.27+(random()-.5)*.06,ahead:(Math.floor(j/3)-1)*.39+(random()-.5)*.06,scale:.84+random()*.30,depth:-.70-random()*.34,phase:random()*6.28,position:new THREE.Vector3()})));
+  // Keep each school in its own depth band so crossing routes pass above or
+  // below each other. Formation spacing includes the tail and dorsal fin, not
+  // only the body. The wide routes remain time-based and do not jump at contacts.
+  const fish=schools.flatMap((school,k)=>Array.from({length:8},(_,j)=>({school:k,lateral:(j%3-1)*.30+(random()-.5)*.02,ahead:(Math.floor(j/3)-1)*.62+(random()-.5)*.02,scale:.84+random()*.30,depth:[-.78,-.46,-1.10][k]+(random()-.5)*.018,phase:random()*6.28,position:new THREE.Vector3()})));
   const bodies=instances('Shoal bodies',new THREE.SphereGeometry(1,10,6),mat({color:0xffffff,roughness:.43,metalness:.06}),fish.length);
   const tailGeo=new THREE.BufferGeometry();tailGeo.setAttribute('position',new THREE.Float32BufferAttribute([0,0,.025, 0,.075,-.10, 0,0,-.055, 0,-.075,-.10],3));tailGeo.setIndex([0,1,2,0,2,3]);tailGeo.computeVertexNormals();
   const tails=instances('Shoal tails',tailGeo,mat({color:0xffffff,roughness:.55,side:THREE.DoubleSide}),fish.length);
@@ -125,9 +128,9 @@ export function createUnderwaterLife(THREE,{scene,water,sampleBedHeight=()=>-1.4
     fish.forEach((f,i)=>{
       const school=schools[f.school],yaw=school.yaw;
       orientation.setFromAxisAngle(axis,yaw);
-      local.set(f.lateral+Math.sin(elapsed*.53+f.phase)*.035,0,f.ahead+Math.cos(elapsed*.43+f.phase)*.035).applyQuaternion(orientation);
+      local.set(f.lateral+Math.sin(elapsed*.53+f.phase)*.018,0,f.ahead+Math.cos(elapsed*.43+f.phase)*.018).applyQuaternion(orientation);
       const x=school.position.x+local.x,z=school.position.z+local.z;
-      const y=Math.max(school.position.bed+.24,f.depth+Math.sin(elapsed*.8+f.phase)*.055);
+      const y=Math.max(school.position.bed+.24,f.depth+Math.sin(elapsed*.8+f.phase)*.012);
       f.position.set(x,y,z);if(!water.isWater(x,z))unsafe++;if(y<school.position.bed+.15)bedUnsafe++;
 
       drawFish(f,i);
