@@ -2,15 +2,15 @@
 
 Requires Python + numpy and ffmpeg/ffprobe on PATH. Run from any directory:
   python tools/build-ambient-audio.py
-Original recordings remain in video-production/audio/sources; license evidence
-and source links are listed in dist/public/audio/SOURCES.md. No network calls.
+The three CC0 source recordings are included in assets/audio-sources; credits
+and source links are listed there and in dist/public/audio/SOURCES.md. No network calls.
 """
 from pathlib import Path
 import json,math,subprocess,wave
 import numpy as np
 
 ROOT=Path(__file__).resolve().parents[1]
-SOURCE=ROOT/'video-production'/'audio'/'sources'
+SOURCE=ROOT/'assets'/'audio-sources'
 OUT=ROOT/'dist'/'public'/'audio'
 WORK=ROOT/'output'/'ambient-audio'
 OUT.mkdir(parents=True,exist_ok=True);WORK.mkdir(parents=True,exist_ok=True)

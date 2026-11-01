@@ -1,12 +1,14 @@
 # 可编辑 Blender 模型
 
-## 最新本地版本（V14.3.1 · 2026-10-30）
+## 当前模型版本（V14.3.1 · 2026-10-30）
 
 [small-goods-harbor-pov.blend.zip](small-goods-harbor-pov.blend.zip) 包含修复后的主岛、连续上山台阶与两侧挡背岩群，以及独立 `POV_ENVIRONMENT` 远景集合。V14.3.1 将山顶木牌及停鸟移到台阶内侧，使两根立柱都嵌入岩面。压缩包为 10,694,204 字节，含模型、清单、字体许可和说明。解压后可在 Blender 5.2 中打开；远景集合默认隐藏，可从 Outliner 开启。当前直接编辑的 `small-goods-harbor-pov.blend` 工作文件与 ZIP 便携副本分开保存。
 
 归档已解压并由独立 Blender 后台进程重开：3,137 对象、2,360 个 mesh 数据块、78 材质、496 条场景依赖驱动及几何/材质/形态键/层级校验一致。字体已内嵌，无外部贴图或链接库；已清理保存的本机路径字段，并完成路径与常见令牌模式检查。此轮没有 Blender 离线渲染或对全部 Blender 时间轴逐帧复核；网页运动另有 240 秒采样验证，详见[近景修复说明](../docs/near-scene-v14.2.md)。
 
-详见[便携模型清单](pov-model-manifest.json)与[网页第一视角说明](../docs/pov-v14.md)。本地归档没有上传；网页中的自动跟随、远船航行、扩展海面与水下表现由 JavaScript 实时实现。
+详见[便携模型清单](pov-model-manifest.json)与[网页第一视角说明](../docs/pov-v14.md)。该包对应当前 V14.4 网站使用的模型；网站版本与模型版本分别记录，因为 V14.4 新增的是 JavaScript 环境声音。网页中的自动跟随、远船航行、扩展海面与水下表现由 JavaScript 实时实现。
+
+继续建模时，将 ZIP 内的 `small-goods-harbor-pov.blend` 解压到本目录再打开。无需安装 Codex 或 MCP；MCP 只是可选的建模控制方式。主岛导出和 Draco 压缩脚本均随仓库提供，具体命令见[开发指南](../docs/DEVELOPMENT.md#修改模型并更新网页)。普通网页修改不需要重新导出模型。
 
 ## 原已发布版本（2026-10-22）
 

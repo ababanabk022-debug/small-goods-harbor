@@ -1,18 +1,27 @@
 # 小岛 · 自由漫游
 
-> **当前本地版本：V14.4 · 2026-10-30，尚未发布或推送**：右上角一个「开启声音」开关，即可听见混合好的海浪、海鸟和远处含混人声；音量较短片提升，默认静音，暂停小岛时声音也会淡出。保留玛拉上山散步及山顶木牌落地修复。详见[环境声音](docs/ambient-audio-v14.4.md)。
+> **当前网站版本：V14.4**：右上角一个「开启声音」开关，即可听见混合好的海浪、海鸟和远处含混人声；默认静音，暂停小岛时声音也会淡出。保留玛拉上山散步及山顶木牌落地修复。详见[环境声音](docs/ambient-audio-v14.4.md)。2026-11-01 补齐开发交接说明与声音重建素材。
 
-> **V14.3.1 · 2026-10-30 本地更新**：修复山顶木牌立柱悬空，将木牌和停鸟整体移到台阶内侧的岩面，同步网页模型与 Blender 归档。空手的玛拉会沿石阶上山，在顶部停留 12 秒，再走回沙滩。选择「玛拉 · 山顶散步」可跟随第一视角，随时环顾或暂停。详见[山顶散步与验证](docs/mountain-walk-v14.3.md)。
+> **模型版本：V14.3.1 · 2026-10-30**：修复山顶木牌立柱悬空，将木牌和停鸟整体移到台阶内侧的岩面，同步网页模型与 Blender 归档。空手的玛拉会沿石阶上山，在顶部停留 12 秒，再走回沙滩。选择「玛拉 · 山顶散步」可跟随第一视角，随时环顾或暂停。详见[山顶散步与验证](docs/mountain-walk-v14.3.md)。
 
 > **V14.2 · 2026-10-29 本地更新**：修复近景悬空植被、屋顶文字、船桶与座板穿插；清开上山楼梯，把挡路石头移到两旁，补齐沿台阶逐渐升高的背面岩群与石质支撑。人物、小狗和鱼的自动漫游增加完整体积避让，水下码头桩延伸至海床。详见[近景修复与验证](docs/near-scene-v14.2.md)。V14.1 的八种第一视角、群岛与远船继续保留，角色自动行动、拖动只转头。原 V13 小船闭环巡航与水体修复继续保留，本地标签为 `v13-local-2026-10-29`。在线展示、下方 `preview-*` 图片及原 `small-goods-harbor.blend.zip` 仍对应 2026-10-22 已发布版本。
 
 一座可以自由旋转的热带小岛：木屋、码头、小船、人物、棕榈树、山坡和四朵云，配合实时海浪、水下光纹与小船轻晃。
 
-**[打开旧版在线展示](https://small-goods-harbor-yfsong.flowymule11.chatgpt.site)** · [原 Blender 模型包](blender/small-goods-harbor.blend.zip) · [Blender 与 MCP 工作流](docs/blender-workflow.md)
+**[下载当前项目 ZIP](https://github.com/ababanabk022-debug/small-goods-harbor/archive/refs/heads/main.zip)** · [开发指南](docs/DEVELOPMENT.md) · [最新 Blender 模型包](blender/small-goods-harbor-pov.blend.zip) · [打开旧版在线展示](https://small-goods-harbor-yfsong.flowymule11.chatgpt.site)
 
-本仓库是独立项目，包含可运行的网页、GLB 模型、可编辑的 Blender 场景包及使用说明。本地 Git 提交不会自动同步到 GitHub；在线展示页是单独的公开站点，无需登录。
+本仓库是独立项目，包含可直接运行的网页源码、GLB 模型、环境声音、可编辑的 Blender 场景包及开发工具。下载 ZIP 并解压，或使用下方命令克隆后，即可在自己的电脑上运行和继续开发。运行网页不需要 Codex、MCP、Blender、Node.js 或 API 密钥；只需 Python 3 和支持 WebGL 2 的现代浏览器。
 
-## 当前本地画面（V14.2）
+```bash
+git clone https://github.com/ababanabk022-debug/small-goods-harbor.git
+cd small-goods-harbor
+```
+
+Windows 安装 Python 3 后，双击 **[启动小岛网站.cmd](启动小岛网站.cmd)**。macOS / Linux 可执行 `python3 start-local-site.py`。命令会显示本地网址并打开浏览器，详见[本地运行](#本地运行)。
+
+GitHub 源码更新与在线站点部署是两件事；上面的在线展示链接仍对应 2026-10-22 旧版。当前功能请下载本仓库运行。
+
+## 近景修复画面（V14.2）
 
 | 楼梯背面的低视角 | 岩群之间的上山台阶 |
 | --- | --- |
@@ -68,7 +77,7 @@ python3 -m http.server 5198 --bind 127.0.0.1 --directory dist
 
 终端按 `Ctrl+C` 停止。如果端口被占用，将命令和地址中的 `5198` 改为其他空闲端口。请通过 HTTP 服务器访问，不要直接双击 `index.html`。
 
-浏览器需要支持 **WebGL 2、ES Modules / importmap、Web Worker 和 WebAssembly**。网页不需要运行 Blender 或 MCP。默认 GLB 约 7.19 MB，首次打开还会加载本地打包的 JavaScript 和解码器；7.19 MB 并非整页总下载量。
+浏览器需要支持 **WebGL 2、ES Modules / importmap、Web Worker 和 WebAssembly**。默认 GLB 约 7.24 MB，首次打开还会加载本地打包的 JavaScript 和解码器；7.24 MB 并非整页总下载量。环境声音仅在点击开关后加载。
 
 ## 操作
 
@@ -83,6 +92,7 @@ python3 -m http.server 5198 --bind 127.0.0.1 --directory dist
 | 返回原俯瞰 | 「返回俯瞰」或 `Esc` | 点击「返回俯瞰」 |
 | 暂停 / 继续 | 「小岛生活」按钮或空格 | 点击「小岛生活」 |
 | 回到初始视角 | 「复位」按钮或 `R` | 点击「复位」 |
+| 环境声音 | 右上角「开启声音 / 关闭声音」 | 同左 |
 
 底部还可选择正面、背面、俯瞰、自动环绕和全屏。暂停会冻结海浪、岸边泡沫、水下光纹、人物、小狗、小船、海草与鱼群，仍可操作相机；已开启的自动环绕也会继续。相机静止后暂停渲染，操作相机或切换水色时仍会刷新。按下水面即产生涟漪，松开后可引导小船；提拉底座功能已移除。
 
@@ -90,13 +100,13 @@ python3 -m http.server 5198 --bind 127.0.0.1 --directory dist
 
 ## Blender 模型与 MCP
 
-V14.2 当前可编辑工作副本位于 `blender/small-goods-harbor-pov.blend`；远景保存在独立 `POV_ENVIRONMENT` 集合。模型与网页效果的对应关系见[第一视角说明](docs/pov-v14.md)，最新模型修复见[近景说明](docs/near-scene-v14.2.md)。
+当前网站对应的可编辑模型是 [V14.3.1 模型包](blender/small-goods-harbor-pov.blend.zip)。下载后解压其中的 `small-goods-harbor-pov.blend` 到 `blender/`，用 Blender 打开并继续编辑；工作 `.blend` 本身由 Git 忽略。远景保存在独立 `POV_ENVIRONMENT` 集合。模型与网页效果的对应关系见[第一视角说明](docs/pov-v14.md)，导出流程见[开发指南](docs/DEVELOPMENT.md)。
 
-[模型压缩包](blender/small-goods-harbor.blend.zip)提供 2026-10-22 已发布版本对应的可编辑场景快照；最新本地工作场景见[本地更新说明](docs/local-update-2026-10-27.md)。下载并解压后，用 Blender 打开其中的 `.blend` 文件；制作和复核环境为 Blender 5.2。具体保留内容、文件校验和隐私处理见 [模型包说明](blender/README.md)。
+[旧模型包](blender/small-goods-harbor.blend.zip)保留 2026-10-22 已发布版本，供历史对照。两个模型包的制作和复核环境均为 Blender 5.2。具体内容和校验信息见[模型包说明](blender/README.md)。
 
 MCP 是建模时可选的控制方式，用于让支持 MCP 的客户端与本机 Blender 通信。**查看或编辑 `.blend` 文件本身不依赖 MCP**。连接方式、工作流程、动画预览和网页转换的区别，见 [Blender 与 MCP 工作流](docs/blender-workflow.md)。
 
-本仓库提供网页源代码与可编辑场景快照；不包含原始对话记录、完整历史建模脚本或离线渲染视频，也不保证能从空白场景自动重建全部建模历史。
+本仓库提供网页源代码、可编辑场景快照、模型导出工具和环境声音重建素材；不包含展示视频、原始对话记录或全部历史建模过程。从现有场景继续开发，无需重建原始对话或 AI 工作环境。
 
 ## 文件结构
 
@@ -107,8 +117,16 @@ MCP 是建模时可选的控制方式，用于让支持 MCP 的客户端与本�
 ├── .openai/hosting.json        # Sites 标识和静态目录配置，不含认证凭据
 ├── blender/
 │   ├── small-goods-harbor.blend.zip
+│   ├── small-goods-harbor-pov.blend.zip # 当前可编辑模型
+│   ├── export-harbor.py        # 主岛完整 / 精简模型导出
+│   ├── export-compress.py      # Draco 压缩
 │   └── README.md              # 模型内容、隐私处理和校验信息
+├── tools/
+│   ├── build-ambient-audio.py  # 可选：重建网站环境声音
+│   └── requirements-audio.txt # 可选混音工具依赖
+├── assets/audio-sources/      # CC0 原始环境录音与来源说明
 ├── docs/
+│   ├── DEVELOPMENT.md         # 下载、修改、模型导出与交接
 │   ├── blender-workflow.md    # Blender / MCP 使用说明
 │   ├── verification.md        # 本次运行与交互检查说明
 │   └── images/                # README 使用的真实网页截图
@@ -120,6 +138,8 @@ MCP 是建模时可选的控制方式，用于让支持 MCP 的客户端与本�
     ├── water-physics.js       # 有边界的水面高度场
     ├── harbor-renderer.js     # 场景颜色 / 深度采集与水体合成
     ├── harbor-motion.js       # 船、居民和小狗的实时动画
+    ├── harbor-hike.js         # 玛拉上山、停留与返回路线
+    ├── harbor-audio.js        # 一个开关控制复合环境声音
     ├── harbor-pov.js          # 第一视角相机与只转头的输入
     ├── harbor-bird.js         # 自主飞行的海鸟
     ├── harbor-world.js        # POV 天空、远岛、航船与延伸海床
@@ -129,6 +149,7 @@ MCP 是建模时可选的控制方式，用于让支持 MCP 的客户端与本�
     ├── harbor-fish-navigation.js # 三条整岛巡游路线与鱼群水域检查
     ├── harbor-seabed-edge.js  # 加载时克隆并内收海床 / 底座上缘
     ├── public/assets/         # GLB 与模型元数据
+    ├── public/audio/          # 已混好的环境声音与来源说明
     └── vendor/                # Three.js、Draco 和许可证
 ```
 
@@ -138,8 +159,8 @@ MCP 是建模时可选的控制方式，用于让支持 MCP 的客户端与本�
 
 | 资源 | 大小（十进制） | 三角面数 | 用途 |
 | --- | ---: | ---: | --- |
-| `harbor-lite.glb` | 7.19 MB | 602,242 | 默认网页模型 |
-| `harbor.glb` | 11.47 MB | 1,143,129 | 高细节备用资源 |
+| `harbor-lite.glb` | 7.24 MB（7,242,152 字节） | 603,071 | 默认网页模型 |
+| `harbor.glb` | 11.59 MB（11,589,740 字节） | 1,147,513 | 高细节备用资源 |
 
 界面提供清晰、精细和流畅三档画质，使用同一模型。清晰档按屏幕像素密度渲染，普通屏幕为 1 倍，高 DPR 设备最高 2 倍；精细档最高 2.5 倍。各档还受画布像素预算约束，不低于 CSS 尺寸的 1 倍，不会因一次慢帧永久降画质。当前加载逻辑通常使用精简模型，仅在精简元数据请求返回非成功 HTTP 状态时尝试备用资源；它不是覆盖所有下载或解码错误的自动回退机制。
 
@@ -151,11 +172,11 @@ MCP 是建模时可选的控制方式，用于让支持 MCP 的客户端与本�
 
 V11 点击水面使用强度 2.2、足迹 0.60 的不对称椭圆凹陷，再由高度场产生回弹与传播，单击峰值约 0.194，约为旧值 0.063 的三倍；背景微浪保持不变。已删除小船点击目标的 Torus 圆环，点击引航仍保留。30 秒连续输入检查没有非有限数，平均水位漂移保持在数值误差范围内。
 
-这些材质、水下细节、光学与漫游改动均由网页运行时代码提供，V7–V13 没有改写 Blender 文件或已导出的 GLB；Blender ZIP 仍为旧归档。
+V7–V13 的材质、水下细节、光学与漫游改动主要来自网页运行时代码。此后 V14.1–V14.3.1 也更新了 Blender 场景和 GLB；当前的 `small-goods-harbor-pov.blend.zip` 已包含最新模型修复。角色路线、视角跟随和环境声音仍由网页 JavaScript 实现。
 
 ## 访问与隐私
 
-- 本地 Git 仓库包含源码与 Blender 包。2026-10-29 查询到 GitHub 远端仓库为公开状态；本地 V13 / V14.1 均未推送到远端。
+- GitHub 仓库为公开仓库，包含网页源码、运行资源与可编辑 Blender 包。下载 ZIP 可以获得当前文件；克隆则同时保留 Git 版本记录。
 - 在线展示页是公开的，浏览器必须下载网页代码与 GLB 才能显示 3D 场景，因此这些网页运行资源可被访问者获取。
 - Blender 包和 MCP 文档放在 `dist/` 之外，不会随当前静态发布配置上传到公开网站。
 - 不应把登录令牌、个人配置、真实账号密码或本机目录写进项目文档或模型属性。MCP 只用于本机连接，连接范围和凭据处理见工作流文档。
