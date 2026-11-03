@@ -1,6 +1,19 @@
 # 可编辑 Blender 模型
 
-## 当前模型版本（V14.3.1 · 2026-10-30）
+## 环岛海浪分支（2026-11-03）
+
+打开 [island-wave.blend.zip](island-wave.blend.zip) 中的 `island-wave.blend` 即可编辑当前分支。独立源场景有 2,576 个对象，保留海岸、商店、台阶、山顶木牌、岛上三位居民和小狗。默认隐藏的 `POV_ENVIRONMENT` 有五个远景网格，包含远岛、礁石、灯塔和云。网页海浪由浏览器实时生成。[归档校验清单](island-wave-model-manifest.json)
+
+从基础模型重新生成此分支可在项目根目录运行以下命令。第一条命令需要 `blender/island-wave.blend` 尚不存在，会同时生成 `output/island-wave/harbor-horizon.glb`。日常编辑请直接使用分支源文件。
+
+```sh
+blender -b --factory-startup --python-exit-code 1 --python blender/build-island-wave.py
+python blender/package-harbor.py --blender blender --version 1.0 --island-wave
+```
+
+更新主岛网页模型时，给 `export-harbor.py` 传入 `blender/island-wave.blend`。分别导出完整与 `--lite` 版本，再运行对应的 `export-compress.py`。两种 LOD 及其元数据使用相同的海岸线与角色路径。
+
+## 基础模型（V14.3.1 · 2026-10-30）
 
 [small-goods-harbor-pov.blend.zip](small-goods-harbor-pov.blend.zip) 包含修复后的主岛、连续上山台阶与两侧挡背岩群，以及独立 `POV_ENVIRONMENT` 远景集合。V14.3.1 将山顶木牌及停鸟移到台阶内侧，使两根立柱都嵌入岩面。压缩包为 10,694,204 字节，含模型、清单、字体许可和说明。解压后可在 Blender 5.2 中打开；远景集合默认隐藏，可从 Outliner 开启。当前直接编辑的 `small-goods-harbor-pov.blend` 工作文件与 ZIP 便携副本分开保存。
 

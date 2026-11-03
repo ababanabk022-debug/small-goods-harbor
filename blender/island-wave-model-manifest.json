@@ -1,0 +1,123 @@
+{
+  "format": "Portable editable Blender scene - local island-wave edition",
+  "modelVersion": "V1.0",
+  "packagedDate": "2026-11-03",
+  "blenderVersion": "5.2.0 LTS",
+  "file": {
+    "name": "island-wave.blend",
+    "bytes": 43352818,
+    "sha256": "08e4df7d08f2b90bdb0c38088ee8149d904d3a9b4c00cbf87c541ca8b4829de6"
+  },
+  "sourceWorkingFileSha256": "7298ea832a56300e9eb57143dd39192d72deee5f3fb8980595b52a2faaee908b",
+  "scene": {
+    "scene": "Small Goods · Reference Harbor",
+    "objects": 2576,
+    "meshObjects": 1960,
+    "curveObjects": 570,
+    "textObjects": 14,
+    "cameraCount": 2,
+    "lightCount": 8,
+    "materials": 75,
+    "activeCamera": "Camera | reference hero",
+    "frames": [
+      1,
+      2880
+    ],
+    "fps": 24,
+    "driverCount": 470,
+    "driverHash": "c860036a9388919f2fdcc5d2a6360750d5cd24e7cecbd1fe56cd3b617b318c4e",
+    "objectStateHash": "9fdce8fa671890d2e5e40e886bf340fd1f93c959924e93aec29c458364fc14b8",
+    "geometryHash": "52ded1d915ee245097565648e71308bf19b680acb54f7e676cb7d0d6046b6a7b",
+    "materialHash": "402e3aabacf788652551ffd35a7714ec3aaff5f3ce4412fa8a24fc93cf7e2aea",
+    "environmentObjects": 5,
+    "environmentHidden": {
+      "viewport": true,
+      "render": true
+    },
+    "movableSailboatRoots": []
+  },
+  "content": {
+    "mainIslandObjects": 2571,
+    "horizonObjects": 5,
+    "sailboats": 0,
+    "horizonCollection": "POV_ENVIRONMENT",
+    "horizonHiddenByDefault": true,
+    "movableSailboatRoots": []
+  },
+  "validation": {
+    "independentBackgroundReopen": true,
+    "sourceWorkingFileUnchanged": true,
+    "sceneObjectStateMatches": true,
+    "geometryAndShapeKeysMatch": true,
+    "materialGraphAndInputValuesMatch": true,
+    "sceneDependencyDriverFingerprintMatches": true,
+    "noLinkedLibraries": true,
+    "noExternalTextureFiles": true,
+    "noEmbeddedTextScripts": true,
+    "knownPersonalPathAndTokenMatches": 0,
+    "validAbsoluteWindowsPathMatches": 0,
+    "asciiAndBothUtf16AlignmentsScanned": true,
+    "noRenderPerformed": true
+  },
+  "portableResources": {
+    "font": {
+      "name": "Georgia Regular",
+      "packed": true,
+      "reference": "//fonts\\",
+      "bytes": 219712,
+      "sha256": "38dffcaf1fac89492f7c56c600a14daf36ae42f7c21985cd4134ae113124a58f",
+      "fsType": 8,
+      "noticeFile": "FONT_NOTICES.txt",
+      "standaloneFontDistributed": false
+    },
+    "renderOutput": "//renders/harbor-"
+  },
+  "privacyChanges": [
+    "Scene-only copy excludes unrelated scenes, original editor state and unused authoring data",
+    "Fresh factory editor layout opens the harbor scene directly",
+    "Removed embedded text scripts and unused editor brushes",
+    "Sanitized private custom-property strings and asset author metadata",
+    "Packed all used external resources and replaced paths with portable relative references",
+    "Cleared stale bytes only inside the SDNA-identified FileSelectParams directory string buffer",
+    "Archive contains no source filesystem paths or original diagnostic logs"
+  ],
+  "verificationScope": [
+    "Static editable scene, mesh geometry, shape-key coordinates, transforms, hierarchy, material nodes and scene dependency drivers were compared before and after packaging",
+    "Scene dependency driver count and fingerprints are read dynamically from this source model",
+    "Privacy scan covers current user name, workspace/token strings, printable absolute Windows paths, common Unix home/workspace path prefixes, UNC paths, ASCII and both UTF-16LE alignments",
+    "Public font license and certificate URLs remain embedded with their legal notices",
+    "No render, playback performance benchmark or full frame-by-frame animation comparison was performed",
+    "Website sky, expanded water, fog and runtime motion are separate JavaScript features"
+  ],
+  "publication": "Local archive only; this packaging step does not deploy or publish the project",
+  "archive": {
+    "name": "island-wave.blend.zip",
+    "bytes": 10284206,
+    "sha256": "7ad31f021b2156bbb812d1c2501dd5158c4a88512c45e6e5b0906b5946b11431",
+    "crcIntegrityPassed": true,
+    "extractedModelHashMatches": true,
+    "members": [
+      {
+        "name": "island-wave.blend",
+        "bytes": 43352818,
+        "sha256": "08e4df7d08f2b90bdb0c38088ee8149d904d3a9b4c00cbf87c541ca8b4829de6"
+      },
+      {
+        "name": "manifest.json",
+        "bytes": 3980,
+        "sha256": "ec07826ab1d6518ab4a32695c6b01676802126d73304d3709be518fb83d88103"
+      },
+      {
+        "name": "FONT_NOTICES.txt",
+        "bytes": 1044,
+        "sha256": "8e55f64763835660e40d88896119690584444e9140e2f733b914d377f92347bb"
+      },
+      {
+        "name": "README.txt",
+        "bytes": 353,
+        "sha256": "8a3e2c9d69078b954e167fd1cf83fc2ffc71edae2ec1705d640855408c99162c"
+      }
+    ],
+    "extractedArchiveIndependentReopenPassed": true
+  }
+}

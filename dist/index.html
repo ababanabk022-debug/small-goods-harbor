@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#b8cddd" />
-    <meta name="description" content="在小岛上停留片刻。摇动清透海水，看小船巡游，跟随居民走过沙滩。" />
+    <meta name="description" content="在小岛上停留片刻。摇动清透海水，看浪花绕岛，跟随居民走过沙滩。" />
     <title>小岛 · 自由漫游</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='.9em' font-size='56'%3E%F0%9F%8C%B4%3C/text%3E%3C/svg%3E" />
     <link rel="stylesheet" href="./style.css?v=14.4" />
@@ -60,7 +60,8 @@
           <div><dt>回到俯瞰</dt><dd>点击「返回俯瞰」或按 Esc；R 恢复默认视线</dd></div>
           <div><dt>听见小岛</dt><dd>右上角点击「开启声音」，一起听海浪、鸟鸣和远处人声；再次点击关闭</dd></div>
           <div><dt>俯瞰旋转</dt><dd>鼠标左键拖动 / 单指拖动，海水会随之回荡</dd></div>
-          <div><dt>涟漪 / 引航</dt><dd>在俯瞰模式轻点水面激起涟漪；宽阔水域可指定小船目的地</dd></div>
+          <div><dt>环岛浪</dt><dd>浪峰会绕岛一圈，在起点消散。点击「再起一浪」可重新观看。</dd></div>
+          <div><dt>涟漪</dt><dd>俯瞰时轻点水面，涟漪会从指尖散开。</dd></div>
           <div><dt>俯瞰缩放</dt><dd>滚动鼠标滚轮 / 双指开合</dd></div>
           <div><dt>俯瞰平移</dt><dd>鼠标右键拖动 / 双指拖动</dd></div>
         </dl>
@@ -107,6 +108,10 @@
           </div>
           <span class="control-divider" aria-hidden="true"></span>
           <div class="motion-controls" role="group" aria-label="动画控制">
+            <button id="wave-replay" type="button" class="control-button" title="让一道高浪绕岛一圈" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 17c4 0 4-8 10-10 3-1 6 0 7 3-3-1-6 0-6 3s4 5 9 4M3 20c3 0 4-1 6-1s4 1 7 1 4-1 6-1"/></svg>
+              <span class="control-label" id="wave-label">再起一浪</span>
+            </button>
             <button id="motion-toggle" type="button" class="control-button is-active" aria-pressed="true" title="暂停小岛生活">
               <svg class="water-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7c1.5-1.8 3-1.8 4.5 0S10.5 8.8 12 7s3-1.8 4.5 0S19.5 8.8 21 7M3 12c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4.5 0 3 1.8 4.5 0M3 17c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4.5 0 3 1.8 4.5 0"/></svg>
               <span class="control-label" id="motion-label">小岛生活</span>
@@ -129,9 +134,9 @@
             </button>
           </div>
         </nav>
-        <p class="interaction-hint"><span class="desktop-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点水面引航 <span aria-hidden="true">·</span> 滚轮缩放</span><span class="touch-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点引航 <span aria-hidden="true">·</span> 双指缩放</span></p>
+        <p class="interaction-hint"><span class="desktop-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点水面起涟漪 <span aria-hidden="true">·</span> 滚轮缩放</span><span class="touch-hint">拖动旋转 <span aria-hidden="true">·</span> 轻点起涟漪 <span aria-hidden="true">·</span> 双指缩放</span></p>
       </div>
     </main>
-    <script type="module" src="./viewer.js?v=14.4"></script>
+    <script type="module" src="./viewer.js?v=coast-2"></script>
   </body>
 </html>

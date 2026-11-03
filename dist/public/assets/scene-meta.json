@@ -1,25 +1,18 @@
 {
   "sourceScene": "Small Goods · Reference Harbor",
-  "sourceFile": "small-goods-harbor-pov.blend",
-  "sourceBlendSha256": "cda53db134ff167794a7e3164151fcc534badc8c6a5c75e6ba77767694a650cf",
-  "generatedAt": "2026-10-30T23:31:21",
+  "sourceFile": "island-wave.blend",
+  "sourceBlendSha256": "7298ea832a56300e9eb57143dd39192d72deee5f3fb8980595b52a2faaee908b",
+  "generatedAt": "2026-11-03T17:15:42",
   "coordinateSystem": "glTF right-handed Y-up: Blender (x,y,z) to (x,z,-y)",
   "groupNames": [
     "STATIC",
-    "BOAT",
     "SEABED",
     "FOAM",
     "CLOUDS",
     "ACTOR_mara",
     "ACTOR_sol",
     "ACTOR_porter",
-    "ACTOR_dockhand",
     "ACTOR_dog"
-  ],
-  "boatPivot": [
-    5.699999809265137,
-    0.20000000298023224,
-    4.800000190734863
   ],
   "water": {
     "radius": 9.0,
@@ -403,12 +396,12 @@
     ],
     "orthographicScale": 23.5
   },
-  "sourceObjectCount": 2866,
-  "drawCalls": 192,
-  "triangles": 1147513,
-  "vertices": 1295466,
-  "bytes": 11589740,
-  "sha256": "b73d2ec5624db301ae3d1f3fa9ef4a1ea8e82039bccb09a1512f3e48fa0bfce6",
+  "sourceObjectCount": 2328,
+  "drawCalls": 143,
+  "triangles": 1029273,
+  "vertices": 1191506,
+  "bytes": 10746864,
+  "sha256": "b4f6207e023f7b2d4d4e7e76fabdceb1c90dc551460dbd9ff361a52c94c8c037",
   "materialMode": "Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Embedded normal and roughness maps preserve fine surface response as procedural approximations.",
   "clouds": [
     {
@@ -480,9 +473,9 @@
     {
       "category": "STATIC",
       "material": "Harbor | wood_dark",
-      "vertices": 19982,
-      "triangles": 19732,
-      "sourceObjects": 104
+      "vertices": 8510,
+      "triangles": 6236,
+      "sourceObjects": 70
     },
     {
       "category": "STATIC",
@@ -490,13 +483,6 @@
       "vertices": 4266,
       "triangles": 7484,
       "sourceObjects": 18
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • warm painted ivory",
-      "vertices": 3168,
-      "triangles": 5304,
-      "sourceObjects": 14
     },
     {
       "category": "STATIC",
@@ -620,65 +606,65 @@
     {
       "category": "STATIC",
       "material": "Architecture • cedar grain 04",
-      "vertices": 6456,
-      "triangles": 3228,
-      "sourceObjects": 34
+      "vertices": 4912,
+      "triangles": 2456,
+      "sourceObjects": 26
     },
     {
       "category": "STATIC",
       "material": "Architecture • cedar grain 01",
-      "vertices": 5520,
-      "triangles": 2760,
-      "sourceObjects": 31
+      "vertices": 4824,
+      "triangles": 2412,
+      "sourceObjects": 27
     },
     {
       "category": "STATIC",
       "material": "Architecture • cedar grain 06",
-      "vertices": 5424,
-      "triangles": 2712,
-      "sourceObjects": 30
+      "vertices": 3664,
+      "triangles": 1832,
+      "sourceObjects": 21
     },
     {
       "category": "STATIC",
       "material": "Architecture • cedar grain 05",
-      "vertices": 4980,
-      "triangles": 2490,
-      "sourceObjects": 26
+      "vertices": 3652,
+      "triangles": 1826,
+      "sourceObjects": 19
     },
     {
       "category": "STATIC",
       "material": "Architecture • cedar grain 00",
-      "vertices": 6252,
-      "triangles": 3126,
-      "sourceObjects": 34
+      "vertices": 5124,
+      "triangles": 2562,
+      "sourceObjects": 28
     },
     {
       "category": "STATIC",
       "material": "Architecture • cedar grain 02",
-      "vertices": 4644,
-      "triangles": 2322,
-      "sourceObjects": 26
+      "vertices": 3532,
+      "triangles": 1766,
+      "sourceObjects": 20
     },
     {
       "category": "STATIC",
       "material": "Architecture • cedar grain 03",
-      "vertices": 8316,
-      "triangles": 4158,
-      "sourceObjects": 43
+      "vertices": 5908,
+      "triangles": 2954,
+      "sourceObjects": 31
     },
     {
       "category": "STATIC",
       "material": "Harbor | wood_light",
-      "vertices": 28215,
-      "triangles": 15865,
-      "sourceObjects": 133
+      "vertices": 20543,
+      "triangles": 11997,
+      "sourceObjects": 96
     },
     {
       "category": "STATIC",
       "material": "Harbor | wood.001",
-      "vertices": 13128,
-      "triangles": 8748,
-      "sourceObjects": 69
+      "vertices": 10980,
+      "triangles": 7020,
+      "sourceObjects": 52
     },
     {
       "category": "STATIC",
@@ -690,9 +676,9 @@
     {
       "category": "STATIC",
       "material": "Harbor | metal",
-      "vertices": 17902,
-      "triangles": 26128,
-      "sourceObjects": 177
+      "vertices": 13278,
+      "triangles": 20016,
+      "sourceObjects": 123
     },
     {
       "category": "STATIC",
@@ -725,121 +711,16 @@
     {
       "category": "STATIC",
       "material": "Harbor | rope",
-      "vertices": 13880,
-      "triangles": 27088,
-      "sourceObjects": 42
+      "vertices": 2416,
+      "triangles": 4688,
+      "sourceObjects": 9
     },
     {
       "category": "STATIC",
       "material": "Harbor | glow",
-      "vertices": 666,
-      "triangles": 1320,
-      "sourceObjects": 3
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • faded navy blue",
-      "vertices": 776,
-      "triangles": 1300,
-      "sourceObjects": 3
-    },
-    {
-      "category": "BOAT",
-      "material": "Harbor | wood_dark",
-      "vertices": 2668,
-      "triangles": 2328,
-      "sourceObjects": 28
-    },
-    {
-      "category": "BOAT",
-      "material": "Harbor | blue",
-      "vertices": 624,
-      "triangles": 1224,
+      "vertices": 444,
+      "triangles": 880,
       "sourceObjects": 2
-    },
-    {
-      "category": "BOAT",
-      "material": "Harbor | wood.001",
-      "vertices": 3092,
-      "triangles": 2444,
-      "sourceObjects": 25
-    },
-    {
-      "category": "BOAT",
-      "material": "Harbor | wood_light",
-      "vertices": 9494,
-      "triangles": 5064,
-      "sourceObjects": 45
-    },
-    {
-      "category": "BOAT",
-      "material": "Harbor | metal",
-      "vertices": 1176,
-      "triangles": 2304,
-      "sourceObjects": 3
-    },
-    {
-      "category": "BOAT",
-      "material": "Harbor | rope",
-      "vertices": 4704,
-      "triangles": 9216,
-      "sourceObjects": 12
-    },
-    {
-      "category": "BOAT",
-      "material": "Harbor | linen",
-      "vertices": 1252,
-      "triangles": 2096,
-      "sourceObjects": 1
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • cedar grain 04",
-      "vertices": 1328,
-      "triangles": 664,
-      "sourceObjects": 7
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • cedar grain 03",
-      "vertices": 464,
-      "triangles": 232,
-      "sourceObjects": 3
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • cedar grain 05",
-      "vertices": 1112,
-      "triangles": 556,
-      "sourceObjects": 6
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • cedar grain 06",
-      "vertices": 896,
-      "triangles": 448,
-      "sourceObjects": 5
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • cedar grain 01",
-      "vertices": 264,
-      "triangles": 132,
-      "sourceObjects": 2
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • cedar grain 02",
-      "vertices": 680,
-      "triangles": 340,
-      "sourceObjects": 4
-    },
-    {
-      "category": "BOAT",
-      "material": "Architecture • cedar grain 00",
-      "vertices": 696,
-      "triangles": 348,
-      "sourceObjects": 4
     },
     {
       "category": "ACTOR_mara:LEFT_LEG",
@@ -1353,237 +1234,6 @@
       "sourceObjects": 19
     },
     {
-      "category": "ACTOR_dockhand:LEFT_LEG",
-      "material": "Burnished leather boots",
-      "vertices": 216,
-      "triangles": 108,
-      "sourceObjects": 1
-    },
-    {
-      "category": "ACTOR_dockhand:LEFT_LEG",
-      "material": "Harbor | wood_dark",
-      "vertices": 216,
-      "triangles": 108,
-      "sourceObjects": 1
-    },
-    {
-      "category": "ACTOR_dockhand:LEFT_LEG",
-      "material": "Cinnamon canvas trousers",
-      "vertices": 112,
-      "triangles": 88,
-      "sourceObjects": 2
-    },
-    {
-      "category": "ACTOR_dockhand:LEFT_LEG",
-      "material": "Straw hat braided edge",
-      "vertices": 16,
-      "triangles": 16,
-      "sourceObjects": 1
-    },
-    {
-      "category": "ACTOR_dockhand:RIGHT_LEG",
-      "material": "Burnished leather boots",
-      "vertices": 216,
-      "triangles": 108,
-      "sourceObjects": 1
-    },
-    {
-      "category": "ACTOR_dockhand:RIGHT_LEG",
-      "material": "Harbor | wood_dark",
-      "vertices": 216,
-      "triangles": 108,
-      "sourceObjects": 1
-    },
-    {
-      "category": "ACTOR_dockhand:RIGHT_LEG",
-      "material": "Cinnamon canvas trousers",
-      "vertices": 112,
-      "triangles": 88,
-      "sourceObjects": 2
-    },
-    {
-      "category": "ACTOR_dockhand:RIGHT_LEG",
-      "material": "Straw hat braided edge",
-      "vertices": 16,
-      "triangles": 16,
-      "sourceObjects": 1
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Natural cotton shirts",
-      "vertices": 522,
-      "triangles": 514,
-      "sourceObjects": 5
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Peach hand painted skin",
-      "vertices": 936,
-      "triangles": 1804,
-      "sourceObjects": 5
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Burnished leather boots",
-      "vertices": 216,
-      "triangles": 108,
-      "sourceObjects": 1
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Golden woven hat",
-      "vertices": 882,
-      "triangles": 1428,
-      "sourceObjects": 4
-    },
-    {
-      "category": "ACTOR_dockhand:LEFT_ARM",
-      "material": "Natural cotton shirts",
-      "vertices": 422,
-      "triangles": 528,
-      "sourceObjects": 3
-    },
-    {
-      "category": "ACTOR_dockhand:LEFT_ARM",
-      "material": "Peach hand painted skin",
-      "vertices": 762,
-      "triangles": 1408,
-      "sourceObjects": 5
-    },
-    {
-      "category": "ACTOR_dockhand:RIGHT_ARM",
-      "material": "Natural cotton shirts",
-      "vertices": 422,
-      "triangles": 528,
-      "sourceObjects": 3
-    },
-    {
-      "category": "ACTOR_dockhand:RIGHT_ARM",
-      "material": "Peach hand painted skin",
-      "vertices": 762,
-      "triangles": 1408,
-      "sourceObjects": 5
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Harbor | wood_dark",
-      "vertices": 216,
-      "triangles": 108,
-      "sourceObjects": 1
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Harbor | wood_light",
-      "vertices": 3456,
-      "triangles": 1728,
-      "sourceObjects": 16
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Harbor | wood.001",
-      "vertices": 2808,
-      "triangles": 1404,
-      "sourceObjects": 13
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Harbor | metal",
-      "vertices": 1776,
-      "triangles": 3520,
-      "sourceObjects": 8
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Dockworkers navy cap",
-      "vertices": 498,
-      "triangles": 692,
-      "sourceObjects": 3
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Chestnut hair",
-      "vertices": 278,
-      "triangles": 504,
-      "sourceObjects": 4
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Eyes ink",
-      "vertices": 444,
-      "triangles": 880,
-      "sourceObjects": 2
-    },
-    {
-      "category": "ACTOR_dockhand:BODY",
-      "material": "Faded indigo work shirts",
-      "vertices": 398,
-      "triangles": 772,
-      "sourceObjects": 3
-    },
-    {
-      "category": "BOAT",
-      "material": "Burnished leather boots",
-      "vertices": 840,
-      "triangles": 704,
-      "sourceObjects": 4
-    },
-    {
-      "category": "BOAT",
-      "material": "Cinnamon canvas trousers",
-      "vertices": 224,
-      "triangles": 176,
-      "sourceObjects": 4
-    },
-    {
-      "category": "BOAT",
-      "material": "Straw hat braided edge",
-      "vertices": 1400,
-      "triangles": 2464,
-      "sourceObjects": 21
-    },
-    {
-      "category": "BOAT",
-      "material": "Faded indigo work shirts",
-      "vertices": 952,
-      "triangles": 1464,
-      "sourceObjects": 6
-    },
-    {
-      "category": "BOAT",
-      "material": "Peach hand painted skin",
-      "vertices": 2460,
-      "triangles": 4620,
-      "sourceObjects": 15
-    },
-    {
-      "category": "BOAT",
-      "material": "Golden woven hat",
-      "vertices": 1330,
-      "triangles": 2316,
-      "sourceObjects": 6
-    },
-    {
-      "category": "BOAT",
-      "material": "Natural cotton shirts",
-      "vertices": 142,
-      "triangles": 106,
-      "sourceObjects": 5
-    },
-    {
-      "category": "BOAT",
-      "material": "Chestnut hair",
-      "vertices": 278,
-      "triangles": 504,
-      "sourceObjects": 4
-    },
-    {
-      "category": "BOAT",
-      "material": "Eyes ink",
-      "vertices": 444,
-      "triangles": 880,
-      "sourceObjects": 2
-    },
-    {
       "category": "STATIC",
       "material": "Dockworkers navy cap",
       "vertices": 128,
@@ -1823,18 +1473,6 @@
     }
   ],
   "excluded": [
-    "HORIZON_BOAT_01",
-    "HORIZON_BOAT_01_Hull",
-    "HORIZON_BOAT_01_Sail",
-    "HORIZON_BOAT_01_Spars",
-    "HORIZON_BOAT_02",
-    "HORIZON_BOAT_02_Hull",
-    "HORIZON_BOAT_02_Sail",
-    "HORIZON_BOAT_02_Spars",
-    "HORIZON_BOAT_03",
-    "HORIZON_BOAT_03_Hull",
-    "HORIZON_BOAT_03_Sail",
-    "HORIZON_BOAT_03_Spars",
     "POV_Horizon_BeaconRoof",
     "POV_Horizon_Canopy",
     "POV_Horizon_Chalk",
@@ -1855,22 +1493,12 @@
       "after": 3
     },
     {
-      "name": "Boat painted hull name",
-      "font_resolution_before": 12,
-      "after": 3
-    },
-    {
       "name": "Sol receiving supplies parcel shipping stencil",
       "font_resolution_before": 12,
       "after": 3
     },
     {
       "name": "Beach delivery porter parcel shipping stencil",
-      "font_resolution_before": 12,
-      "after": 3
-    },
-    {
-      "name": "Dock hand parcel shipping stencil",
       "font_resolution_before": 12,
       "after": 3
     },
@@ -1920,7 +1548,7 @@
       "after": 3
     }
   ],
-  "seconds": 7.67,
+  "seconds": 6.59,
   "schemaVersion": 2,
   "embeddedMicroTextures": {
     "imageCount": 10,
@@ -2658,33 +2286,6 @@
       4.014037132263184,
       -0.17135664820671082
     ]
-  ],
-  "boatObstacles": [
-    {
-      "polygon": [
-        [
-          2.65,
-          3.18
-        ],
-        [
-          5.85,
-          3.18
-        ],
-        [
-          5.85,
-          1.58
-        ],
-        [
-          2.65,
-          1.58
-        ]
-      ]
-    }
-  ],
-  "boatForward": [
-    -0.6441357457827797,
-    0,
-    0.7649111981170509
   ],
   "actors": [
     {
@@ -3630,320 +3231,6 @@
       }
     },
     {
-      "id": "dockhand",
-      "node": "ACTOR_dockhand",
-      "pivot": [
-        3.5299999713897705,
-        0.7260000109672546,
-        2.430000066757202
-      ],
-      "route": [
-        [
-          3.5299999713897705,
-          0.7260000109672546,
-          2.430000066757202
-        ],
-        [
-          3.5288877487182617,
-          0.7260000109672546,
-          2.3973684310913086
-        ],
-        [
-          3.5255703926086426,
-          0.7260000109672546,
-          2.365295171737671
-        ],
-        [
-          3.52010440826416,
-          0.7260000109672546,
-          2.334329128265381
-        ],
-        [
-          3.5125832557678223,
-          0.7260000109672546,
-          2.305000066757202
-        ],
-        [
-          3.503135919570923,
-          0.7260000109672546,
-          2.2778096199035645
-        ],
-        [
-          3.4919238090515137,
-          0.7260000109672546,
-          2.253223419189453
-        ],
-        [
-          3.4791390895843506,
-          0.7260000109672546,
-          2.231661558151245
-        ],
-        [
-          3.4649999141693115,
-          0.7260000109672546,
-          2.213493585586548
-        ],
-        [
-          3.4497487545013428,
-          0.7260000109672546,
-          2.1990301609039307
-        ],
-        [
-          3.4336464405059814,
-          0.7260000109672546,
-          2.188518524169922
-        ],
-        [
-          3.41696834564209,
-          0.7260000109672546,
-          2.182138681411743
-        ],
-        [
-          3.4000000953674316,
-          0.7260000109672546,
-          2.180000066757202
-        ],
-        [
-          3.3830316066741943,
-          0.7260000109672546,
-          2.182138681411743
-        ],
-        [
-          3.3663535118103027,
-          0.7260000109672546,
-          2.188518524169922
-        ],
-        [
-          3.3502511978149414,
-          0.7260000109672546,
-          2.1990301609039307
-        ],
-        [
-          3.3350000381469727,
-          0.7260000109672546,
-          2.213493585586548
-        ],
-        [
-          3.3208611011505127,
-          0.7260000109672546,
-          2.231661558151245
-        ],
-        [
-          3.3080761432647705,
-          0.7260000109672546,
-          2.253223419189453
-        ],
-        [
-          3.2968640327453613,
-          0.7260000109672546,
-          2.2778096199035645
-        ],
-        [
-          3.287416696548462,
-          0.7260000109672546,
-          2.305000066757202
-        ],
-        [
-          3.279895544052124,
-          0.7260000109672546,
-          2.334329128265381
-        ],
-        [
-          3.2744295597076416,
-          0.7260000109672546,
-          2.365295171737671
-        ],
-        [
-          3.2711122035980225,
-          0.7260000109672546,
-          2.3973684310913086
-        ],
-        [
-          3.2699999809265137,
-          0.7260000109672546,
-          2.430000066757202
-        ],
-        [
-          3.2711122035980225,
-          0.7260000109672546,
-          2.4626314640045166
-        ],
-        [
-          3.2744295597076416,
-          0.7260000109672546,
-          2.4947047233581543
-        ],
-        [
-          3.279895544052124,
-          0.7260000109672546,
-          2.5256707668304443
-        ],
-        [
-          3.287416696548462,
-          0.7260000109672546,
-          2.555000066757202
-        ],
-        [
-          3.2968640327453613,
-          0.7260000109672546,
-          2.5821902751922607
-        ],
-        [
-          3.3080761432647705,
-          0.7260000109672546,
-          2.606776714324951
-        ],
-        [
-          3.3208611011505127,
-          0.7260000109672546,
-          2.62833833694458
-        ],
-        [
-          3.3350000381469727,
-          0.7260000109672546,
-          2.6465063095092773
-        ],
-        [
-          3.3502511978149414,
-          0.7260000109672546,
-          2.6609699726104736
-        ],
-        [
-          3.3663535118103027,
-          0.7260000109672546,
-          2.6714813709259033
-        ],
-        [
-          3.3830316066741943,
-          0.7260000109672546,
-          2.677861213684082
-        ],
-        [
-          3.4000000953674316,
-          0.7260000109672546,
-          2.680000066757202
-        ],
-        [
-          3.41696834564209,
-          0.7260000109672546,
-          2.677861213684082
-        ],
-        [
-          3.4336464405059814,
-          0.7260000109672546,
-          2.6714813709259033
-        ],
-        [
-          3.4497487545013428,
-          0.7260000109672546,
-          2.6609699726104736
-        ],
-        [
-          3.4649999141693115,
-          0.7260000109672546,
-          2.6465063095092773
-        ],
-        [
-          3.4791390895843506,
-          0.7260000109672546,
-          2.62833833694458
-        ],
-        [
-          3.4919238090515137,
-          0.7260000109672546,
-          2.606776714324951
-        ],
-        [
-          3.503135919570923,
-          0.7260000109672546,
-          2.5821902751922607
-        ],
-        [
-          3.5125832557678223,
-          0.7260000109672546,
-          2.555000066757202
-        ],
-        [
-          3.52010440826416,
-          0.7260000109672546,
-          2.5256707668304443
-        ],
-        [
-          3.5255703926086426,
-          0.7260000109672546,
-          2.4947047233581543
-        ],
-        [
-          3.5288877487182617,
-          0.7260000109672546,
-          2.4626314640045166
-        ]
-      ],
-      "speed": 0.24,
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "pose": "carry",
-      "closed": true,
-      "phase": 0.0,
-      "limbs": {
-        "LEFT_ARM": {
-          "node": "ACTOR_dockhand_LEFT_ARM",
-          "pivot": [
-            0.14689993858337402,
-            0.5683899521827698,
-            -2.384185791015625e-07
-          ],
-          "axis": [
-            -1.0,
-            0.0,
-            0.0
-          ]
-        },
-        "LEFT_LEG": {
-          "node": "ACTOR_dockhand_LEFT_LEG",
-          "pivot": [
-            0.06683921813964844,
-            0.3199999928474426,
-            0.011299848556518555
-          ],
-          "axis": [
-            -1.0,
-            0.0,
-            0.0
-          ]
-        },
-        "RIGHT_ARM": {
-          "node": "ACTOR_dockhand_RIGHT_ARM",
-          "pivot": [
-            -0.14690017700195312,
-            0.5683899521827698,
-            0.0
-          ],
-          "axis": [
-            -1.0,
-            0.0,
-            0.0
-          ]
-        },
-        "RIGHT_LEG": {
-          "node": "ACTOR_dockhand_RIGHT_LEG",
-          "pivot": [
-            -0.06683969497680664,
-            0.3199999928474426,
-            -0.008475065231323242
-          ],
-          "axis": [
-            -1.0,
-            0.0,
-            0.0
-          ]
-        }
-      }
-    },
-    {
       "id": "dog",
       "node": "ACTOR_dog",
       "pivot": [
@@ -4290,8 +3577,8 @@
     "radius": 9.025,
     "style": "geological cutaway"
   },
-  "animationMode": "Web runtime animates actor routes and limbs, boat buoyancy and navigation, and the interactive height-field water. GLB contains geometry and named pivots, not baked animation tracks.",
-  "uncompressedBytes": 47991780,
+  "animationMode": "Web runtime animates actor routes and limbs and the interactive height-field water. GLB contains geometry and named pivots.",
+  "uncompressedBytes": 44235520,
   "compression": "KHR_draco_mesh_compression",
-  "compressionSeconds": 4.9
+  "compressionSeconds": 5.03
 }

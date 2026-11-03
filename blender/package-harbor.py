@@ -23,12 +23,16 @@ parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--blender',required=True)
 parser.add_argument('--node',default='node')
 parser.add_argument('--version',required=True)
+parser.add_argument('--island-wave',action='store_true',
+                    help='Package the separate island-wave working copy and preserve the baseline archive')
 args=parser.parse_args()
 assert re.fullmatch(r'[0-9]+(?:\.[0-9]+)*',args.version), 'Use a numerical local version'
-STAGE=ROOT/'output'/('portable-pov-v'+args.version)
+edition='island-wave' if args.island_wave else 'pov'
+STAGE=ROOT/'output'/('portable-'+edition+'-v'+args.version)
 STAGE.mkdir(parents=True,exist_ok=True)
 FINAL=STAGE/'final'
-live=SCRIPTS/'small-goods-harbor-pov.blend'
+baseline_name='small-goods-harbor-pov.blend'
+live=SCRIPTS/('island-wave.blend' if args.island_wave else baseline_name)
 sha=lambda data:hashlib.sha256(data).hexdigest()
 source_hash=sha(live.read_bytes())
 old_manifest=json.loads((SCRIPTS/'pov-model-manifest.json').read_text(encoding='utf8'))
@@ -54,8 +58,10 @@ def blender(label,source,script,report=None):
 
 blender('prepare',live,'package-prepare.py')
 assert sha(live.read_bytes())==source_hash, 'Source changed during packaging; wait for edits to finish and rerun'
-blender('finalize',STAGE/live.name,'package-finalize.py')
+blender('finalize',STAGE/baseline_name,'package-finalize.py')
 run('privacy',[args.node,str(SCRIPTS/'package-scrub.mjs'),str(STAGE)])
+if args.island_wave:
+    (FINAL/baseline_name).replace(FINAL/live.name)
 blender('validate-final',FINAL/live.name,'package-validate.py')
 validation=json.loads((STAGE/'validation.json').read_text(encoding='utf8'))
 privacy=json.loads((STAGE/'privacy-verification.json').read_text(encoding='utf8'))
@@ -75,7 +81,7 @@ assert not re.search(rb'\\\\[A-Za-z0-9_.-]+\\[A-Za-z0-9_.-]+',raw)
 state=validation['state']
 today=datetime.date.today()
 manifest={
-  'format':'Portable editable Blender scene - local POV edition',
+  'format':'Portable editable Blender scene - local '+('island-wave' if args.island_wave else 'POV')+' edition',
   'modelVersion':'V'+args.version,'packagedDate':today.isoformat(),
   'blenderVersion':validation['blenderVersion'],
   'file':{'name':model.name,'bytes':len(raw),'sha256':sha(raw)},
@@ -109,26 +115,36 @@ manifest={
     'Privacy scan covers current user name, workspace/token strings, printable absolute Windows paths, common Unix home/workspace path prefixes, UNC paths, ASCII and both UTF-16LE alignments',
     'Public font license and certificate URLs remain embedded with their legal notices',
     'No render, playback performance benchmark or full frame-by-frame animation comparison was performed',
-    'Website sky, expanded water, fog, and runtime boat animation remain separate JavaScript features'],
+    'Website sky, expanded water, fog and runtime motion are separate JavaScript features'],
   'publication':'Local archive only; this packaging step does not deploy or publish the project',
 }
 (FINAL/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 (FINAL/'FONT_NOTICES.txt').write_bytes(notice)
-(FINAL/'README.txt').write_text(
-    'Small Goods Harbor - Local POV model archive V'+args.version+'\n\n'
-    'Open small-goods-harbor-pov.blend in Blender '+validation['blenderVersion']+'.\n'
-    'The opening scene is Small Goods · Reference Harbor.\n'
-    'This archive includes the expanded main island and POV_ENVIRONMENT.\n'
-    'POV_ENVIRONMENT is hidden for the normal overview. Enable the collection\n'
-    'in the Outliner for editing or rendering the distant islands, reefs, clouds\n'
-    'and sailboats. The website shows this collection only in first-person mode.\n\n'
-    'The font is embedded. See FONT_NOTICES.txt. No external model resources\n'
-    'or MCP connection are required to open the scene.\n'
-    'The website sky, expanded water, fog and distant boat movement are runtime\n'
-    'JavaScript features and are not baked into this Blender archive.\n\n'
-    'See manifest.json for contents, checksums, verification scope and limitations.\n',encoding='utf8')
+if args.island_wave:
+    assert not state['movableSailboatRoots'] and state['environmentObjects'] == 5
+    (FINAL/'README.txt').write_text(
+        'Island Wave - Editable Blender scene V'+args.version+'\n\n'
+        'Open island-wave.blend in Blender '+validation['blenderVersion']+'.\n'
+        'POV_ENVIRONMENT contains the distant islands, reefs, clouds and beacon.\n'
+        'Enable this collection in the Outliner to edit the horizon.\n'
+        'The website animates the waves, water and residents at runtime.\n'
+        'The font is embedded. See FONT_NOTICES.txt and manifest.json.\n',encoding='utf8')
+else:
+    (FINAL/'README.txt').write_text(
+        'Small Goods Harbor - Local POV model archive V'+args.version+'\n\n'
+        'Open small-goods-harbor-pov.blend in Blender '+validation['blenderVersion']+'.\n'
+        'The opening scene is Small Goods · Reference Harbor.\n'
+        'This archive includes the expanded main island and POV_ENVIRONMENT.\n'
+        'POV_ENVIRONMENT is hidden for the normal overview. Enable the collection\n'
+        'in the Outliner for editing or rendering the distant islands, reefs, clouds\n'
+        'and sailboats. The website shows this collection only in first-person mode.\n\n'
+        'The font is embedded. See FONT_NOTICES.txt. No external model resources\n'
+        'or MCP connection are required to open the scene.\n'
+        'The website sky, expanded water, fog and distant boat movement are runtime\n'
+        'JavaScript features and are not baked into this Blender archive.\n\n'
+        'See manifest.json for contents, checksums, verification scope and limitations.\n',encoding='utf8')
 members=[model.name,'manifest.json','FONT_NOTICES.txt','README.txt']
-staged_archive=STAGE/'small-goods-harbor-pov.blend.zip'
+staged_archive=STAGE/(live.name+'.zip')
 with zipfile.ZipFile(staged_archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
     for name in members:
         info=zipfile.ZipInfo(name,date_time=(today.year,today.month,today.day,0,0,0))
@@ -157,7 +173,7 @@ archive_info={'name':staged_archive.name,'bytes':staged_archive.stat().st_size,
 manifest['archive']=archive_info
 # Promote only after every privacy, integrity and independent reopen check passes.
 shutil.copyfile(staged_archive,SCRIPTS/staged_archive.name)
-(SCRIPTS/'pov-model-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+(SCRIPTS/(edition+'-model-manifest.json')).write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 report={'archive':archive_info,'sourceWorkingFileUnchanged':True,
     'independentReopenValidation':validation,'extractedArchiveReopenValidation':zip_validation,
     'privacyVerification':privacy,'knownUnixHomeOrWorkspacePathMatches':0,'uncPathMatches':0,'noPublication':True}

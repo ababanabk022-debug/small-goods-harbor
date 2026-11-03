@@ -171,7 +171,7 @@ dg=bpy.context.evaluated_depsgraph_get()
 
 R=np.array([[1,0,0],[0,0,1],[0,-1,0]],dtype=np.float32)
 boatobj=bpy.data.objects.get('Boat | gentle floating motion')
-boatpivot=R@np.array(boatobj.matrix_world.translation,dtype=np.float32) if boatobj else np.array([3.47,.2,3.48],dtype=np.float32)
+boatpivot=R@np.array(boatobj.matrix_world.translation,dtype=np.float32) if boatobj else None
 
 skip_exact={'Sea — single closed wavy volume','Seamless blue ground'}
 
@@ -472,19 +472,20 @@ with path.open('wb') as f:
     f.write(struct.pack('<II',len(js),0x4e4f534a));f.write(js)
     f.write(struct.pack('<II',len(blob),0x004e4942));f.write(blob)
 cam=scene.camera
-metadata={'sourceScene':scene.name,'sourceFile':Path(bpy.data.filepath).name,'sourceBlendSha256':hashlib.sha256(Path(bpy.data.filepath).read_bytes()).hexdigest(),'generatedAt':time.strftime('%Y-%m-%dT%H:%M:%S'),'coordinateSystem':'glTF right-handed Y-up: Blender (x,y,z) to (x,z,-y)','groupNames':[nodes[i]['name'] for i in roots],'boatPivot':boatpivot.tolist(),'water':{'radius':water_radius,'surfaceY':0,'bottomY':-water_depth,'depth':water_depth,'loopSeconds':6,'shoreline':shoreline},'camera':{'position':(R@np.array(cam.matrix_world.translation)).tolist(),'target':[0,1.25,0],'orthographicScale':cam.data.ortho_scale},'sourceObjectCount':len(records),'drawCalls':len(groups),'triangles':sum(x['triangles'] for x in group_report),'vertices':sum(x['vertices'] for x in group_report),'bytes':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'materialMode':'Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Embedded normal and roughness maps preserve fine surface response as procedural approximations.','clouds':[r for r in records if r['category']=='CLOUDS'],'groups':group_report,'excluded':excluded,'reductions':reductions,'seconds':round(time.time()-START,2)}
+metadata={'sourceScene':scene.name,'sourceFile':Path(bpy.data.filepath).name,'sourceBlendSha256':hashlib.sha256(Path(bpy.data.filepath).read_bytes()).hexdigest(),'generatedAt':time.strftime('%Y-%m-%dT%H:%M:%S'),'coordinateSystem':'glTF right-handed Y-up: Blender (x,y,z) to (x,z,-y)','groupNames':[nodes[i]['name'] for i in roots],'water':{'radius':water_radius,'surfaceY':0,'bottomY':-water_depth,'depth':water_depth,'loopSeconds':6,'shoreline':shoreline},'camera':{'position':(R@np.array(cam.matrix_world.translation)).tolist(),'target':[0,1.25,0],'orthographicScale':cam.data.ortho_scale},'sourceObjectCount':len(records),'drawCalls':len(groups),'triangles':sum(x['triangles'] for x in group_report),'vertices':sum(x['vertices'] for x in group_report),'bytes':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'materialMode':'Procedural base-color palette sampled into linear vertex colors; dynamic water and projected caustics are authored by the viewer. Embedded normal and roughness maps preserve fine surface response as procedural approximations.','clouds':[r for r in records if r['category']=='CLOUDS'],'groups':group_report,'excluded':excluded,'reductions':reductions,'seconds':round(time.time()-START,2)}
 
 metadata.update({
     'schemaVersion':2,
     'embeddedMicroTextures':{'imageCount':len(images),'materialCount':len(surface_details),'kinds':list(texture_sets),'resolution':128,'mode':'Embedded repeating micro-normal and roughness maps supplement the sampled source palette; no baked lighting and no external image paths.'},
     'shoreline':shoreline,
     'landBoundary':land_boundary,
-    'boatObstacles':boat_obstacles,
-    'boatForward':navigation.get('boatForward', [-.819152,0,.573576]),
     'actors':actor_meta,
     'tray':navigation.get('tray', {'bottomY':-2.55}),
-    'animationMode':'Web runtime animates actor routes and limbs, boat buoyancy and navigation, and the interactive height-field water. GLB contains geometry and named pivots, not baked animation tracks.',
+    'animationMode':'Web runtime animates actor routes and limbs and the interactive height-field water. GLB contains geometry and named pivots.',
 })
+if boatobj:
+    metadata.update(boatPivot=boatpivot.tolist(), boatObstacles=boat_obstacles,
+                    boatForward=navigation.get('boatForward', [-.819152,0,.573576]))
 assert not any(':' in actor['id'] for actor in actor_meta)
 
 (OUT/('scene-meta'+SUFFIX+'.json')).write_text(json.dumps(metadata,ensure_ascii=False,indent=2),encoding='utf8')

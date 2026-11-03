@@ -5,6 +5,7 @@
  * No image assets, network requests, or Blender scene changes are required.
  */
 import { createWaterPhysics } from './water-physics.js?v=12.1';
+import { createCoastWave, COAST_GLSL } from './coast-wave.js?v=2';
 
 const TAU = Math.PI * 2;
 const DEFAULT_RADIUS = 9.0;
@@ -66,6 +67,7 @@ vec3 harborOceanWave(vec2 p, float seconds) {
 const WAVE_GLSL = `
 ${PHYSICS_GLSL}
 ${OCEAN_WAVE_GLSL}
+${COAST_GLSL}
 uniform float harborTime;
 uniform float harborImmersive;
 vec3 harborAmbientWave(vec2 p) {
@@ -84,10 +86,10 @@ vec3 harborAmbientWave(vec2 p) {
   }).join('\n')}
   return result;
 }
-vec3 harborWave(vec2 p) {
+vec3 harborWave(vec2 p, vec4 breaker) {
   vec4 field = harborFieldAt(p);
   vec3 ambient = harborAmbientWave(p);
-  vec3 bounded = (ambient + field.xyz) * step(0.001, field.w);
+  vec3 bounded = (ambient + field.xyz + breaker.xyz) * step(0.001, field.w);
   if(harborImmersive<.5)return bounded;
   // Only the render extension uses ambient ocean waves. The interactive field
   // stays bounded; shared edge vertices use exactly the same blended height.
@@ -97,6 +99,7 @@ vec3 harborWave(vec2 p) {
   if(openSea<=0.0)return shelf;
   return mix(shelf,harborOceanWave(p,harborTime),openSea);
 }
+vec3 harborWave(vec2 p) { return harborWave(p,harborBreaker(p)); }
 `;
 
 // Capture contains the opaque scene in linear light, without water. This is a
@@ -122,14 +125,15 @@ vec3 harborViewPoint(vec2 uv, float depth) {
   vec4 p = harborOpticalInverseProjection * vec4(uv * 2.0 - 1.0, depth * 2.0 - 1.0, 1.0);
   return p.xyz / p.w;
 }
-void harborProtectDryScene() {
+void harborProtectDryScene(float breakerHeight) {
   if (harborOpticalEnabled < 0.5) return;
   vec2 uv = gl_FragCoord.xy / harborOpticalResolution;
   float depth = texture2D(harborSceneDepth,uv).r;
   vec3 localPoint = (harborOpticalViewToLocal * vec4(harborViewPoint(uv,depth),1.0)).xyz;
   // Explicit protection complements the restored GPU depth buffer, including
   // silhouettes where the composite anti-aliasing spans a dry and wet pixel.
-  if (depth < 0.9999 && (depth < gl_FragCoord.z - 0.000001 || localPoint.y > 0.045)) discard;
+  if (depth < 0.9999 && (depth < gl_FragCoord.z - 0.000001 ||
+      (breakerHeight < .03 && localPoint.y > 0.045))) discard;
 }
 vec3 harborRefractedScene(vec3 waterViewPosition, vec3 waterNormal, float fresnel) {
   vec2 uv = gl_FragCoord.xy / harborOpticalResolution;
@@ -406,6 +410,7 @@ function oceanRing(THREE, radius, outerRadius) {
 export function createHarborWater(THREE, options = {}) {
   const radius = Number(options.radius) || DEFAULT_RADIUS;
   const physics = createWaterPhysics({ ...options, radius });
+  const coastWave = createCoastWave(THREE, radius, options.shoreline);
   const fieldTexture = new THREE.DataTexture(physics.textureData, physics.size, physics.size, THREE.RGBAFormat, THREE.FloatType);
   fieldTexture.minFilter = THREE.NearestFilter;
   fieldTexture.magFilter = THREE.NearestFilter;
@@ -414,6 +419,7 @@ export function createHarborWater(THREE, options = {}) {
   const time = { value: 0 };
   const causticPattern = createCausticPattern(THREE);
   const shaderUniforms = {
+    ...coastWave.uniforms,
     harborSceneColor: { value: null },
     harborSceneDepth: { value: null },
     harborOpticalResolution: { value: new THREE.Vector2(1, 1) },
@@ -485,8 +491,9 @@ export function createHarborWater(THREE, options = {}) {
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', `#include <common>\n${WAVE_GLSL}\nvarying vec2 vHarborWaterXZ;`)
       .replace('#include <beginnormal_vertex>', `
-        vec3 harborVertexWave = harborWave(position.xz);
-        vec3 objectNormal = normalize(vec3(-harborVertexWave.y, 1.0, -harborVertexWave.z));
+        vec4 harborRoll = harborBreaker(position.xz);
+        vec3 harborVertexWave = harborWave(position.xz,harborRoll);
+        vec3 objectNormal = harborBreakerNormal(harborVertexWave,harborRoll);
         #ifdef USE_TANGENT
           vec3 objectTangent = vec3(tangent.xyz);
         #endif
@@ -494,13 +501,15 @@ export function createHarborWater(THREE, options = {}) {
       .replace('#include <begin_vertex>', `
         vec3 transformed = vec3(position);
         transformed.y += harborVertexWave.x;
+        transformed.xz += harborBreakerLean(harborRoll.x);
         vHarborWaterXZ = position.xz;
       `);
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', `#include <common>\n${OPTICAL_GLSL}\n${OCEAN_WAVE_GLSL}\nuniform float harborTime;\nuniform mat4 harborContainerMatrix;\nvarying vec2 vHarborWaterXZ;`)
+      .replace('#include <common>', `#include <common>\n${OPTICAL_GLSL}\n${OCEAN_WAVE_GLSL}\n${COAST_GLSL}\nuniform float harborTime;\nuniform mat4 harborContainerMatrix;\nvarying vec2 vHarborWaterXZ;`)
       .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
         if(length(vHarborWaterXZ)<harborRadius-0.5 && texture2D(harborField,vHarborWaterXZ/(2.0*harborRadius)+0.5).w < 0.99) discard;
-        harborProtectDryScene();`)
+        vec4 harborSurf = harborBreaker(vHarborWaterXZ);
+        harborProtectDryScene(harborSurf.x);`)
       .replace('#include <roughnessmap_fragment>', `
         #include <roughnessmap_fragment>
         float harborOffshoreBlend=smoothstep(harborRadius,harborRadius+3.0,length(vHarborWaterXZ))*harborImmersive;
@@ -561,11 +570,22 @@ export function createHarborWater(THREE, options = {}) {
           diffuseColor.a = min(0.72, diffuseColor.a + pow(1.0-harborViewDot,3.0) * 0.42);
           outgoingLight /= max(diffuseColor.a, 0.18);
         }
+        if (harborSurf.x>.001 || harborSurf.w>.001) {
+          // The thick face scatters turquoise light. At the torn rim the
+          // trapped air turns opaque, with the same displacement in every tier.
+          float face=smoothstep(.035,1.66,harborSurf.x);
+          float steep=clamp(-dot(harborSurf.yz,harborCoastFrame.zw)*.43,0.0,1.0);
+          vec3 jade=mix(vec3(.014,.275,.32),vec3(.075,.67,.62),face*.55+steep*.40);
+          outgoingLight=mix(outgoingLight,jade,face*(.57+.24*steep));
+          float foam=harborSurf.w;
+          outgoingLight=mix(outgoingLight,vec3(1.42,1.55,1.46),foam*.95);
+          diffuseColor.a=mix(diffuseColor.a,1.0,max(foam,face*.64));
+        }
         #include <opaque_fragment>
       `);
     shaderStatus.surface = true;
   };
-  material.customProgramCacheKey = () => 'harbor-silhouette-safe-microrefraction-immersive-v17';
+  material.customProgramCacheKey = () => 'harbor-coast-breaker-optical-v19';
   const surface = new THREE.Mesh(polarSurface(THREE, 256, 112, radius), material);
   surface.name = 'Sea · interactive reflecting wave surface';
   surface.receiveShadow = true;
@@ -590,12 +610,14 @@ export function createHarborWater(THREE, options = {}) {
       varying vec3 vUnderLocal;
       varying vec3 vUnderNormal;
       void main(){
-        vec3 wave=harborWave(position.xz);
+        vec4 breaker=harborBreaker(position.xz);
+        vec3 wave=harborWave(position.xz,breaker);
         vec3 displaced=position+vec3(0.0,wave.x,0.0);
+        displaced.xz+=harborBreakerLean(breaker.x);
         vec4 viewed=modelViewMatrix*vec4(displaced,1.0);
         vUnderView=viewed.xyz;
         vUnderLocal=displaced;
-        vUnderNormal=normalize(normalMatrix*vec3(-wave.y,1.0,-wave.z));
+        vUnderNormal=normalize(normalMatrix*harborBreakerNormal(wave,breaker));
         gl_Position=projectionMatrix*viewed;
       }
     `,
@@ -730,7 +752,7 @@ export function createHarborWater(THREE, options = {}) {
       `);
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>\n${OPTICAL_GLSL}\nuniform float harborTime;\nuniform mat4 harborContainerMatrix;\nvarying float vHarborSideDepth;\nvarying vec3 vHarborSidePosition;`)
-      .replace('#include <clipping_planes_fragment>', '#include <clipping_planes_fragment>\n harborProtectDryScene();')
+      .replace('#include <clipping_planes_fragment>', '#include <clipping_planes_fragment>\n harborProtectDryScene(0.0);')
       .replace('#include <color_fragment>', `
         #include <color_fragment>
         // Uniform cut-section color; depth remains visible in the captured objects.
@@ -816,12 +838,17 @@ export function createHarborWater(THREE, options = {}) {
       syncImmersiveVisibility();
     },
     waveGLSL: WAVE_GLSL,
+    get coastWaveRunning(){return coastWave.running;},
+    startCoastWave(elapsed = previousSeconds ?? 0, x, z) {
+      return coastWave.start(elapsed,x,z);
+    },
     update(seconds, deltaSeconds) {
       const next = Number.isFinite(Number(seconds)) ? Number(seconds) : 0;
       let delta = previousSeconds === null ? 0 : Math.max(0, next - previousSeconds);
       if (Number.isFinite(deltaSeconds)) delta = delta > 0 ? Math.max(0, deltaSeconds) : 0;
       if (previousSeconds !== null && next < previousSeconds - 0.001) physics.reset();
       previousSeconds = next;
+      coastWave.update(next);
       time.value = ((next % DURATION) + DURATION) % DURATION;
       const causticPhase = time.value * TAU / DURATION;
       shaderUniforms.harborCausticDrift.value.set(
@@ -833,8 +860,10 @@ export function createHarborWater(THREE, options = {}) {
       const interactive = physics.sample(x, z);
       if (!interactive.wet) return { height: 0, dx: 0, dz: 0, wet: false };
       const ambient = ambientSample(x, z, seconds);
-      return { height: interactive.height + ambient.height, dx: interactive.dx + ambient.dx,
-        dz: interactive.dz + ambient.dz, wet: true };
+      const breaker = coastWave.sample(x,z);
+      return { height: interactive.height + ambient.height + (breaker?.height ?? 0),
+        dx: interactive.dx + ambient.dx + (breaker?.dx ?? 0),
+        dz: interactive.dz + ambient.dz + (breaker?.dz ?? 0), wet: true };
     },
     sampleHeight(x, z, seconds = time.value) {
       return api.sample(x, z, seconds).height;
@@ -894,6 +923,7 @@ export function createHarborWater(THREE, options = {}) {
     isWater: physics.isWater,
     setShoreline(points) {
       physics.setShoreline(points);
+      coastWave.configure(points);
       fieldTexture.needsUpdate = true;
     },
     resetInteraction() {
@@ -912,7 +942,8 @@ export function createHarborWater(THREE, options = {}) {
         loopSeconds: DURATION,
         interactionLoops: false,
         physics: physics.diagnostics(),
-        maxAmplitude: WAVES.reduce((sum, w) => sum + w.amplitude, 0) + physics.diagnostics().maxHeight,
+        coastWave: coastWave.diagnostics(),
+        maxAmplitude: WAVES.reduce((sum, w) => sum + w.amplitude, 0) + physics.diagnostics().maxHeight + coastWave.diagnostics().peak,
         surfaceVertices: surface.geometry.attributes.position.count,
         quality,
         appearance,
@@ -955,6 +986,7 @@ export function createHarborWater(THREE, options = {}) {
       sideMaterial.dispose();
       fieldTexture.dispose();
       causticPattern.dispose();
+      coastWave.dispose();
       if (ownedSkyEnvironment) ownedSkyEnvironment.dispose();
     },
   };

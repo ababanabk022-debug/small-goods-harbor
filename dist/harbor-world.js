@@ -17,14 +17,6 @@ export function createHarborWorld(THREE,{scene,model,stageFloor,horizon,sampleBe
   });
   const sky=new THREE.Mesh(skyGeometry,skyMaterial);sky.name='POV · sky dome';sky.renderOrder=-100;group.add(sky);
   horizon.name='POV · distant islands and clouds';group.add(horizon);
-  const boats=[];horizon.traverse(object=>{if(/^HORIZON_BOAT_\d{2}$/.test(object.name))boats.push({object,center:object.position.clone()});});
-  boats.sort((a,b)=>a.object.name.localeCompare(b.object.name));
-  const wakeGeometry=new THREE.BufferGeometry();
-  wakeGeometry.setAttribute('position',new THREE.Float32BufferAttribute([-.65,0,-.10,-3.0,0,-.60,-2.8,0,-.39, -.65,0,.10,-2.8,0,.39,-3.0,0,.60],3));
-  wakeGeometry.computeVertexNormals();
-  const wakeMaterial=new THREE.MeshBasicMaterial({color:'#d2efdf',transparent:true,opacity:.18,depthWrite:false,side:THREE.DoubleSide});
-  const wakes=new THREE.InstancedMesh(wakeGeometry,wakeMaterial,boats.length);wakes.name='POV · distant sailboat wakes';wakes.renderOrder=5;wakes.frustumCulled=false;group.add(wakes);
-  const wakeTransform=new THREE.Object3D();
   // Overlap the authored bed by a narrow strip, then descend into the sea.
   // The cutaway layers are hidden, while the original inner bed stays intact.
   const radii=[8.60,8.86,9.1,9.8,11,14,20,30,50,95],segments=192,vertices=[],indices=[];
@@ -62,19 +54,10 @@ export function createHarborWorld(THREE,{scene,model,stageFloor,horizon,sampleBe
     setMode(id){
       if(id&&!subject){restore=[stageFloor,...cutaway].map(object=>[object,object.visible]);for(const [object] of restore)object.visible=false;}
       if(!id&&subject){for(const [object,visible] of restore)object.visible=visible;restore=[];}
-      subject=id;group.visible=!!id;sky.visible=id!=='fish';horizon.visible=id!=='fish';wakes.visible=id!=='fish';
+      subject=id;group.visible=!!id;sky.visible=id!=='fish';horizon.visible=id!=='fish';
     },
-    update(time){
-      clock.value=time;
-      boats.forEach(({object,center},index)=>{
-        const phase=time*Math.PI*2/(90+index*20)+index*2.1;
-        object.position.set(center.x+Math.cos(phase)*3.2,center.y+Math.sin(time*1.05+index)*.024,center.z+Math.sin(phase)*2);
-        object.rotation.set(Math.sin(time*.74+index)*.012,-Math.atan2(2*Math.cos(phase),-3.2*Math.sin(phase)),Math.sin(time*.91+index)*.018);
-        wakeTransform.position.copy(object.position);wakeTransform.position.y=.045;wakeTransform.rotation.set(0,object.rotation.y,0);wakeTransform.updateMatrix();wakes.setMatrixAt(index,wakeTransform.matrix);
-      });
-      if(boats.length)wakes.instanceMatrix.needsUpdate=true;
-    },
-    diagnostics(){return {active:!!subject,subject,horizonLoaded:!!horizon,cutawayHidden:restore.length,outerRadius:95,skyRadius:110,bedTriangles:indices.length/3,boats:boats.map(({object})=>({name:object.name,position:object.position.toArray()}))};},
-    dispose(){this.setMode(null);scene.remove(group);skyGeometry.dispose();skyMaterial.dispose();bedGeometry.dispose();bedMaterial.dispose();wakeGeometry.dispose();wakeMaterial.dispose();horizon.traverse(o=>{if(o.isMesh){o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();}});},
+    update(time){clock.value=time;},
+    diagnostics(){return {active:!!subject,subject,horizonLoaded:!!horizon,cutawayHidden:restore.length,outerRadius:95,skyRadius:110,bedTriangles:indices.length/3};},
+    dispose(){this.setMode(null);scene.remove(group);skyGeometry.dispose();skyMaterial.dispose();bedGeometry.dispose();bedMaterial.dispose();horizon.traverse(o=>{if(o.isMesh){o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();}});},
   };
 }
