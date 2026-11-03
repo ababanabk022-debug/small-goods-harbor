@@ -3,9 +3,9 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { createHarborWater, installHarborCaustics } from './water.js?v=coast-3';
+import { createHarborWater, installHarborCaustics } from './water.js?v=coast-flow-1';
 import { createHarborMotion } from './harbor-motion.js?v=coast-1';
-import { createHarborRenderer } from './harbor-renderer.js?v=14.1';
+import { createHarborRenderer } from './harbor-renderer.js?v=coast-flow-1';
 import { createUnderwaterLife } from './harbor-underwater.js?v=14.2';
 import { insetHarborSeabedEdge } from './harbor-seabed-edge.js?v=14.1';
 import { createHarborPOV } from './harbor-pov.js?v=14.1';
@@ -18,7 +18,9 @@ const viewport=$('viewport'), errors=[];
 const POV_FISH_INDEX=7; // Lead row: a clear forward view, with the school beside and behind.
 const state={ready:false,playing:true,elapsed:0,autoRotate:false,view:'hero',frames:0};
 let renderer,scene,camera,controls,water,model,foam,meta,transition,motion,diorama,sun,harborRenderer,underwaterLife;
-let imageQuality='clear';
+let imageQuality='auto';
+let autoScale=1, sampleSeconds=0, sampleFrames=0, lateFrames=0, smoothSeconds=0;
+let measureAfter=0, allowIncreaseAfter=0;
 let manualOrbitUntil=0,lastAzimuth=0,lastPolar=0;
 const interactions={splashes:0,sloshes:0};
 let lastTime=performance.now(), averageFrame=16, causticInfo;
@@ -110,7 +112,8 @@ function resize(){
   const w=viewport.clientWidth,h=viewport.clientHeight,aspect=w/h;
   const requested=imageQuality==='ultra'?Math.min(2.5,Math.max(2,devicePixelRatio)):imageQuality==='smooth'?Math.max(1,Math.min(1.25,devicePixelRatio)):Math.min(2,Math.max(1,devicePixelRatio));
   const budget=imageQuality==='ultra'?4200000:imageQuality==='smooth'?1600000:2400000;
-  const ratio=Math.max(1,Math.min(requested,Math.sqrt(budget/(w*h))));
+  const baseRatio=Math.max(1,Math.min(requested,Math.sqrt(budget/(w*h))));
+  const ratio=imageQuality==='auto'?baseRatio*autoScale:baseRatio;
   renderer.setPixelRatio(ratio);renderer.setSize(w,h,false);harborRenderer?.setQuality(imageQuality);renderDirty=true;
   if(sun){
     const shadowSize=imageQuality==='ultra'?2048:imageQuality==='smooth'?1024:1536;
@@ -120,6 +123,33 @@ function resize(){
   camera.left=-width/2;camera.right=width/2;camera.top=height/2;camera.bottom=-height/2;
   camera.updateProjectionMatrix();
   pov?.resize(aspect);
+}
+function resetFrameWindow(now){
+  sampleSeconds=0;sampleFrames=0;lateFrames=0;measureAfter=now+900;
+}
+function setQuality(name){
+  if(!['auto','clear','smooth','ultra'].includes(name))return;
+  imageQuality=name;autoScale=1;smoothSeconds=0;allowIncreaseAfter=0;
+  $('image-quality').value=name;resetFrameWindow(performance.now());resize();
+}
+function adaptResolution(now,dt){
+  if(imageQuality!=='auto'||!state.playing||now<measureAfter||dt<=0)return;
+  sampleSeconds+=dt;sampleFrames++;
+  if(dt>.024)lateFrames++;
+  if(sampleSeconds<1.8)return;
+  const lateShare=lateFrames/sampleFrames;
+  const overloaded=lateShare>.18&&sampleSeconds/sampleFrames>.0195;
+  smoothSeconds=lateShare<.025?smoothSeconds+sampleSeconds:0;
+  sampleSeconds=0;sampleFrames=0;lateFrames=0;
+  let next=autoScale;
+  if(overloaded&&autoScale>.76){
+    next=Math.max(.76,autoScale-.08);allowIncreaseAfter=now+30000;
+  }else if(autoScale<1&&smoothSeconds>12&&now>allowIncreaseAfter){
+    next=Math.min(1,autoScale+.08);allowIncreaseAfter=now+15000;
+  }
+  if(next!==autoScale){
+    autoScale=Math.round(next*100)/100;smoothSeconds=0;resetFrameWindow(now);resize();
+  }
 }
 function fail(error){
   console.error(error);errors.push(String(error?.stack||error));
@@ -167,7 +197,7 @@ function wireControls(){
   $('pov-exit').addEventListener('click',()=>pov?.exit());
   $('wave-replay').addEventListener('click',startCoastWave);
   $('water-style').addEventListener('change',e=>{water?.setAppearance(e.target.value);renderDirty=true;});
-  $('image-quality').addEventListener('change',e=>{imageQuality=e.target.value;resize();});
+  $('image-quality').addEventListener('change',e=>setQuality(e.target.value));
   $('motion-toggle').addEventListener('click',()=>setPlaying(!state.playing));
   $('auto-rotate').addEventListener('click',()=>{
     transition=null;state.autoRotate=!state.autoRotate;controls.autoRotate=state.autoRotate;
@@ -293,8 +323,8 @@ async function init(){
   stageFloor=new THREE.Mesh(new THREE.PlaneGeometry(180,180),
     new THREE.MeshStandardMaterial({color:'#80a4c2',roughness:1}));
   stageFloor.rotation.x=-Math.PI/2;stageFloor.position.y=-2.69;stageFloor.receiveShadow=true;scene.add(stageFloor);
-  wireControls();window.addEventListener('resize',resize);
-  document.addEventListener('visibilitychange',()=>{lastTime=performance.now();});
+  wireControls();window.addEventListener('resize',()=>setQuality(imageQuality));
+  document.addEventListener('visibilitychange',()=>{lastTime=performance.now();resetFrameWindow(lastTime);});
 
   const metaResponse=await fetch('./public/assets/scene-meta-lite.json?v=coast-1');
   const useLite=metaResponse.ok;
@@ -357,7 +387,7 @@ async function init(){
     const option=document.createElement('option');option.value=subject.id;option.textContent=subject.label;$('subject-view').appendChild(option);
   }
   pov.resize(viewport.clientWidth/viewport.clientHeight);
-  harborRenderer=createHarborRenderer(THREE,renderer,scene,camera,water);
+  harborRenderer=createHarborRenderer(THREE,renderer,scene,camera,water,{stageFloor});
   wireWaterInteraction();
   lastAzimuth=controls.getAzimuthalAngle();lastPolar=controls.getPolarAngle();
   $('loading-progress').value=96;
@@ -368,12 +398,13 @@ async function init(){
   setPlaying(true);
   startCoastWave();
   window.dispatchEvent(new Event('harbor-ready'));
-  lastTime=performance.now();renderer.setAnimationLoop(tick);
+  lastTime=performance.now();resetFrameWindow(lastTime);renderer.setAnimationLoop(tick);
 }
 
 function tick(now){
   const dt=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   if(document.hidden)return;
+  adaptResolution(now,dt);
   averageFrame=averageFrame*.96+dt*1000*.04;
   if(state.playing)state.elapsed+=dt;
   if(transition){
@@ -413,14 +444,14 @@ window.harborViewer={
     motion:motion?.getDiagnostics(),appearance:$('water-style')?.value,quality:imageQuality,interactions:{...interactions},
     audio:ambient?.diagnostics(),
     render:renderer?{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,
-      pixelRatio:renderer.getPixelRatio(),width:renderer.domElement.width,height:renderer.domElement.height,shadowFrames,shadowUpdateHz:10,shadowMapSize:sun?.shadow.mapSize.x,averageFrameMs:averageFrame}:null,
+      pixelRatio:renderer.getPixelRatio(),autoScale,width:renderer.domElement.width,height:renderer.domElement.height,shadowFrames,shadowUpdateHz:10,shadowMapSize:sun?.shadow.mapSize.x,averageFrameMs:averageFrame}:null,
     optics:harborRenderer?.diagnostics(),
     underwater:underwaterLife?.diagnostics(),seabedTone:'warm gray beige',seabedEdge:seabedEdgeInfo,
     asset:meta?{triangles:meta.triangles,bytes:meta.bytes,clouds:meta.clouds?.length}:null,
     errors:[...errors]}),
   setView, setPlaying,enterPOV,exitPOV(){pov?.exit();},setLook(yaw,pitch){pov?.setLook(yaw,pitch);},
   setAppearance(name){$('water-style').value=name;water?.setAppearance(name);renderDirty=true;},
-  setQuality(name){imageQuality=name;$('image-quality').value=name;resize();},
+  setQuality,
   setOpticalSamples(value){harborRenderer?.setSamples(value);renderDirty=true;},
   setOptics(value){harborRenderer?.setEnabled(value);renderDirty=true;},
   splash(x,z,strength=2.2){renderDirty=true;return water?.poke(x,z,strength,.60);},

@@ -4,7 +4,7 @@
  * interaction adds a bounded, damped height-field simulation.
  * No image assets, network requests, or Blender scene changes are required.
  */
-import { createWaterPhysics } from './water-physics.js?v=12.1';
+import { createWaterPhysics } from './water-physics.js?v=12.2';
 import { createCoastWave, COAST_GLSL } from './coast-wave.js?v=2';
 
 const TAU = Math.PI * 2;
@@ -12,6 +12,7 @@ const DEFAULT_RADIUS = 9.0;
 const IMMERSIVE_RADIUS = 100;
 const DEPTH = 1.80;
 const DURATION = 6;
+const SURFACE_SEGMENTS = 256, SURFACE_RINGS = 112;
 const WAVES = [
   { amplitude: 0.024, wavelength: 3.10, direction: [0.894427191, -0.447213595], harmonic: 1, phase: 0.35 },
   { amplitude: 0.014, wavelength: 1.65, direction: [-0.287347886, -0.957826285], harmonic: 2, phase: 1.40 },
@@ -213,6 +214,7 @@ vec3 harborCutawayScene(float fresnel) {
 
 const CAUSTIC_GLSL = `
 ${PHYSICS_GLSL}
+uniform bool harborFieldDisplaced;
 uniform float harborTime;
 uniform mat4 harborContainerMatrix;
 uniform float harborCausticStrength;
@@ -382,6 +384,26 @@ function volumeSide(THREE, segments, radius) {
   return geometry;
 }
 
+// The polar mesh is indexed from the hub outwards. Both faces discard dry mask
+// texels, so omit complete inner rings while keeping every shoreline triangle.
+function trimDryWaterRings(geometry, physics) {
+  const { wet, radius, size } = physics;
+  const texel = 2 * radius / size;
+  let closestSquared = Infinity;
+  for (let i = 0; i < wet.length; i++) {
+    if (!wet[i]) continue;
+    const x = (i % size + .5) * texel - radius;
+    const z = (Math.floor(i / size) + .5) * texel - radius;
+    closestSquared = Math.min(closestSquared, x * x + z * z);
+  }
+  // Account for the full nearest-filtered texel, the unmasked outer rim, and
+  // the underside's pitched position (at most .34 units of horizontal lean).
+  const dryRadius = Math.min(Math.sqrt(closestSquared) - texel * Math.SQRT1_2, radius - .5) - .5;
+  const rings = Math.max(0, Math.floor(dryRadius * SURFACE_RINGS / radius));
+  const start = Math.max(0, 2 * rings - 1) * SURFACE_SEGMENTS * 3;
+  geometry.setDrawRange(start, geometry.index.count - start);
+}
+
 // Dense only at the shared shoreline-side boundary. Far rings need no fluid
 // simulation and share the near surface's 256 angular samples without overlap.
 function oceanRing(THREE, radius, outerRadius) {
@@ -431,6 +453,7 @@ export function createHarborWater(THREE, options = {}) {
     harborOpticalTint: { value: new THREE.Color('#168d98') },
     harborTime: time,
     harborField: { value: fieldTexture },
+    harborFieldDisplaced: { value: false },
     harborRadius: { value: radius },
     harborOpticalRadius: { value: radius },
     harborOpticalDepth: { value: DEPTH },
@@ -448,6 +471,10 @@ export function createHarborWater(THREE, options = {}) {
   };
   let previousSeconds = null;
   let ownedSkyEnvironment = null;
+  function publishField() {
+    shaderUniforms.harborFieldDisplaced.value = physics.hasDisplacement;
+    fieldTexture.needsUpdate = true;
+  }
   function ambientSample(x, z, seconds) {
     const sample = { height: 0, dx: 0, dz: 0 };
     for (const w of WAVES) {
@@ -586,7 +613,8 @@ export function createHarborWater(THREE, options = {}) {
     shaderStatus.surface = true;
   };
   material.customProgramCacheKey = () => 'harbor-coast-breaker-optical-v19';
-  const surface = new THREE.Mesh(polarSurface(THREE, 256, 112, radius), material);
+  const surface = new THREE.Mesh(polarSurface(THREE, SURFACE_SEGMENTS, SURFACE_RINGS, radius), material);
+  trimDryWaterRings(surface.geometry, physics);
   surface.name = 'Sea · interactive reflecting wave surface';
   surface.receiveShadow = true;
   surface.castShadow = false;
@@ -846,7 +874,10 @@ export function createHarborWater(THREE, options = {}) {
       const next = Number.isFinite(Number(seconds)) ? Number(seconds) : 0;
       let delta = previousSeconds === null ? 0 : Math.max(0, next - previousSeconds);
       if (Number.isFinite(deltaSeconds)) delta = delta > 0 ? Math.max(0, deltaSeconds) : 0;
-      if (previousSeconds !== null && next < previousSeconds - 0.001) physics.reset();
+      if (previousSeconds !== null && next < previousSeconds - 0.001) {
+        physics.reset();
+        publishField();
+      }
       previousSeconds = next;
       coastWave.update(next);
       time.value = ((next % DURATION) + DURATION) % DURATION;
@@ -854,7 +885,7 @@ export function createHarborWater(THREE, options = {}) {
       shaderUniforms.harborCausticDrift.value.set(
         Math.sin(causticPhase) * .045, Math.cos(causticPhase) * .040,
         Math.cos(causticPhase) * .032, -Math.sin(causticPhase) * .037);
-      if (physics.advance(delta)) fieldTexture.needsUpdate = true;
+      if (physics.advance(delta, true)) publishField();
     },
     sample(x, z, seconds = time.value) {
       const interactive = physics.sample(x, z);
@@ -871,7 +902,7 @@ export function createHarborWater(THREE, options = {}) {
     addImpulse: physics.addImpulse,
     poke(x, z, strength = 2.2, footprint = .60) {
       const changed = physics.poke(x, z, strength, footprint);
-      if (changed) fieldTexture.needsUpdate = true;
+      if (changed) publishField();
       return changed;
     },
     addSlosh: physics.addSlosh,
@@ -929,11 +960,12 @@ export function createHarborWater(THREE, options = {}) {
     setShoreline(points) {
       physics.setShoreline(points);
       coastWave.configure(points);
-      fieldTexture.needsUpdate = true;
+      trimDryWaterRings(surface.geometry, physics);
+      publishField();
     },
     resetInteraction() {
       physics.reset();
-      fieldTexture.needsUpdate = true;
+      publishField();
     },
     setQuality(level) {
       quality = level === 'high' ? 'high' : 'balanced';
@@ -950,6 +982,7 @@ export function createHarborWater(THREE, options = {}) {
         coastWave: coastWave.diagnostics(),
         maxAmplitude: WAVES.reduce((sum, w) => sum + w.amplitude, 0) + physics.diagnostics().maxHeight + coastWave.diagnostics().peak,
         surfaceVertices: surface.geometry.attributes.position.count,
+        surfaceTrianglesDrawn: surface.geometry.drawRange.count / 3,
         quality,
         appearance,
         appearanceNames: Object.keys(APPEARANCES),
@@ -1046,7 +1079,8 @@ export function installHarborCaustics(THREE, root, water) {
           .replace('#include <common>', `#include <common>\n${CAUSTIC_GLSL}`)
           .replace('#include <emissivemap_fragment>', `
             #include <emissivemap_fragment>
-            vec4 harborCausticField = harborFieldAt(vHarborCausticPosition.xz);
+            vec4 harborCausticField = vec4(0.0);
+            if (harborFieldDisplaced) harborCausticField = harborFieldAt(vHarborCausticPosition.xz);
             float harborLocalWaterLevel = harborCausticField.x;
             float harborWet = (1.0 - smoothstep(-0.08, -0.015, vHarborCausticPosition.y - harborLocalWaterLevel)) *
               smoothstep(-1.78, -1.55, vHarborCausticPosition.y) *
@@ -1064,7 +1098,7 @@ export function installHarborCaustics(THREE, root, water) {
             diffuseColor.rgb *= 1.0 + harborLight * harborCausticStrength;
           `);
       };
-      material.customProgramCacheKey = () => `${originalKey}|harbor-baked-optical-depth-caustics-v8`;
+      material.customProgramCacheKey = () => `${originalKey}|harbor-baked-optical-depth-caustics-v9`;
       replacements.set(original, material);
       water._noteCausticMaterial();
       return material;

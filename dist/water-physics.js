@@ -5,6 +5,7 @@
  * container produces a world-horizontal equilibrium and reflected travelling waves.
  */
 const clamp = (x, low, high) => Math.max(low, Math.min(high, x));
+const REST_HEIGHT = 0.00001, REST_SPEED = 0.00003; // scene units and scene units/second
 
 export function pointInShoreline(x, z, polygon) {
   let inside = false;
@@ -35,7 +36,7 @@ export function createWaterPhysics({
   let tiltX = 0, tiltZ = 0, slopeX = 0, slopeZ = 0, tiltUpdates = 0;
   let stepCount = 0, impulseCount = 0, pokeCount = 0, sloshCount = 0, rejectedImpulses = 0;
   let maximumHeight = 0, energy = 0, meanHeight = 0, nonFiniteCount = 0, limitedSteps = 0;
-  let equilibriumError = 0, revision = 0, discardedLongFrameSeconds = 0;
+  let equilibriumError = 0, revision = 0, discardedLongFrameSeconds = 0, atRest = true;
 
   function isWater(x, z) {
     return Number.isFinite(x) && Number.isFinite(z) && x * x + z * z <= radius * radius + 1e-7 &&
@@ -65,7 +66,7 @@ export function createWaterPhysics({
     const nextX = clamp(Number(x) || 0, -0.16, 0.16);
     const nextZ = clamp(Number(z) || 0, -0.16, 0.16);
     if (Math.abs(nextX - tiltX) + Math.abs(nextZ - tiltZ) < 1e-9) return;
-    tiltX = nextX; tiltZ = nextZ; tiltUpdates++;
+    tiltX = nextX; tiltZ = nextZ; tiltUpdates++; atRest = false;
     rebuildEquilibrium();
   }
 
@@ -109,10 +110,12 @@ export function createWaterPhysics({
     }
     energy *= spacing * spacing; meanHeight /= Math.max(1, active.length);
     equilibriumError = Math.sqrt(equilibriumError / Math.max(1, active.length)); revision++;
+    atRest = maximumHeight === 0 && energy === 0 && tiltX === 0 && tiltZ === 0;
   }
 
   function applySlosh() {
     if (Math.abs(sloshX) + Math.abs(sloshZ) < 1e-8) return;
+    atRest = false;
     const forceX = clamp(sloshX, -1.2, 1.2), forceZ = clamp(sloshZ, -1.2, 1.2);
     for (const i of active) {
       const x = (coordinateX[i] - wetCenterX) / radius;
@@ -122,7 +125,7 @@ export function createWaterPhysics({
     sloshX = sloshZ = 0;
   }
 
-  function advance(delta) {
+  function advance(delta, skipRestingField = false) {
     if (!Number.isFinite(delta) || delta <= 0) return false;
     // Catch up normal slow frames without changing the stable CFL-limited substep.
     // Only long suspension gaps are dropped; the caller also pauses hidden tabs.
@@ -132,6 +135,10 @@ export function createWaterPhysics({
     const coefficient = speedSquared / (spacing * spacing), decay = Math.exp(-damping * step);
     let changed = false;
     while (accumulator + 1e-10 >= step) {
+      accumulator -= step; simulationTime += step; stepCount++;
+      // The viewer owns the field and applies every external force through this API.
+      // Keep its clock in sync without solving or uploading an exactly flat field.
+      if (skipRestingField && atRest) continue;
       for (const i of active) potential[i] = height[i] - equilibrium[i];
       let velocitySum = 0;
       for (const i of active) {
@@ -160,9 +167,18 @@ export function createWaterPhysics({
         correction = sum / Math.max(1, active.length);
       }
       if (clipped) limitedSteps++;
-      accumulator -= step; simulationTime += step; stepCount++; changed = true;
+      changed = true;
     }
-    if (changed) writeTexture();
+    if (changed) {
+      // Previous-frame height avoids an extra scan while a ripple is visible.
+      // Check this frame's displacement AND velocity before publishing one final flat field.
+      if (skipRestingField && tiltX === 0 && tiltZ === 0 && maximumHeight < REST_HEIGHT &&
+          active.every(i => Math.abs(height[i]) < REST_HEIGHT && Math.abs(velocity[i]) < REST_SPEED)) {
+        height.fill(0);
+        velocity.fill(0);
+      }
+      writeTexture();
+    }
     return changed;
   }
 
@@ -180,6 +196,7 @@ export function createWaterPhysics({
       const q = (dx * dx + dz * dz) / denom;
       velocity[i] = clamp(velocity[i] + amount * (1 - q) * Math.exp(-q), -3.6, 3.6);
     }
+    if (amount) atRest = false;
     impulseCount++; return true;
   }
 
@@ -259,6 +276,7 @@ export function createWaterPhysics({
     radius, size, spacing, step, height, velocity, wet, textureData,
     advance, sample, isWater, addImpulse, poke, addSlosh, reset, setContainerTilt, setShoreline: rebuildMask,
     get revision() { return revision; },
+    get hasDisplacement() { return maximumHeight !== 0; },
     diagnostics() {
       return {
         model: 'fixed-step shallow-water free-surface approximation; not volumetric fluid',
