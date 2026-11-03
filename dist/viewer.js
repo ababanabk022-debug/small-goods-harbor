@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { createHarborWater, installHarborCaustics } from './water.js?v=coast-2';
+import { createHarborWater, installHarborCaustics } from './water.js?v=coast-3';
 import { createHarborMotion } from './harbor-motion.js?v=coast-1';
 import { createHarborRenderer } from './harbor-renderer.js?v=14.1';
 import { createUnderwaterLife } from './harbor-underwater.js?v=14.2';

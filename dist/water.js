@@ -885,8 +885,13 @@ export function createHarborWater(THREE, options = {}) {
     setOpticalScene(capture) {
       if (!capture?.colorTexture?.isTexture || !capture?.depthTexture?.isTexture) {
         shaderUniforms.harborOpticalEnabled.value = 0;
+        material.depthWrite = false;
         return false;
       }
+      // The optical shader resolves transmission from the captured scene and
+      // outputs alpha 1. Keep the closest water triangle when a tall crest
+      // overlaps the far side of the surface in screen space.
+      material.depthWrite = true;
       shaderUniforms.harborSceneColor.value = capture.colorTexture;
       shaderUniforms.harborSceneDepth.value = capture.depthTexture;
       shaderUniforms.harborOpticalResolution.value.set(Math.max(1,capture.width), Math.max(1,capture.height));
