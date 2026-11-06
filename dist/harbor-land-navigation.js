@@ -3,13 +3,17 @@ function inside(x,z,polygon){let hit=false;for(let i=0,j=polygon.length-1;i<poly
 function segmentDistance(x,z,a,b){const dx=b.x-a.x,dz=b.z-a.z,t=clamp(((x-a.x)*dx+(z-a.z)*dz)/(dx*dx+dz*dz||1),0,1);return Math.hypot(x-a.x-dx*t,z-a.z-dz*t);}
 
 /** One-time triangle rasterization; walking never raycasts the detailed scene. */
-export function createLandNavigator(THREE,{model,boundary=[]}){
+export function createLandNavigator(THREE,{model,boundary=[],extraObstacleRoots=[]}){
   // Includes a carried crate's full turning envelope, not only the torso.
   // This is rasterized once, so walking does not raycast the detailed rocks.
   const cell=.18,padding=.50,meshes=[];let ground=null;
   model.updateMatrixWorld(true);
   const root=model.getObjectByName('STATIC');
   (root||model).traverse(o=>{if(!o.isMesh||!o.geometry?.attributes.position)return;if(/fine[ _]+even[ _]+ivory[ _]+beach[ _]+sand/i.test(o.name))ground=o;else meshes.push(o);});
+  const seen=new Set(meshes);
+  for(const extra of extraObstacleRoots)extra.traverse(o=>{
+    if(o.isMesh&&o.geometry?.attributes.position&&o!==ground&&!seen.has(o)){meshes.push(o);seen.add(o);}
+  });
   if(!ground)return null;
   const box=new THREE.Box3().setFromObject(ground),minX=box.min.x,minZ=box.min.z;
   const width=Math.ceil((box.max.x-minX)/cell)+1,depth=Math.ceil((box.max.z-minZ)/cell)+1,size=width*depth;
@@ -56,7 +60,7 @@ export function createLandNavigator(THREE,{model,boundary=[]}){
   const component=new Int32Array(size).fill(-1),components=[];
   for(let i=0;i<size;i++)if(safe[i]&&component[i]<0){const list=[i],id=components.length;component[i]=id;for(let k=0;k<list.length;k++)for(const j of adjacent(list[k]))if(component[j]<0){component[j]=id;list.push(j);}components.push(list);}
   const largest=components.reduce((best,a)=>a.length>best.length?a:best,[]),mainComponent=largest.length?component[largest[0]]:-1;
-  function nearest(x,z){let best=-1,d=Infinity;for(const i of largest){const p=point(i),dd=(p[0]-x)**2+(p[1]-z)**2;if(dd<d){d=dd;best=i;}}return best;}
+  function nearest(x,z,avoid=[]){let best=-1,d=Infinity;for(const i of largest){const p=point(i);if(!freeOfActors(p[0],p[1],avoid))continue;const dd=(p[0]-x)**2+(p[1]-z)**2;if(dd<d){d=dd;best=i;}}return best;}
   function indexAt(x,z){const ix=Math.round((x-minX)/cell),iz=Math.round((z-minZ)/cell);return ix>=0&&ix<width&&iz>=0&&iz<depth?iz*width+ix:-1;}
   function valid(x,z){const i=indexAt(x,z);return i>=0&&!!safe[i]&&component[i]===mainComponent;}
   function freeOfActors(x,z,avoid){return !avoid.some(a=>(x-a.x)**2+(z-a.z)**2<a.radius*a.radius);}
@@ -84,7 +88,7 @@ export function createLandNavigator(THREE,{model,boundary=[]}){
   }
   function height(x,z){const i=indexAt(x,z);return i>=0&&Number.isFinite(heights[i])?heights[i]:.60;}
   const all=largest.map(point);
-  return {plan,planTo:(x,z,target,avoid=[])=>plan(x,z,[],avoid,target),valid,height,nearest:(x,z)=>{const i=nearest(x,z);return i<0?null:point(i);},random,
+  return {plan,planTo:(x,z,target,avoid=[])=>plan(x,z,[],avoid,target),valid,height,nearest:(x,z,avoid=[])=>{const i=nearest(x,z,avoid);return i<0?null:point(i);},random,
     diagnostics:()=>({cell,padding,walkableCells:largest.length,components:components.map(c=>c.length).sort((a,b)=>b-a).slice(0,8),bounds:all.length?{min:[Math.min(...all.map(p=>p[0])),Math.min(...all.map(p=>p[1]))],max:[Math.max(...all.map(p=>p[0])),Math.max(...all.map(p=>p[1]))]}:null}),
     exportGrid:()=>({cell,minX,minZ,width,depth,heights:Array.from(heights),safe:Array.from(safe),component:Array.from(component),mainComponent})};
 }

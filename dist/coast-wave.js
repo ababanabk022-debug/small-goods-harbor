@@ -2,7 +2,10 @@
 // and its tapered wings fill the local stretch from the actual coast to the rim.
 const TAU = Math.PI * 2;
 const LAP = 16, SETTLE = 1.25, DEFAULT_ANGLE = .70;
-const MIN_U = -4.55, MAX_U = 1.90, LEAN = .155;
+const CANCEL_SETTLE = 2.0;
+const HEIGHT_SCALE = .5;
+// Compress only vertically, preserving the crest's horizontal footprint.
+const MIN_U = -4.55, MAX_U = 1.90, LEAN = .155 / HEIGHT_SCALE;
 const SPILL_SWAY = .056, SPILL_FREQ = 8.2;
 const NX = 224, NY = 144;
 const COAST_SAMPLES = 512, INNER_CLEARANCE = .115, RIM_CLEARANCE = .012;
@@ -24,7 +27,7 @@ function section(u, v) {
   const bead = .080*Math.exp(-(((q-.04)/.22)**2))*(.48+.52*Math.cos(22*v+1.1*Math.sin(7*v)));
   const hollow = .21*Math.exp(-(((q-.88)/.41)**2));
   const train = .16*Math.exp(-(((q+2.15)/.63)**2))*(.73+.27*Math.cos(v*4.6+q*1.2));
-  const height = wing*(1.91*ridge + bead - hollow + train)*smooth(MIN_U, MIN_U+.46, u)*(1-smooth(MAX_U-.27, MAX_U, u));
+  const height = HEIGHT_SCALE*wing*(1.91*ridge + bead - hollow + train)*smooth(MIN_U, MIN_U+.46, u)*(1-smooth(MAX_U-.27, MAX_U, u));
   return {height, q, wing};
 }
 
@@ -126,6 +129,7 @@ export function createCoastWave(THREE, radius, shoreline) {
   shoreMap.wrapS=THREE.RepeatWrapping;
   const frame = new THREE.Vector4(), band = new THREE.Vector3(), spill = new THREE.Vector4();
   let startTime = null, startAngle = DEFAULT_ANGLE, progress = 0, age = 0, running = false;
+  let stopping=false,stopAge=0,stopGain=0,stopClock=0,stopOrbitAge=0,stopPhaseAge=0,stopSpeed=1;
 
   function configure(points) {
     const polygon=(points || []).filter(p=>Number.isFinite(p?.[0])&&Number.isFinite(p?.[1]));
@@ -163,15 +167,34 @@ export function createCoastWave(THREE, radius, shoreline) {
     const i=((angle/TAU%1+1)%1)*COAST_SAMPLES, j=Math.floor(i), f=i-j;
     return coast[j]*(1-f)+coast[(j+1)%COAST_SAMPLES]*f;
   }
-  function update(elapsed) {
+  function setFrame(orbitAge,phaseAge) {
+    const turns=orbitAge/LAP;
+    const angle=startAngle+(turns-Math.floor(turns))*TAU;
+    const c=Math.cos(angle),s=Math.sin(angle);
+    frame.set(c*band.x,s*band.x,-s,c);
+    const spillPhase=TAU*7*(phaseAge%LAP)/LAP;
+    spill.set(spillPhase,Math.sin(spillPhase),angle/TAU,spill.w);
+  }
+  function update(elapsed, effectDelta) {
     if (startTime === null || !running) return;
+    if(stopping){
+      // Let the crest run on as it dissipates. The integrated speed starts at
+      // the current cruising speed and eases to a quarter of it, without a
+      // sudden brake. Continue the spill phase as the lip falls into the water.
+      const delta=Number.isFinite(effectDelta)?effectDelta:elapsed-stopClock;
+      stopClock=elapsed;stopAge+=Math.max(0,delta);
+      const t=clamp(stopAge/CANCEL_SETTLE,0,1);
+      const travel=stopSpeed*CANCEL_SETTLE*(t-.75*(t*t*t-.5*t*t*t*t));
+      age=stopPhaseAge+travel;progress=Math.min(1,(stopOrbitAge+travel)/LAP);
+      setFrame(stopOrbitAge+travel,age);
+      const fade=t*t*t*(t*(6*t-15)+10);
+      band.z=stopGain*(1-fade);
+      if(stopAge>=CANCEL_SETTLE){running=false;stopping=false;}
+      return;
+    }
     age = clamp(elapsed-startTime,0,LAP+SETTLE);
     progress = Math.min(1,age/LAP);
-    const angle = progress===1 ? startAngle : startAngle+progress*TAU;
-    const c=Math.cos(angle), s=Math.sin(angle);
-    frame.set(c*band.x,s*band.x,-s,c);
-    const spillPhase = TAU*7*(age%LAP)/LAP;
-    spill.set(spillPhase,Math.sin(spillPhase),angle/TAU,spill.w);
+    setFrame(Math.min(age,LAP),age);
     // Start with a formed crest. At the end of the orbit both its outline and
     // its forward pitch land exactly where they started, then they collapse.
     band.z = elapsed<startTime ? 0 : Math.min(1,band.y/.85)*(1-smooth(LAP,LAP+SETTLE,age));
@@ -180,10 +203,25 @@ export function createCoastWave(THREE, radius, shoreline) {
   function start(elapsed, x, z) {
     if (!Number.isFinite(elapsed) || band.y<=0) return false;
     startTime=elapsed;
+    stopping=false;stopAge=0;stopGain=0;
     startAngle=Number.isFinite(x)&&Number.isFinite(z)&&(x*x+z*z)>.0001 ? Math.atan2(z,x) : DEFAULT_ANGLE;
     running=true;
     update(elapsed);
     return true;
+  }
+  function cancel(elapsed) {
+    if(!running||stopping||!Number.isFinite(elapsed))return false;
+    update(elapsed);
+    if(!running)return false;
+    stopping=true;stopAge=0;stopGain=band.z;stopClock=elapsed;
+    stopOrbitAge=Math.min(age,LAP);stopPhaseAge=age;
+    // If it already reached the stationary end-of-lap settle, do not kick it
+    // back into motion. Otherwise preserve its existing forward momentum.
+    stopSpeed=age<LAP?1:0;
+    return true;
+  }
+  function stop() {
+    startTime=null;running=false;stopping=false;stopAge=0;stopGain=0;age=0;progress=0;band.z=0;
   }
   function sample(x,z) {
     const dx=x-frame.x, dz=z-frame.y, f=frame.z, g=frame.w;
@@ -219,13 +257,13 @@ export function createCoastWave(THREE, radius, shoreline) {
   configure(shoreline);
   return {
     uniforms:{harborCoastProfile:{value:texture},harborCoastShore:{value:shoreMap},harborCoastFrame:{value:frame},harborCoastBand:{value:band},harborCoastSpill:{value:spill}},
-    get running(){return running;},
-    start,update,sample,configure,dispose(){texture.dispose();shoreMap.dispose();},
+    get running(){return running;},get stopping(){return stopping;},
+    start,cancel,stop,update,sample,configure,dispose(){texture.dispose();shoreMap.dispose();},
     diagnostics:()=>({
       start:{x:Math.cos(startAngle)*band.x,z:Math.sin(startAngle)*band.x},
       center:{x:frame.x,z:frame.y},peak:section(0,0).height*band.z,radius:band.x,halfSpan:band.y,
       innerEdge:innerEdge(spill.z*TAU),outerEdge:band.x+band.y,span:band.x+band.y-innerEdge(spill.z*TAU),
-      duration:LAP+SETTLE,lapSeconds:LAP,speed:TAU*band.x/LAP,elapsed:age,startTime,progress,running,
+      duration:LAP+SETTLE,lapSeconds:LAP,speed:TAU*band.x/LAP,elapsed:age,startTime,progress,running,stopping,stopSeconds:CANCEL_SETTLE,
     }),
   };
 }

@@ -64,7 +64,7 @@ export function createHarborRenderer(THREE, renderer, scene, camera, water, {sta
   });
   const seedScene = new THREE.Scene(), seedQuad = new THREE.Mesh(triangle,seedMaterial);
   seedQuad.frustumCulled=false;seedScene.add(seedQuad);
-  const fixedRoots = new Set(['STATIC','CLOUDS','SEABED'].map(name=>scene.getObjectByName(name)).filter(Boolean));
+  const fixedRoots = new Set(['STATIC','DOCK_STATIC','CLOUDS','SEABED'].map(name=>scene.getObjectByName(name)).filter(Boolean));
   if(stageFloor)fixedRoots.add(stageFloor);
   const watchedNodes = new Map(), lightShadows = [], splitLayers = [];
   let cachedObjects=0, cachedTriangles=0, cacheEnabled=true, cacheValid=false;

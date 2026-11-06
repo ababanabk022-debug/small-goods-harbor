@@ -246,3 +246,18 @@ h1 { margin: 0; font-size: 22px; font-weight: 550; letter-spacing: .09em; line-h
   #sound-toggle{padding:7px 9px}
 }
 @media(max-width:380px){#sound-label{display:none}#sound-toggle{width:34px;padding:7px}}
+
+.look-controls {flex-wrap:wrap;width:264px;gap:8px 10px}
+.scene-mode-controls {display:flex;width:100%;gap:4px;padding:3px;border-radius:10px;background:#e5eeec}
+.scene-mode-controls button {flex:1;min-height:34px;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#607782;font-size:12px;cursor:pointer}
+.scene-mode-controls button[aria-pressed="true"] {background:#fbfcf7;color:#315f64;box-shadow:0 1px 4px #29485817}
+.scene-mode-controls button:disabled {cursor:wait;opacity:.5}
+@media(max-width:590px){
+  .look-controls {width:264px;max-width:calc(100% - 42px)}
+  .subject-controls {top:192px}
+  .scene-mode-controls button {min-height:32px;font-size:11px}
+}
+@media(max-width:380px){
+  #auto-rotate .control-label,#motion-toggle .water-icon,#motion-toggle .toggle-indicator {display:none}
+  #auto-rotate {width:32px;padding:6px}
+}

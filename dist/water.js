@@ -5,7 +5,7 @@
  * No image assets, network requests, or Blender scene changes are required.
  */
 import { createWaterPhysics } from './water-physics.js?v=12.2';
-import { createCoastWave, COAST_GLSL } from './coast-wave.js?v=2';
+import { createCoastWave, COAST_GLSL } from './coast-wave.js?v=wave-runout-1';
 
 const TAU = Math.PI * 2;
 const DEFAULT_RADIUS = 9.0;
@@ -867,10 +867,13 @@ export function createHarborWater(THREE, options = {}) {
     },
     waveGLSL: WAVE_GLSL,
     get coastWaveRunning(){return coastWave.running;},
+    get coastWaveStopping(){return coastWave.stopping;},
     startCoastWave(elapsed = previousSeconds ?? 0, x, z) {
       return coastWave.start(elapsed,x,z);
     },
-    update(seconds, deltaSeconds) {
+    stopCoastWave() { coastWave.stop(); },
+    cancelCoastWave(elapsed = previousSeconds ?? 0) { return coastWave.cancel(elapsed); },
+    update(seconds, deltaSeconds, effectDeltaSeconds) {
       const next = Number.isFinite(Number(seconds)) ? Number(seconds) : 0;
       let delta = previousSeconds === null ? 0 : Math.max(0, next - previousSeconds);
       if (Number.isFinite(deltaSeconds)) delta = delta > 0 ? Math.max(0, deltaSeconds) : 0;
@@ -879,7 +882,7 @@ export function createHarborWater(THREE, options = {}) {
         publishField();
       }
       previousSeconds = next;
-      coastWave.update(next);
+      coastWave.update(next,Number.isFinite(effectDeltaSeconds)?effectDeltaSeconds:delta);
       time.value = ((next % DURATION) + DURATION) % DURATION;
       const causticPhase = time.value * TAU / DURATION;
       shaderUniforms.harborCausticDrift.value.set(
