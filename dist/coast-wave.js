@@ -1,7 +1,7 @@
 // Moving coordinates on the water disc. The front travels along the tangent,
 // and its tapered wings fill the local stretch from the actual coast to the rim.
 const TAU = Math.PI * 2;
-const LAP = 16, SETTLE = 1.25, DEFAULT_ANGLE = .70;
+const LAP = 16, SETTLE = 2.4, DEFAULT_ANGLE = .70;
 const CANCEL_SETTLE = 2.0;
 // A tall continuous breaker. Its crest pitches forward in the same surface
 // mesh, forming an overhang without a detached shell.
@@ -172,8 +172,10 @@ export function createCoastWave(THREE, radius, shoreline) {
   shoreMap.wrapS=THREE.RepeatWrapping;
   const frame = new THREE.Vector4(), band = new THREE.Vector3(), spill = new THREE.Vector4();
   let startTime = null, startAngle = DEFAULT_ANGLE, progress = 0, age = 0, running = false;
+  let orbitAge=0,orbitSpeed=0;
   let riseSeconds=0;
   let stopping=false,stopAge=0,stopGain=0,stopClock=0,stopOrbitAge=0,stopPhaseAge=0,stopSpeed=1;
+  let stopDuration=CANCEL_SETTLE,stopInNaturalFade=false,stopNaturalGain=0;
 
   function configure(points) {
     const polygon=(points || []).filter(p=>Number.isFinite(p?.[0])&&Number.isFinite(p?.[1]));
@@ -224,22 +226,30 @@ export function createCoastWave(THREE, radius, shoreline) {
     if (startTime === null || !running) return;
     if(stopping){
       // Let the crest run on as it dissipates. The integrated speed starts at
-      // the current cruising speed and eases to a quarter of it, without a
-      // sudden brake. Continue the spill phase as the lip falls into the water.
+      // the current speed and eases to rest, without a sudden brake. Continue
+      // the spill phase as the lip falls into the water.
       const delta=Number.isFinite(effectDelta)?effectDelta:elapsed-stopClock;
       stopClock=elapsed;stopAge+=Math.max(0,delta);
-      const t=clamp(stopAge/CANCEL_SETTLE,0,1);
-      const travel=stopSpeed*CANCEL_SETTLE*(t-.75*(t*t*t-.5*t*t*t*t));
-      age=stopPhaseAge+travel;progress=Math.min(1,(stopOrbitAge+travel)/LAP);
-      setFrame(stopOrbitAge+travel,age);
+      const t=clamp(stopAge/stopDuration,0,1);
+      const travel=stopSpeed*stopDuration*(t-t*t*t+.5*t*t*t*t);
+      orbitAge=stopOrbitAge+travel;orbitSpeed=stopSpeed*(1-3*t*t+2*t*t*t);
+      age=stopPhaseAge+travel;progress=Math.min(1,orbitAge/LAP);
+      setFrame(orbitAge,age);
       const fade=t*t*t*(t*(6*t-15)+10);
-      band.z=stopGain*(1-fade);
-      if(stopAge>=CANCEL_SETTLE){running=false;stopping=false;}
+      // If already settling naturally, keep its original fade curve instead
+      // of resetting the height slope when the user clicks stop.
+      band.z=stopInNaturalFade?stopNaturalGain*(1-smooth(LAP,LAP+SETTLE,stopPhaseAge+stopAge)):stopGain*(1-fade);
+      if(stopAge>=stopDuration){band.z=0;running=false;stopping=false;}
       return;
     }
     age = clamp(elapsed-startTime,0,LAP+SETTLE);
     progress = Math.min(1,age/LAP);
-    setFrame(Math.min(age,LAP),age);
+    // The crest reaches its starting position after one lap, then keeps a
+    // little forward momentum as it settles instead of freezing in place.
+    const t=clamp((age-LAP)/SETTLE,0,1);
+    orbitAge=Math.min(age,LAP)+SETTLE*(t-t*t+t*t*t/3);
+    orbitSpeed=age<LAP?1:(1-t)*(1-t);
+    setFrame(orbitAge,age);
     // A rider can request a short formation ramp for a continuous landing.
     // Ordinary waves keep their original immediate crest, height and lap.
     const formation=riseSeconds>0?smooth(0,riseSeconds,age):1;
@@ -261,14 +271,17 @@ export function createCoastWave(THREE, radius, shoreline) {
     update(elapsed);
     if(!running)return false;
     stopping=true;stopAge=0;stopGain=band.z;stopClock=elapsed;
-    stopOrbitAge=Math.min(age,LAP);stopPhaseAge=age;
-    // If it already reached the stationary end-of-lap settle, do not kick it
-    // back into motion. Otherwise preserve its existing forward momentum.
-    stopSpeed=age<LAP?1:0;
+    stopOrbitAge=orbitAge;stopPhaseAge=age;
+    stopInNaturalFade=age>=LAP;
+    stopDuration=stopInNaturalFade?LAP+SETTLE-age:CANCEL_SETTLE;
+    stopNaturalGain=Math.min(1,band.y/.85)*(riseSeconds>0?smooth(0,riseSeconds,age):1);
+    // Cancellation during the natural runout preserves the actual position
+    // and instantaneous speed; it cannot jump back to the starting point.
+    stopSpeed=orbitSpeed;
     return true;
   }
   function stop() {
-    startTime=null;running=false;stopping=false;stopAge=0;stopGain=0;age=0;progress=0;band.z=0;
+    startTime=null;running=false;stopping=false;stopAge=0;stopGain=0;age=0;progress=0;orbitAge=0;orbitSpeed=0;band.z=0;
   }
   function sample(x,z) {
     const dx=x-frame.x, dz=z-frame.y, f=frame.z, g=frame.w;
@@ -334,7 +347,7 @@ export function createCoastWave(THREE, radius, shoreline) {
       start:{x:Math.cos(startAngle)*band.x,z:Math.sin(startAngle)*band.x},
       center:{x:frame.x,z:frame.y},peak:section(0,0).height*band.z,radius:band.x,halfSpan:band.y,
       innerEdge:innerEdge(spill.z*TAU),outerEdge:band.x+band.y,span:band.x+band.y-innerEdge(spill.z*TAU),
-      duration:LAP+SETTLE,lapSeconds:LAP,speed:TAU*band.x/LAP,elapsed:age,startTime,progress,running,stopping,stopSeconds:CANCEL_SETTLE,
+      duration:LAP+SETTLE,lapSeconds:LAP,speed:TAU*band.x/LAP,elapsed:age,startTime,progress,running,stopping,stopSeconds:stopping?stopDuration:CANCEL_SETTLE,
     }),
   };
 }

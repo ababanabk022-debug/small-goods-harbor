@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { createHarborWater, installHarborCaustics } from './water.js?v=continuous-breaker-8';
+import { createHarborWater, installHarborCaustics } from './water.js?v=rider-follow-1';
 import { createHarborMotion } from './harbor-motion.js?v=continuous-breaker-8';
 import { createHarborCharacter } from './harbor-character.js?v=tapati-medium-1';
 import { createSurferRig } from './harbor-surfer-rig.js?v=surfer-pov-cheer-1';
@@ -32,10 +32,14 @@ let seabedEdgeInfo=null;
 let pov,bird,world,stageFloor,overviewView='hero',overviewBackground,overviewFog;
 let ambient,harborRoot,characterPreview,characterController,characterFollowing=false,overviewCharacterFollowing=false;
 let surferRig,surfing,surfEffects,surferPreview,surferFollowing=false,overviewSurferFollowing=false;
+let filmFollowing=false,filmPending=false;
 let characterFocusHeight=.55;
 const characterLastPosition=new THREE.Vector3();
 const surferForward=new THREE.Vector3(),surferWorldQ=new THREE.Quaternion(),followOffset=new THREE.Vector3();
 const followUp=new THREE.Vector3(0,1,0);
+const filmForward=new THREE.Vector3(),filmLeft=new THREE.Vector3(),filmPosition=new THREE.Vector3(),filmTarget=new THREE.Vector3(),filmFigureEuler=new THREE.Euler(0,0,0,'YXZ');
+const filmDirection=new THREE.Vector3(),filmRight=new THREE.Vector3();
+const filmPointers=new Map();let filmLookYaw=0,filmLookPitch=0,filmZoomFactor=1,filmPinch=null;
 let surferLastHeading=0;
 let renderDirty=true,lastShadowTime=-Infinity,shadowFrames=0;
 const presets={
@@ -44,7 +48,54 @@ const presets={
   top:{position:[.02,32,4.5],target:[0,0,0],zoom:1},
   character:{position:[5,3.5,12.35],target:[2,1,3.35],zoom:8},
   surfer:{position:[5,3.5,12.35],target:[2,1,3.35],zoom:7},
+  film:{position:[5,3.5,12.35],target:[2,1,3.35],zoom:3},
 };
+function keepFilmCameraOffshore(position){
+  // The island's shoreline is inside radius 6.07; keep the camera near the
+  // radius-9 sea rim. This is a position constraint only, never a look target.
+  const safeRadius=Math.max(0,(water?.radius||9)-.20),r=Math.hypot(position.x,position.z);
+  if(r<safeRadius){
+    if(r>1e-5){position.x*=safeRadius/r;position.z*=safeRadius/r;}
+    else {position.x=filmLeft.x*safeRadius;position.z=filmLeft.z*safeRadius;}
+  }
+  const sample=water?.sample?.(position.x,position.z,state.elapsed);
+  const surface=sample?.wet===false?0:(Number.isFinite(sample?.height)?sample.height:0);
+  position.y=Math.max(position.y,surface+.8);
+}
+function filmComposition(){
+  const p=surferRig.root.position,figure=surferRig.root.children[0];
+  // The surfer turns sideways on the board: the rig's figure is rotated
+  // -90° relative to its board-aligned root. Track the visible figure's yaw,
+  // rather than confusing board direction with the rider's forward direction.
+  const figureYaw=figure?filmFigureEuler.setFromQuaternion(figure.quaternion,'YXZ').y:0;
+  const heading=getSurferHeading()+figureYaw;
+  filmForward.set(Math.sin(heading),0,Math.cos(heading));
+  // This rig's left-hand bones and leg are on local +X; when looking along
+  // its +Z front, character-left is therefore +X (not world camera-left).
+  filmLeft.set(filmForward.z,0,-filmForward.x);
+  const height=viewport.clientWidth<700?7.1:7.4;
+  const zoom=Math.min(18,(camera.top-camera.bottom)/height);
+  // Camera and aim are attached to the rider's horizontal frame, never the
+  // island centre. In the figure's frame left is +X and forward is +Z.
+  // Ignore board pitch/roll so the camera does not lean with the water.
+  // The surfer stands sideways: figure-left points toward the board's nose.
+  // Stay ahead of the moving board and look back so the crest trails behind
+  // the rider instead of standing between the rider and the camera.
+  filmPosition.copy(p).addScaledVector(filmForward,2.8).addScaledVector(filmLeft,3.5);filmPosition.y+=3.35;
+  keepFilmCameraOffshore(filmPosition);
+  filmTarget.copy(p);filmTarget.y+=.65;
+  // Turn the view at the camera, without orbiting it around the surfer.
+  // Offsets are relative to this rider-attached base view as the rider turns.
+  filmDirection.subVectors(filmTarget,filmPosition).applyAxisAngle(followUp,filmLookYaw);
+  filmRight.crossVectors(filmDirection,followUp).normalize();
+  filmDirection.applyAxisAngle(filmRight,filmLookPitch);
+  filmTarget.copy(filmPosition).add(filmDirection);
+  return Math.max(.55,Math.min(18,zoom*filmZoomFactor));
+}
+function endFilmInput(){
+  const canvas=renderer?.domElement,ids=[...filmPointers.keys()];filmPointers.clear();filmPinch=null;
+  if(canvas)for(const id of ids)if(canvas.hasPointerCapture(id))canvas.releasePointerCapture(id);
+}
 const followingActor=()=>surferFollowing?surferRig:characterFollowing?characterController:null;
 function getSurferHeading(){
   if(!surferRig)return 0;
@@ -68,9 +119,27 @@ function followActorPosition(position,heading){
 
 function setView(name,instant=false){
   const preset=presets[name];if(!preset)return;
+  // Arm the shot without changing the overview until the rider is actually
+  // on the board. The same button can cancel this pending shot at any time.
+  if(name==='film'&&surferRig&&state.sceneMode==='surf'&&surfing?.phase!=='riding'){
+    filmPending=true;syncFilmButton();return;
+  }
+  filmPending=false;
   if(pov?.active)pov.exit();
+  if(name!=='film')endFilmInput();
+  filmFollowing=name==='film'&&!!surferRig&&state.sceneMode==='surf';
+  if(name==='film'&&!filmFollowing)return;
+  // An orthographic shot can see water behind its physical eye position.
+  // Expand its near plane so the foreground is not sliced open. Restore the
+  // original near plane after leaving the shot and completing the transition.
+  if(filmFollowing||instant){camera.near=filmFollowing?-30:.1;camera.updateProjectionMatrix();}
+  if(filmFollowing){filmLookYaw=filmLookPitch=0;filmZoomFactor=1;}
+  controls.enabled=!filmFollowing;
   characterFollowing=name==='character'&&!!characterController;
   surferFollowing=name==='surfer'&&!!surferRig;
+  if(filmFollowing){
+    preset.zoom=filmComposition();preset.position=filmPosition.toArray();preset.target=filmTarget.toArray();
+  }
   if(followingActor()){
     const p=followingActor().root.position;
     const narrow=viewport.clientWidth<700;characterFocusHeight=narrow?.90:.55;
@@ -89,6 +158,7 @@ function setView(name,instant=false){
     b.setAttribute('aria-pressed',String(b.dataset.view===name));
     b.classList.toggle('is-active',b.dataset.view===name);
   });
+  syncFilmButton();
   if(instant){
     camera.position.fromArray(preset.position);controls.target.fromArray(preset.target);
     camera.zoom=preset.zoom;camera.updateProjectionMatrix();controls.update();
@@ -103,7 +173,7 @@ function finishCameraTransition(){
   if(!transition)return;
   camera.position.copy(transition.to);controls.target.copy(transition.targetTo);
   camera.zoom=transition.zoomTo;camera.updateProjectionMatrix();
-  transition=null;controls.update();renderDirty=true;
+  transition=null;if(!filmFollowing){camera.near=.1;camera.updateProjectionMatrix();}controls.update();renderDirty=true;
 }
 function setPlaying(value){
   state.playing=Boolean(value);renderDirty=true;
@@ -124,6 +194,15 @@ function syncWaveButton(){
   surfButton.disabled=!state.ready||state.sceneMode!=='surf'||!surfing||(surfing.busy&&!surfing.canCancel)||(!surfing.busy&&!!water?.coastWaveRunning);
   $('surf-label').textContent=surfing?.busy?(surfing.canCancel?'结束冲浪':'正在返回'):water?.coastWaveRunning?'等待浪结束':'开始冲浪';
   surfButton.title=surfing?.busy?'结束这次冲浪并返回岸边':water?.coastWaveRunning?'等待这道浪结束后再开始冲浪':'让冲浪板降落，伙伴从岛上出发冲浪';
+  syncFilmButton();
+}
+
+function syncFilmButton(){
+  const button=document.querySelector('[data-view="film"]');if(!button)return;
+  const selected=filmPending||filmFollowing;
+  button.hidden=state.sceneMode!=='surf';button.disabled=!state.ready||!surferRig;
+  button.setAttribute('aria-pressed',String(selected));button.classList.toggle('is-active',selected);
+  button.title=filmPending?'等待人物开始冲浪，再次点击取消跟拍':filmFollowing?'退出跟拍并返回俯瞰':'人物开始冲浪后从前方回拍';
 }
 
 function startCoastWave(){
@@ -164,6 +243,7 @@ function syncSubjects(){
 function setSceneMode(next){
   if(!state.ready||!['harbor','surf'].includes(next))return false;
   if(next===state.sceneMode)return true;
+  if((filmFollowing||filmPending)&&next!=='surf')setView('hero',true);
   // Restore POV-hidden parts before hiding their entire harbor group.
   if(next==='surf'&&['boat','dockhand'].includes(pov?.subject))pov.exit();
   water.stopCoastWave();
@@ -187,6 +267,7 @@ function updateStatus(){
 function enterPOV(id){
   if(!state.ready||!pov)return false;
   if(id==='overview'){pov.exit();return true;}
+  if(filmFollowing||filmPending)setView('hero',true);
   // A quick second click can arrive before the close-up transition has had a
   // render frame. Save the completed composition, not an off-center halfway view.
   if(!pov.active&&followingActor())finishCameraTransition();
@@ -314,7 +395,10 @@ function wireControls(){
     $('sound-message').textContent=sound.error?'声音暂时未加载，点击重试。':sound.loading&&sound.enabled?'正在准备小岛的声音。':!sound.enabled?'环境声音已关闭。':!sound.playing?'环境声音已随小岛暂停。':'环境声音已开启。';
   }});
   $('sound-toggle').addEventListener('click',()=>ambient.setEnabled(!ambient.diagnostics().enabled));
-  document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+  document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{
+    if(b.dataset.view==='film'&&(filmFollowing||filmPending))setView('hero');
+    else setView(b.dataset.view);
+  }));
   $('reset-view').addEventListener('click',()=>{setView('hero');});
   $('subject-view').addEventListener('change',e=>enterPOV(e.target.value));
   $('pov-forward').addEventListener('click',resetPOVLook);
@@ -326,6 +410,7 @@ function wireControls(){
   $('image-quality').addEventListener('change',e=>setQuality(e.target.value));
   $('motion-toggle').addEventListener('click',()=>setPlaying(!state.playing));
   $('auto-rotate').addEventListener('click',()=>{
+    if(filmFollowing||filmPending)setView('hero',true);
     transition=null;state.autoRotate=!state.autoRotate;controls.autoRotate=state.autoRotate;
     $('auto-rotate').setAttribute('aria-pressed',String(state.autoRotate));
     $('auto-rotate').classList.toggle('is-active',state.autoRotate);
@@ -386,7 +471,7 @@ function wireWaterInteraction(){
     return point;
   }
   canvas.addEventListener('pointerdown',event=>{
-    if(pov?.active){down=null;activePointers.clear();return;}
+    if(pov?.active||filmFollowing){down=null;activePointers.clear();return;}
     activePointers.add(event.pointerId);
     if(event.button===0&&activePointers.size===1)
       down={x:event.clientX,y:event.clientY,id:event.pointerId,moved:false,multi:false};
@@ -398,7 +483,7 @@ function wireWaterInteraction(){
     manualOrbitUntil=performance.now()+650;
   });
   canvas.addEventListener('pointermove',event=>{
-    if(pov?.active){down=null;return;}
+    if(pov?.active||filmFollowing){down=null;return;}
     if(!down||down.id!==event.pointerId)return;
     manualOrbitUntil=performance.now()+650;
     if(Math.hypot(event.clientX-down.x,event.clientY-down.y)>6)down.moved=true;
@@ -407,11 +492,42 @@ function wireWaterInteraction(){
     }
   });
   canvas.addEventListener('pointerup',event=>{
-    if(pov?.active){down=null;activePointers.clear();return;}
+    if(pov?.active||filmFollowing){down=null;activePointers.clear();return;}
     activePointers.delete(event.pointerId);
     if(down?.id===event.pointerId)down=null;
   });
   canvas.addEventListener('pointercancel',event=>{activePointers.delete(event.pointerId);down=null;});
+}
+
+// Like a view-only head turn: drag changes camera direction, not its position.
+// Two touch points pinch the orthographic zoom; both gestures survive motion.
+function wireFilmLook(){
+  const canvas=renderer.domElement;
+  const pinchDistance=()=>{const points=[...filmPointers.values()];return points.length<2?0:Math.hypot(points[0].x-points[1].x,points[0].y-points[1].y);};
+  const startPinch=()=>{const distance=pinchDistance();filmPinch=distance>0?{distance,zoom:filmZoomFactor}:null;};
+  canvas.addEventListener('pointerdown',event=>{
+    if(!filmFollowing||pov?.active||(event.pointerType!=='touch'&&event.button!==0))return;
+    event.preventDefault();transition=null;filmPointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+    canvas.setPointerCapture(event.pointerId);if(filmPointers.size>=2)startPinch();
+  });
+  canvas.addEventListener('pointermove',event=>{
+    const point=filmPointers.get(event.pointerId);if(!filmFollowing||!point)return;
+    const dx=event.clientX-point.x,dy=event.clientY-point.y;point.x=event.clientX;point.y=event.clientY;
+    if(filmPointers.size>=2){
+      if(!filmPinch)startPinch();
+      if(filmPinch)filmZoomFactor=THREE.MathUtils.clamp(filmPinch.zoom*pinchDistance()/filmPinch.distance,.3,4);
+    }else{
+      filmLookYaw=Math.atan2(Math.sin(filmLookYaw-dx*.004),Math.cos(filmLookYaw-dx*.004));
+      filmLookPitch=THREE.MathUtils.clamp(filmLookPitch-dy*.004,-1.15,1.15);
+    }
+    renderDirty=true;
+  });
+  const release=event=>{filmPointers.delete(event.pointerId);filmPinch=null;if(filmPointers.size>=2)startPinch();};
+  canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',release);
+  canvas.addEventListener('wheel',event=>{
+    if(!filmFollowing||pov?.active)return;event.preventDefault();transition=null;
+    filmZoomFactor=THREE.MathUtils.clamp(filmZoomFactor*Math.exp(-event.deltaY*.001),.3,4);renderDirty=true;
+  },{passive:false});
 }
 
 async function init(){
@@ -561,6 +677,7 @@ async function init(){
   pov.resize(viewport.clientWidth/viewport.clientHeight);
   harborRenderer=createHarborRenderer(THREE,renderer,scene,camera,water,{stageFloor});
   wireWaterInteraction();
+  wireFilmLook();
   lastAzimuth=controls.getAzimuthalAngle();lastPolar=controls.getPolarAngle();
   $('loading-progress').value=96;
   await renderer.compileAsync(scene,camera);
@@ -586,9 +703,9 @@ function tick(now){
     controls.target.lerpVectors(transition.targetFrom,transition.targetTo,s);
     camera.zoom=THREE.MathUtils.lerp(transition.zoomFrom,transition.zoomTo,s);
     camera.updateProjectionMatrix();
-    if(t===1)transition=null;
+    if(t===1){transition=null;if(!filmFollowing&&camera.near!==.1){camera.near=.1;camera.updateProjectionMatrix();}}
   }
-  if(!pov.active)controls.update(dt);
+  if(!pov.active&&!filmFollowing)controls.update(dt);
   const azimuth=controls.getAzimuthalAngle(),polar=controls.getPolarAngle();
   const da=Math.atan2(Math.sin(azimuth-lastAzimuth),Math.cos(azimuth-lastAzimuth)),dp=polar-lastPolar;
   if(!pov.active&&state.playing&&!transition&&now<manualOrbitUntil&&(Math.abs(da)+Math.abs(dp))>.00015){
@@ -600,6 +717,8 @@ function tick(now){
   if(water.coastWaveStopping||surfing?.settling)renderDirty=true;
   water.update(state.elapsed,state.playing?dt:0,dt);
   surfing?.update(state.playing?dt:0,state.elapsed,dt);
+  if(filmPending&&surfing?.phase==='riding')setView('film');
+  else if(filmPending&&surfPhase!=='waiting'&&surfing?.phase==='waiting'){filmPending=false;syncFilmButton();}
   surfEffects?.update(state.playing?dt:0,state.elapsed,dt);
   if(surfPhase!=='riding'&&surfing?.phase==='riding')ambient?.playSurfCheer?.();
   if(waveWasRunning!==water.coastWaveRunning||surfPhase!==surfing?.phase)syncWaveButton();
@@ -607,6 +726,27 @@ function tick(now){
   if(followingActor()&&!pov.active){
     const position=followingActor().root.position;
     followActorPosition(position,surferFollowing?getSurferHeading():0);
+  }
+  if(filmFollowing&&!pov.active){
+    if(!surferRig||state.sceneMode!=='surf')setView('hero');
+    else {
+      const zoom=filmComposition();
+      if(transition){transition.to.copy(filmPosition);transition.targetTo.copy(filmTarget);transition.zoomTo=zoom;}
+      else {
+        const changed=camera.position.distanceToSquared(filmPosition)>1e-8||controls.target.distanceToSquared(filmTarget)>1e-8||Math.abs(camera.zoom-zoom)>.001;
+        const a=1-Math.exp(-dt*10);
+        camera.position.lerp(filmPosition,a);controls.target.copy(camera.position).add(filmDirection);camera.lookAt(controls.target);
+        if(Math.abs(camera.zoom-zoom)>.001){camera.zoom=zoom;camera.updateProjectionMatrix();}
+        if(changed)renderDirty=true;
+      }
+      // A moving camera can cross the island on an interpolated chord even
+      // when both endpoints are safe. Constrain the actual camera too, while
+      // preserving the user's chosen view direction as the position is moved.
+      const x=camera.position.x,y=camera.position.y,z=camera.position.z;
+      keepFilmCameraOffshore(camera.position);
+      controls.target.x+=camera.position.x-x;controls.target.y+=camera.position.y-y;controls.target.z+=camera.position.z-z;
+      camera.lookAt(controls.target);
+    }
   }
   underwaterLife?.update(state.playing?dt:0,state.elapsed);
   bird?.update(state.elapsed,state.playing?dt:0);
@@ -621,12 +761,12 @@ function tick(now){
 
 window.harborViewer={
   get ready(){return state.ready;},
-  getState:()=>({...state,camera:camera?.position.toArray(),target:controls?.target.toArray(),
+  getState:()=>({...state,camera:camera?.position.toArray(),cameraNear:camera?.near,target:controls?.target.toArray(),
     pov:pov?.diagnostics(),bird:bird?.diagnostics(),world:world?.diagnostics(),
     zoom:camera?.zoom,water:water?.diagnostics(),
     motion:motion?.getDiagnostics(),harborVisible:harborRoot?.visible,
     characterPreview:characterController?.diagnostics()||characterPreview,characterFollowing,
-    surfing:surfing?.diagnostics(),surfEffects:surfEffects?.diagnostics(),surferPreview:surferRig?.diagnostics()||surferPreview,surferFollowing,
+    surfing:surfing?.diagnostics(),surfEffects:surfEffects?.diagnostics(),surferPreview:surferRig?.diagnostics()||surferPreview,surferFollowing,filmFollowing,filmPending,filmLook:{yaw:filmLookYaw,pitch:filmLookPitch,zoom:filmZoomFactor},
     appearance:$('water-style')?.value,quality:imageQuality,interactions:{...interactions},
     audio:ambient?.diagnostics(),
     render:renderer?{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,

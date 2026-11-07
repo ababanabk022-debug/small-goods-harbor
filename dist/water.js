@@ -5,7 +5,7 @@
  * No image assets, network requests, or Blender scene changes are required.
  */
 import { createWaterPhysics } from './water-physics.js?v=12.2';
-import { createCoastWave, COAST_GLSL } from './coast-wave.js?v=continuous-breaker-8';
+import { createCoastWave, COAST_GLSL } from './coast-wave.js?v=rider-follow-1';
 
 const TAU = Math.PI * 2;
 const DEFAULT_RADIUS = 9.0;
