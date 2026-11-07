@@ -1,5 +1,7 @@
 # 小岛环境声音
 
+冲浪欢呼 `surf-cheer.mp3` 来源于 Nox_Sound 的 [Voice_Crowd_Small_Expression_Cheer_Stereo](https://freesound.org/people/Nox_Sound/sounds/752708/)，该作者页面标明 [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)。它是一段 2.36 秒的小人群欢呼；本地文件使用公开 HQ MP3 预览，经 180 Hz 高通、4.5 kHz 低通与短暂淡入淡出后重新编码。它只在开启声音后、伙伴真正开始乘浪时轻声播放，单独起浪不触发；暂停、关闭声音或离开页面会停止。记录的来源页与 CC0 标记于 2026-11-07 核验。
+
 制作日期：2026-10-30。`island-ambience.mp3` 为 72 秒、48 kHz 双声道、160 kbps 的复合环境声音。海浪、海鸟、含混人声已混合到一个文件，由网站的一个开关控制，用户开启后才加载和播放。
 
 | 混音层 | 原始录音与作者 | 来源与许可 | 编辑 |

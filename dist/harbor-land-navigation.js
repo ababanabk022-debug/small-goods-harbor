@@ -3,10 +3,10 @@ function inside(x,z,polygon){let hit=false;for(let i=0,j=polygon.length-1;i<poly
 function segmentDistance(x,z,a,b){const dx=b.x-a.x,dz=b.z-a.z,t=clamp(((x-a.x)*dx+(z-a.z)*dz)/(dx*dx+dz*dz||1),0,1);return Math.hypot(x-a.x-dx*t,z-a.z-dz*t);}
 
 /** One-time triangle rasterization; walking never raycasts the detailed scene. */
-export function createLandNavigator(THREE,{model,boundary=[],extraObstacleRoots=[]}){
+export function createLandNavigator(THREE,{model,boundary=[],extraObstacleRoots=[],padding=.50}){
   // Includes a carried crate's full turning envelope, not only the torso.
   // This is rasterized once, so walking does not raycast the detailed rocks.
-  const cell=.18,padding=.50,meshes=[];let ground=null;
+  const cell=.18,meshes=[];let ground=null;
   model.updateMatrixWorld(true);
   const root=model.getObjectByName('STATIC');
   (root||model).traverse(o=>{if(!o.isMesh||!o.geometry?.attributes.position)return;if(/fine[ _]+even[ _]+ivory[ _]+beach[ _]+sand/i.test(o.name))ground=o;else meshes.push(o);});
@@ -90,5 +90,5 @@ export function createLandNavigator(THREE,{model,boundary=[],extraObstacleRoots=
   const all=largest.map(point);
   return {plan,planTo:(x,z,target,avoid=[])=>plan(x,z,[],avoid,target),valid,height,nearest:(x,z,avoid=[])=>{const i=nearest(x,z,avoid);return i<0?null:point(i);},random,
     diagnostics:()=>({cell,padding,walkableCells:largest.length,components:components.map(c=>c.length).sort((a,b)=>b-a).slice(0,8),bounds:all.length?{min:[Math.min(...all.map(p=>p[0])),Math.min(...all.map(p=>p[1]))],max:[Math.max(...all.map(p=>p[0])),Math.max(...all.map(p=>p[1]))]}:null}),
-    exportGrid:()=>({cell,minX,minZ,width,depth,heights:Array.from(heights),safe:Array.from(safe),component:Array.from(component),mainComponent})};
+    exportGrid:()=>({cell,minX,minZ,width,depth,heights:Array.from(heights),blocked:Array.from(blocked),safe:Array.from(safe),component:Array.from(component),mainComponent})};
 }

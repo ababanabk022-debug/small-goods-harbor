@@ -3,15 +3,19 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { createHarborWater, installHarborCaustics } from './water.js?v=wave-runout-1';
-import { createHarborMotion } from './harbor-motion.js?v=surf-mode-2';
+import { createHarborWater, installHarborCaustics } from './water.js?v=continuous-breaker-8';
+import { createHarborMotion } from './harbor-motion.js?v=continuous-breaker-8';
+import { createHarborCharacter } from './harbor-character.js?v=tapati-medium-1';
+import { createSurferRig } from './harbor-surfer-rig.js?v=surfer-pov-cheer-1';
+import { createHarborSurfing } from './harbor-surfing.js?v=continuous-breaker-8';
+import { createHarborSurfEffects } from './harbor-surf-effects.js?v=continuous-breaker-8';
 import { createHarborRenderer } from './harbor-renderer.js?v=surf-mode-1';
 import { createUnderwaterLife } from './harbor-underwater.js?v=14.2';
 import { insetHarborSeabedEdge } from './harbor-seabed-edge.js?v=14.1';
-import { createHarborPOV } from './harbor-pov.js?v=14.1';
+import { createHarborPOV } from './harbor-pov.js?v=surfer-pov-cheer-2';
 import { createHarborBird } from './harbor-bird.js?v=14.1';
 import { createHarborWorld } from './harbor-world.js?v=surf-mode-1';
-import { createHarborAudio } from './harbor-audio.js?v=14.4';
+import { createHarborAudio } from './harbor-audio.js?v=surfer-pov-cheer-1';
 
 const $=id=>document.getElementById(id);
 const viewport=$('viewport'), errors=[];
@@ -26,17 +30,58 @@ const interactions={splashes:0,sloshes:0};
 let lastTime=performance.now(), averageFrame=16, causticInfo;
 let seabedEdgeInfo=null;
 let pov,bird,world,stageFloor,overviewView='hero',overviewBackground,overviewFog;
-let ambient,harborRoot;
+let ambient,harborRoot,characterPreview,characterController,characterFollowing=false,overviewCharacterFollowing=false;
+let surferRig,surfing,surfEffects,surferPreview,surferFollowing=false,overviewSurferFollowing=false;
+let characterFocusHeight=.55;
+const characterLastPosition=new THREE.Vector3();
+const surferForward=new THREE.Vector3(),surferWorldQ=new THREE.Quaternion(),followOffset=new THREE.Vector3();
+const followUp=new THREE.Vector3(0,1,0);
+let surferLastHeading=0;
 let renderDirty=true,lastShadowTime=-Infinity,shadowFrames=0;
 const presets={
   hero:{position:[7.5,18.1,21.8],target:[0,.8,0],zoom:1},
   back:{position:[9,14,-22],target:[0,1.1,0],zoom:1},
   top:{position:[.02,32,4.5],target:[0,0,0],zoom:1},
+  character:{position:[5,3.5,12.35],target:[2,1,3.35],zoom:8},
+  surfer:{position:[5,3.5,12.35],target:[2,1,3.35],zoom:7},
 };
+const followingActor=()=>surferFollowing?surferRig:characterFollowing?characterController:null;
+function getSurferHeading(){
+  if(!surferRig)return 0;
+  surferRig.root.getWorldQuaternion(surferWorldQ);
+  surferForward.set(0,0,1).applyQuaternion(surferWorldQ);surferForward.y=0;
+  return surferForward.lengthSq()>.0001?Math.atan2(surferForward.x,surferForward.z):surferLastHeading;
+}
+function followActorPosition(position,heading){
+  const delta=position.clone().sub(characterLastPosition);
+  const turn=surferFollowing?Math.atan2(Math.sin(heading-surferLastHeading),Math.cos(heading-surferLastHeading)):0;
+  if(transition){
+    transition.to.add(delta);transition.targetTo.add(delta);
+    if(turn)transition.to.copy(followOffset.subVectors(transition.to,transition.targetTo).applyAxisAngle(followUp,turn).add(transition.targetTo));
+  }else{
+    camera.position.add(delta);controls.target.add(delta);
+    if(turn)camera.position.copy(followOffset.subVectors(camera.position,controls.target).applyAxisAngle(followUp,turn).add(controls.target));
+    camera.lookAt(controls.target);
+  }
+  characterLastPosition.copy(position);if(surferFollowing)surferLastHeading=heading;
+}
 
 function setView(name,instant=false){
   const preset=presets[name];if(!preset)return;
   if(pov?.active)pov.exit();
+  characterFollowing=name==='character'&&!!characterController;
+  surferFollowing=name==='surfer'&&!!surferRig;
+  if(followingActor()){
+    const p=followingActor().root.position;
+    const narrow=viewport.clientWidth<700;characterFocusHeight=narrow?.90:.55;
+    preset.target=[p.x,p.y+characterFocusHeight,p.z];
+    if(surferFollowing){
+      surferLastHeading=getSurferHeading();
+      preset.position=[p.x+Math.sin(surferLastHeading)*9,p.y+2.9+characterFocusHeight-.55,p.z+Math.cos(surferLastHeading)*9];
+    }else preset.position=[p.x+3,p.y+2.9+characterFocusHeight-.55,p.z+9];
+    preset.zoom=Math.min(18,(camera.top-camera.bottom)/(surferFollowing?4.4:narrow?3.4:2.8));
+    characterLastPosition.copy(p);
+  }
   renderDirty=true;state.view=name;state.autoRotate=false;controls.autoRotate=false;
   $('auto-rotate').setAttribute('aria-pressed','false');
   $('auto-rotate').classList.remove('is-active');
@@ -54,6 +99,12 @@ function setView(name,instant=false){
     zoomFrom:camera.zoom,zoomTo:preset.zoom,
   };
 }
+function finishCameraTransition(){
+  if(!transition)return;
+  camera.position.copy(transition.to);controls.target.copy(transition.targetTo);
+  camera.zoom=transition.zoomTo;camera.updateProjectionMatrix();
+  transition=null;controls.update();renderDirty=true;
+}
 function setPlaying(value){
   state.playing=Boolean(value);renderDirty=true;
   ambient?.setPlaying(state.playing);
@@ -66,13 +117,17 @@ function setPlaying(value){
 function syncWaveButton(){
   const button=$('wave-replay');
   button.hidden=state.sceneMode!=='surf';
-  button.disabled=!state.ready||state.sceneMode!=='surf'||water?.coastWaveStopping;
+  button.disabled=!state.ready||state.sceneMode!=='surf'||!!water?.coastWaveStopping||!!(surfing?.busy&&!water?.coastWaveRunning);
   $('wave-label').textContent=water?.coastWaveStopping?'浪花消退中':water?.coastWaveRunning?'停止浪花':'掀起一个浪';
-  button.title=water?.coastWaveStopping?'浪花正向前滑行、逐渐消散':water?.coastWaveRunning?'让浪花继续滑行一小段并逐渐消散':'从原来的起点掀起一道环岛浪';
+  button.title=water?.coastWaveRunning?'让浪花继续向前并逐渐消散':'单独掀起一道环岛浪';
+  const surfButton=$('surf-start');surfButton.hidden=state.sceneMode!=='surf';
+  surfButton.disabled=!state.ready||state.sceneMode!=='surf'||!surfing||(surfing.busy&&!surfing.canCancel)||(!surfing.busy&&!!water?.coastWaveRunning);
+  $('surf-label').textContent=surfing?.busy?(surfing.canCancel?'结束冲浪':'正在返回'):water?.coastWaveRunning?'等待浪结束':'开始冲浪';
+  surfButton.title=surfing?.busy?'结束这次冲浪并返回岸边':water?.coastWaveRunning?'等待这道浪结束后再开始冲浪':'让冲浪板降落，伙伴从岛上出发冲浪';
 }
 
 function startCoastWave(){
-  if(!state.ready||state.sceneMode!=='surf'||water.coastWaveRunning||!water.startCoastWave(state.elapsed))return false;
+  if(!state.ready||state.sceneMode!=='surf'||surfing?.busy||water.coastWaveRunning||!water.startCoastWave(state.elapsed))return false;
   if(!state.playing)setPlaying(true);
   syncWaveButton();
   renderDirty=true;
@@ -81,14 +136,25 @@ function startCoastWave(){
 
 function cancelCoastWave(){
   if(!state.ready||state.sceneMode!=='surf'||water.coastWaveStopping)return false;
-  const cancelled=water.cancelCoastWave(state.elapsed);
+  const cancelled=surfing?.phase==='riding'&&surfing.canCancel?surfing.cancel(state.elapsed):water.cancelCoastWave(state.elapsed);
   syncWaveButton();renderDirty=true;
   return cancelled;
 }
 
+function startSurf(){
+  if(!state.ready||state.sceneMode!=='surf'||!surfing||surfing.busy||water.coastWaveRunning)return false;
+  if(!surfing.requestStart(state.elapsed))return false;
+  if(!state.playing)setPlaying(true);
+  syncWaveButton();renderDirty=true;return true;
+}
+function cancelSurf(){
+  if(!state.ready||state.sceneMode!=='surf'||!surfing?.canCancel)return false;
+  const result=surfing.cancel(state.elapsed);syncWaveButton();renderDirty=true;return result;
+}
+
 function syncSubjects(){
   const select=$('subject-view'),subjects=[{id:'overview',label:'整座小岛 · 自由旋转'},
-    ...motion.getViewSubjects(),{id:'fish',label:'小鱼 · 水下漫游'},{id:'gull',label:'海鸟 · 乘风飞行'}];
+    ...motion.getViewSubjects(),...(surfing?[{id:'surfer',label:'冲浪伙伴 · 乘浪环岛'}]:[]),{id:'fish',label:'小鱼 · 水下漫游'},{id:'gull',label:'海鸟 · 乘风飞行'}];
   select.replaceChildren(...subjects.map(subject=>{
     const option=document.createElement('option');option.value=subject.id;option.textContent=subject.label;return option;
   }));
@@ -101,6 +167,8 @@ function setSceneMode(next){
   // Restore POV-hidden parts before hiding their entire harbor group.
   if(next==='surf'&&['boat','dockhand'].includes(pov?.subject))pov.exit();
   water.stopCoastWave();
+  surfEffects?.reset();
+  surfing?.setMode(next,state.elapsed);
   state.sceneMode=next;
   harborRoot.visible=next==='harbor';
   motion.setMode(next);world.setSceneMode(next);
@@ -108,7 +176,7 @@ function setSceneMode(next){
   document.querySelectorAll('[data-scene-mode]').forEach(button=>{
     button.setAttribute('aria-pressed',String(button.dataset.sceneMode===next));
   });
-  $('mode-message').textContent=next==='surf'?'已进入冲浪模式，码头和小船已收起。':'已回到港口生活，码头和小船已恢复。';
+  $('mode-message').textContent=next==='surf'?'已进入冲浪模式，可单独起浪，或点击「开始冲浪」让伙伴出发。':'已回到港口生活，码头和小船已恢复。';
   renderer.shadowMap.needsUpdate=true;renderDirty=true;updateStatus();
   return true;
 }
@@ -119,12 +187,24 @@ function updateStatus(){
 function enterPOV(id){
   if(!state.ready||!pov)return false;
   if(id==='overview'){pov.exit();return true;}
-  if(!pov.active)overviewView=state.view;
-  transition=null;const entered=pov.enter(id);if(entered)resetPOVLook();return entered;
+  // A quick second click can arrive before the close-up transition has had a
+  // render frame. Save the completed composition, not an off-center halfway view.
+  if(!pov.active&&followingActor())finishCameraTransition();
+  if(!pov.active){overviewView=state.view;overviewCharacterFollowing=characterFollowing;overviewSurferFollowing=surferFollowing;}
+  const wasFollowing=characterFollowing,wasSurferFollowing=surferFollowing;
+  characterFollowing=false;surferFollowing=false;
+  transition=null;const entered=pov.enter(id);if(entered)resetPOVLook();else {characterFollowing=wasFollowing;surferFollowing=wasSurferFollowing;}return entered;
 }
 function resetPOVLook(){if(pov?.subject==='gull')pov.setLook(-Math.PI/2,-.72);else pov?.setLook();}
 function changePOV(id){
   const active=!!id,isFish=id==='fish';
+  surferRig?.setBodyPOV(id==='surfer');
+  const restoreActor=overviewSurferFollowing?surferRig:overviewCharacterFollowing?characterController:null;
+  if(!active&&restoreActor){
+    const position=restoreActor.root.position;
+    characterFollowing=overviewCharacterFollowing;surferFollowing=overviewSurferFollowing;
+    followActorPosition(position,surferFollowing?getSurferHeading():0);controls.update();
+  }
   ambient?.setSubject(id);
   state.view=active?'pov':overviewView;state.autoRotate=active?false:controls.autoRotate;
   underwaterLife?.setViewFish(isFish?POV_FISH_INDEX:null);water?.setUnderwaterView(isFish);
@@ -157,6 +237,14 @@ function resize(){
   }
   const width=Math.max(20.5,19.5*aspect),height=width/aspect;
   camera.left=-width/2;camera.right=width/2;camera.top=height/2;camera.bottom=-height/2;
+  if(followingActor()){
+    const narrow=w<700,focusHeight=narrow?.90:.55,delta=focusHeight-characterFocusHeight;
+    characterFocusHeight=focusHeight;
+    camera.position.y+=delta;controls.target.y+=delta;
+    const zoom=Math.min(18,height/(surferFollowing?4.4:narrow?3.4:2.8));
+    if(transition){transition.to.y+=delta;transition.targetTo.y+=delta;transition.zoomTo=zoom;}
+    else camera.zoom=zoom;
+  }
   camera.updateProjectionMatrix();
   pov?.resize(aspect);
 }
@@ -232,6 +320,7 @@ function wireControls(){
   $('pov-forward').addEventListener('click',resetPOVLook);
   $('pov-exit').addEventListener('click',()=>pov?.exit());
   $('wave-replay').addEventListener('click',()=>water?.coastWaveRunning?cancelCoastWave():startCoastWave());
+  $('surf-start').addEventListener('click',()=>surfing?.busy?cancelSurf():startSurf());
   document.querySelectorAll('[data-scene-mode]').forEach(button=>button.addEventListener('click',()=>setSceneMode(button.dataset.sceneMode)));
   $('water-style').addEventListener('change',e=>{water?.setAppearance(e.target.value);renderDirty=true;});
   $('image-quality').addEventListener('change',e=>setQuality(e.target.value));
@@ -267,6 +356,7 @@ function wireControls(){
   });
   controls.addEventListener('change',()=>{renderDirty=true;});
   controls.addEventListener('start',()=>{
+    if(followingActor())finishCameraTransition();
     manualOrbitUntil=performance.now()+650;
     transition=null;state.view='custom';
     document.querySelectorAll('[data-view]').forEach(b=>{b.setAttribute('aria-pressed','false');b.classList.remove('is-active');});
@@ -326,7 +416,7 @@ function wireWaterInteraction(){
 
 async function init(){
   renderer=new THREE.WebGLRenderer({antialias:false,alpha:false,powerPreference:'high-performance'});
-  renderer.debug.onShaderError=(gl,program,vertex,fragment)=>{throw new Error('水面渲染程序编译失败：'+gl.getProgramInfoLog(program)+' '+gl.getShaderInfoLog(fragment));};
+  renderer.debug.onShaderError=(gl,program,vertex,fragment)=>{throw new Error('水面渲染程序编译失败：'+[gl.getProgramInfoLog(program),gl.getShaderInfoLog(vertex),gl.getShaderInfoLog(fragment)].filter(Boolean).join('\n'));};
   renderer.setPixelRatio(1);
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
@@ -344,7 +434,7 @@ async function init(){
   camera=new THREE.OrthographicCamera(-10,10,7,-7,.1,150);
   controls=new OrbitControls(camera,renderer.domElement);
   controls.enableDamping=true;controls.dampingFactor=.07;controls.rotateSpeed=.65;
-  controls.zoomSpeed=.8;controls.minZoom=.55;controls.maxZoom=3;
+  controls.zoomSpeed=.8;controls.minZoom=.55;controls.maxZoom=18;
   controls.minPolarAngle=.08;controls.maxPolarAngle=Math.PI*.49;controls.autoRotateSpeed=.55;
   controls.enablePan=true;controls.panSpeed=.5;
   setView('hero',true);resize();
@@ -416,9 +506,33 @@ async function init(){
     }
   });
   diorama.add(model);
+  // The visitor is a dynamic island actor, independent of harbor-mode visibility.
+  try{
+    const character=await loader.loadAsync('./public/assets/tapati-dancer-young-medium.glb?v=bean-smile-2');
+    characterController=createHarborCharacter(THREE,character);
+    diorama.add(characterController.root);
+    characterPreview=characterController.diagnostics();
+  }catch(error){
+    characterPreview={loaded:false,error:String(error)};
+    console.warn('角色预览加载失败',error);
+  }
+  try{
+    const ghoul=await loader.loadAsync('./public/assets/shambling-ghoul-256f2f.glb?v=bean-smile-2');
+    surferRig=createSurferRig(THREE,ghoul);
+    surfing=createHarborSurfing(THREE,{scene:diorama,model,meta,water,rig:surferRig,mode:state.sceneMode});
+    surferPreview={loaded:true,...surferRig.diagnostics()};
+  }catch(error){
+    surferPreview={loaded:false,error:String(error)};
+    console.warn('冲浪伙伴加载失败',error);
+  }
   causticInfo=installHarborCaustics(THREE,model,water);
   foam=model.getObjectByName('FOAM');if(foam)animateFoam(foam);
-  motion=createHarborMotion(THREE,{model,meta,water,scene:diorama,mode:state.sceneMode});
+  const surferActor=surferRig?{root:surferRig.root,
+    spec:{id:'surfer',label:'冲浪伙伴',forward:[0,0,1],speed:.42,phase:0,contactRadius:.36,skeletal:true,navigationPadding:.53,hideView:true,ignoreLandReservations:true},
+    update:({time,moved})=>surferRig.setPose({phase:moved>1e-5?'walk':'idle',time})}:null;
+  motion=createHarborMotion(THREE,{model,meta,water,scene:diorama,mode:state.sceneMode,externalActors:[...(characterController?[characterController]:[]),...(surferActor?[surferActor]:[])],reservedLandAreas:surfing?.landReservations||(surfing?[surfing.shoreObstacle]:[])});
+  surfing?.bindMotion(motion,'surfer');
+  surfEffects=createHarborSurfEffects(THREE,{scene:diorama,water,surfing});
   model.updateMatrixWorld(true);
   const bedRay=new THREE.Raycaster(),bedPoint=new THREE.Vector3(),downward=new THREE.Vector3(0,-1,0);
   const sampleBedHeight=(x,z)=>{if(!bedMesh)return -1.46;bedPoint.set(x,.1,z);bedRay.set(bedPoint,downward);return bedRay.intersectObject(bedMesh,false)[0]?.point.y??-1.46;};
@@ -433,7 +547,15 @@ async function init(){
   draco.dispose();
   world=createHarborWorld(THREE,{scene,model,stageFloor,horizon:horizon.scene,sampleBedHeight});
   pov=createHarborPOV(THREE,{canvas:renderer.domElement,overview:camera,controls,
-    getPose(id){if(id==='fish')return underwaterLife.getViewPose(POV_FISH_INDEX);if(id==='gull')return bird.getViewPose();return motion.getViewPose(id);},
+    getPose(id){
+      if(id==='fish')return underwaterLife.getViewPose(POV_FISH_INDEX);
+      if(id==='gull')return bird.getViewPose();
+      if(id==='surfer'){
+        const pose=surfing?.getViewPose();if(!pose)return null;
+        return {...pose,hiddenObjects:[]};
+      }
+      return motion.getViewPose(id);
+    },
     onChange:changePOV,onDirty(){renderDirty=true;}});
   syncSubjects();
   pov.resize(viewport.clientWidth/viewport.clientHeight);
@@ -474,16 +596,24 @@ function tick(now){
   }
   lastAzimuth=azimuth;lastPolar=polar;
   const waveWasRunning=water.coastWaveRunning;
-  if(water.coastWaveStopping)renderDirty=true;
+  const surfPhase=surfing?.phase;
+  if(water.coastWaveStopping||surfing?.settling)renderDirty=true;
   water.update(state.elapsed,state.playing?dt:0,dt);
-  if(waveWasRunning&&!water.coastWaveRunning)syncWaveButton();
+  surfing?.update(state.playing?dt:0,state.elapsed,dt);
+  surfEffects?.update(state.playing?dt:0,state.elapsed,dt);
+  if(surfPhase!=='riding'&&surfing?.phase==='riding')ambient?.playSurfCheer?.();
+  if(waveWasRunning!==water.coastWaveRunning||surfPhase!==surfing?.phase)syncWaveButton();
   motion?.update(state.playing?dt:0,state.elapsed);
+  if(followingActor()&&!pov.active){
+    const position=followingActor().root.position;
+    followActorPosition(position,surferFollowing?getSurferHeading():0);
+  }
   underwaterLife?.update(state.playing?dt:0,state.elapsed);
   bird?.update(state.elapsed,state.playing?dt:0);
   world?.update(state.elapsed);
-  pov.update(state.playing?dt:0);
+  pov.update(state.playing||surfing?.settling?dt:0);
   if(state.playing||transition||state.autoRotate||renderDirty){
-    if(state.playing&&now-lastShadowTime>=100){renderer.shadowMap.needsUpdate=true;lastShadowTime=now;shadowFrames++;}
+    if((state.playing||surfing?.settling)&&now-lastShadowTime>=100){renderer.shadowMap.needsUpdate=true;lastShadowTime=now;shadowFrames++;}
     harborRenderer.render(pov.active?pov.camera:camera);state.frames++;renderDirty=false;
   }
 
@@ -495,6 +625,8 @@ window.harborViewer={
     pov:pov?.diagnostics(),bird:bird?.diagnostics(),world:world?.diagnostics(),
     zoom:camera?.zoom,water:water?.diagnostics(),
     motion:motion?.getDiagnostics(),harborVisible:harborRoot?.visible,
+    characterPreview:characterController?.diagnostics()||characterPreview,characterFollowing,
+    surfing:surfing?.diagnostics(),surfEffects:surfEffects?.diagnostics(),surferPreview:surferRig?.diagnostics()||surferPreview,surferFollowing,
     appearance:$('water-style')?.value,quality:imageQuality,interactions:{...interactions},
     audio:ambient?.diagnostics(),
     render:renderer?{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,
@@ -509,7 +641,7 @@ window.harborViewer={
   setOpticalSamples(value){harborRenderer?.setSamples(value);renderDirty=true;},
   setOptics(value){harborRenderer?.setEnabled(value);renderDirty=true;},
   splash(x,z,strength=2.2){renderDirty=true;return water?.poke(x,z,strength,.60);},
-  startCoastWave,cancelCoastWave,
+  startCoastWave,cancelCoastWave,startSurf,cancelSurf,
   slosh(x,z){return water?.addSlosh(x,z);},
   projectPoint(x,y,z){const p=new THREE.Vector3(x,y,z).applyMatrix4(diorama.matrixWorld).project(pov?.active?pov.camera:camera);const r=renderer.domElement.getBoundingClientRect();return {x:r.left+(p.x+1)*r.width/2,y:r.top+(1-p.y)*r.height/2};},
   setTime(seconds){state.elapsed=seconds;water?.update(seconds);syncWaveButton();renderDirty=true;},

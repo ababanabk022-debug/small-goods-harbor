@@ -3,7 +3,7 @@
  * Geometry stays at its authored scale. Navigation and wake forces are local.
  */
 import { createWaterNavigator } from './harbor-navigation.js?v=13.1';
-import { createLandNavigator } from './harbor-land-navigation.js?v=harbor-surf-2';
+import { createLandNavigator } from './harbor-land-navigation.js?v=continuous-breaker-8';
 import { createHarborHike } from './harbor-hike.js?v=14.3';
 import { clearHarborTrail } from './harbor-trail-clearance.js?v=14.3';
 const TAU=Math.PI*2;
@@ -12,7 +12,7 @@ const angleDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
 const damp=(a,b,k,dt)=>a+(b-a)*(1-Math.exp(-k*dt));
 const finite=(v,f=0)=>Number.isFinite(v)?v:f;
 
-export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mode:initialMode='harbor'}){
+export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mode:initialMode='harbor',extraObstacleRoots=[],externalActors=[],reservedLandAreas=[]}){
   let sceneMode=initialMode==='surf'?'surf':'harbor';
   const trailClearance=clearHarborTrail(THREE,model);
   const boat=model.getObjectByName(meta.boat?.node||'BOAT');
@@ -288,22 +288,39 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
     foamPearls.count=foamCount;foamPearls.instanceMatrix.needsUpdate=true;
   }
 
-  const landOptions={model,boundary:meta.landBoundary||[]};
+  const landOptions={model,boundary:meta.landBoundary||[],extraObstacleRoots};
   const surfLandNavigator=createLandNavigator(THREE,landOptions);
   const dockRoot=model.getObjectByName('DOCK_STATIC');
   // Rasterize both layouts once. Hike and walking controllers retain this
   // stable facade while switches select the appropriate cached dock clearance.
-  const harborLandNavigator=dockRoot?createLandNavigator(THREE,{...landOptions,extraObstacleRoots:[dockRoot]}):surfLandNavigator;
+  const harborLandNavigator=dockRoot?createLandNavigator(THREE,{...landOptions,extraObstacleRoots:[...extraObstacleRoots,dockRoot]}):surfLandNavigator;
   const currentLandNavigator=()=>sceneMode==='harbor'?harborLandNavigator:surfLandNavigator;
   const landNavigator=surfLandNavigator&&Object.fromEntries(Object.keys(surfLandNavigator).map(key=>
     [key,(...args)=>currentLandNavigator()[key](...args)]));
+  const guestNavigators=new Map();
+  function navigatorFor(spec){
+    if(!landNavigator||!(spec.navigationPadding>.50))return landNavigator;
+    if(!guestNavigators.has(spec.navigationPadding)){
+      const options={...landOptions,padding:spec.navigationPadding};
+      const surf=createLandNavigator(THREE,options);
+      const harbor=dockRoot?createLandNavigator(THREE,{...options,extraObstacleRoots:[...extraObstacleRoots,dockRoot]}):surf;
+      guestNavigators.set(spec.navigationPadding,Object.fromEntries(Object.keys(surf).map(key=>
+        [key,(...args)=>(sceneMode==='harbor'?harbor:surf)[key](...args)])));
+    }
+    return guestNavigators.get(spec.navigationPadding);
+  }
   const actors=[];
   const footprintPoint=new THREE.Vector3();
-  for(const spec of (meta.actors||meta.actorRoutes||[])){
-    const object=model.getObjectByName(spec.node||spec.name);if(!object)continue;
+  for(const spec of [...(meta.actors||meta.actorRoutes||[]),...externalActors.map(a=>a.spec)]){
+    const external=externalActors.find(a=>a.spec===spec);
+    const object=external?.root||model.getObjectByName(spec.node||spec.name);if(!object)continue;
+    const actorNavigator=navigatorFor(spec);
     const routePoints=spec.route||spec.points||[],points=routePoints.map(p=>new THREE.Vector3(...p));
     const curve=points.length>=3?new THREE.CatmullRomCurve3(points,spec.closed!==false,'centripetal'):null;
-    const f=spec.forward||[0,0,1],restAngle=Math.atan2(f[0],f.length>2?f[2]:f[1]);
+    const f=spec.forward||[0,0,1];
+    const restForward=new THREE.Vector3(f[0],0,f.length>2?f[2]:f[1]);
+    if(external)restForward.applyQuaternion(object.quaternion);
+    const restAngle=Math.atan2(restForward.x,restForward.z);
     const isDog=spec.pose==='dog'||spec.id==='dog';
     const forwardAxis=new THREE.Vector3(f[0],0,f.length>2?f[2]:f[1]).normalize();
     const limbs=[];
@@ -323,26 +340,26 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
     let contactRadius=0;
     object.updateWorldMatrix(true,true);
     const actorOrigin=object.getWorldPosition(new THREE.Vector3());
-    object.traverse(mesh=>{if(!mesh.isMesh)return;const positions=mesh.geometry.attributes.position;
+    if(!Number.isFinite(spec.contactRadius))object.traverse(mesh=>{if(!mesh.isMesh)return;const positions=mesh.geometry.attributes.position;
       for(let i=0;i<positions.count;i++){
         footprintPoint.fromBufferAttribute(positions,i).applyMatrix4(mesh.matrixWorld).sub(actorOrigin);
         contactRadius=Math.max(contactRadius,Math.hypot(footprintPoint.x,footprintPoint.z));
       }
     });
-    contactRadius+=.08;
+    contactRadius=Number.isFinite(spec.contactRadius)?spec.contactRadius:contactRadius+.08;
     const routeEnvelope=points.reduce((r,p)=>Math.max(r,Math.hypot(p.x-object.position.x,p.z-object.position.z)),0);
     actors.push({spec,object,curve,length,restAngle,isDog,forwardAxis,base:object.position.clone(),
       baseQuaternion:object.quaternion.clone(),limbs,phase:finite(spec.phase),lastPosition:object.position.clone(),
       distance:0,travel:(spec.routeOffset||0)*length,walkFactor:1,activity:'walking',tailAngle:0,
       harborOnly:spec.id==='dockhand'||spec.mode==='harbor',
-      roaming:!!landNavigator&&spec.id!=='dockhand',walkPoint:object.position.clone(),heading:restAngle,
+      roaming:!!actorNavigator&&spec.id!=='dockhand',navigator:actorNavigator,walkPoint:object.position.clone(),heading:restAngle,
       path:[],pathIndex:0,pause:finite(spec.phase)*.07,recent:[],destinations:0,blocked:0,
-      contactRadius,routeEnvelope,actorYields:0,
+      contactRadius,routeEnvelope,actorYields:0,external,externalControlled:false,externalTrip:null,
       visitedMin:[object.position.x,object.position.z],visitedMax:[object.position.x,object.position.z]});
     const actor=actors.at(-1);
     if(actor.roaming){
-      const start=landNavigator.nearest(object.position.x,object.position.z);
-      if(!start)actor.roaming=false;else{actor.walkPoint.x=start[0];actor.walkPoint.z=start[1];actor.walkPoint.y=landNavigator.height(...start);actor.object.position.copy(actor.walkPoint);actor.lastPosition.copy(actor.walkPoint);}
+      const start=actorNavigator.nearest(object.position.x,object.position.z);
+      if(!start)actor.roaming=false;else{actor.walkPoint.x=start[0];actor.walkPoint.z=start[1];actor.walkPoint.y=actorNavigator.height(...start);actor.object.position.copy(actor.walkPoint);actor.lastPosition.copy(actor.walkPoint);}
     }
   }
   for(const actor of actors)actor.hike=createHarborHike(THREE,{actor,navigator:landNavigator,model,
@@ -354,6 +371,10 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
       const entry=other.hike.entryClearance,radius=entry.radius+actor.contactRadius;
       return [{x:entry.x,z:entry.z,radius},{x:entry.x,z:entry.z+1.2,radius}];
     });
+  }
+  for(const actor of actors)if(actor.external&&actor.roaming&&!clearOfActors(actor,actor.walkPoint.x,actor.walkPoint.z)){
+    const safe=actor.navigator.nearest(actor.walkPoint.x,actor.walkPoint.z,actorObstacles(actor,.035));
+    if(safe){actor.walkPoint.set(safe[0],actor.navigator.height(...safe),safe[1]);actor.object.position.copy(actor.walkPoint);actor.lastPosition.copy(actor.walkPoint);}
   }
   // Capture the authored eyes once in body-local space. In particular, the dog's
   // HEAD pivot contributes to eye height, but its sniff animation never drives
@@ -390,12 +411,13 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
         }
         if(!upperEyes.isEmpty())upperEyes.getCenter(eyeLocal);
       }
-    }else eyeLocal.copy(localUp).multiplyScalar(isDog?.39:.75).addScaledVector(localForward,isDog?.30:.08);
+    }else if(object.userData.viewEye)eyeLocal.fromArray(object.userData.viewEye);
+    else eyeLocal.copy(localUp).multiplyScalar(isDog?.39:.75).addScaledVector(localForward,isDog?.30:.08);
     eyeLocal.addScaledVector(localForward,.025);
     const localQuaternion=new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(),localForward,localUp));
     viewSubjects.set(id,{id,label,object,eyeLocal,localQuaternion,hiddenObjects,harborOnly:id==='boat'||id==='dockhand',anchorSource:eyes.length?'authored-eyes':'body-fallback'});
   }
-  for(const actor of actors)registerView(actor.spec.id||actor.object.name,viewLabels[actor.spec.id]||actor.spec.label||'岛民',
+  for(const actor of actors)if(!actor.spec.hideView)registerView(actor.spec.id||actor.object.name,viewLabels[actor.spec.id]||actor.spec.label||'岛民',
     actor.object,actor.forwardAxis,actor.baseQuaternion,[actor.object],actor.isDog);
   if(boat){
     // These BOAT material batches contain only the sole crew member. Hull,
@@ -424,9 +446,14 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
       // Reserve fixed routes in full. Roamers use their current footprint.
       const p=other.roaming?other.walkPoint:other.base;
       return {x:p.x,z:p.z,radius:actor.contactRadius+other.contactRadius+extra+(other.roaming?0:other.routeEnvelope)};
-    }).concat(actor.trailReservations);
+    }).concat(actor.trailReservations,actor.spec.ignoreLandReservations?[]:reservedLandAreas.filter(area=>area.active!==false).map(area=>({x:area.x,z:area.z,radius:actor.contactRadius+area.radius+extra})));
   }
   function clearOfActors(actor,x,z,y=actor.walkPoint.y){
+    for(const area of actor.spec.ignoreLandReservations?[]:reservedLandAreas){
+      if(area.active===false)continue;
+      const separation=actor.contactRadius+area.radius+.035;
+      if((x-area.x)**2+(z-area.z)**2<separation*separation)return false;
+    }
     for(const entry of actor.trailReservations)if((x-entry.x)**2+(z-entry.z)**2<entry.radius*entry.radius)return false;
     for(const other of actors){
       if(other===actor||!activeActor(other))continue;
@@ -438,11 +465,14 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
     return true;
   }
   function advanceRoaming(actor,dt){
-    const nav=landNavigator;
+    const nav=actor.navigator;
+    const trip=actor.externalTrip;
+    if(trip&&trip.status!=='walking')return 0;
     if(actor.pause>0){actor.pause=Math.max(0,actor.pause-dt);return 0;}
     if(actor.pathIndex>=actor.path.length){
-      const result=nav.plan(actor.walkPoint.x,actor.walkPoint.z,actor.recent,actorObstacles(actor,.035));
-      if(!result||result.path.length<2){actor.pause=1;return 0;}
+      if(trip&&Math.hypot(actor.walkPoint.x-trip.x,actor.walkPoint.z-trip.z)<.20){trip.status='arrived';return 0;}
+      const result=trip?nav.planTo(actor.walkPoint.x,actor.walkPoint.z,[trip.x,trip.z],actorObstacles(actor,.035)):nav.plan(actor.walkPoint.x,actor.walkPoint.z,actor.recent,actorObstacles(actor,.035));
+      if(!result||result.path.length<2){if(trip&&result&&Math.hypot(actor.walkPoint.x-result.target[0],actor.walkPoint.z-result.target[1])<.20)trip.status='arrived';else actor.pause=.35;return 0;}
       actor.path=result.path;actor.pathIndex=0;actor.target=result.target;
       actor.recent.push(result.target);if(actor.recent.length>4)actor.recent.shift();
     }
@@ -465,7 +495,7 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
       moved+=step;budget-=step;
       if(step>=distance-.0001)actor.pathIndex++;
     }
-    if(actor.pathIndex>=actor.path.length){actor.destinations++;actor.pause=actor.isDog?1.0+nav.random()*1.8:.5+nav.random()*1.4;}
+    if(actor.pathIndex>=actor.path.length){if(trip){trip.status='arrived';actor.pause=0;}else{actor.destinations++;actor.pause=actor.isDog?1.0+nav.random()*1.8:.5+nav.random()*1.4;}}
     actor.visitedMin[0]=Math.min(actor.visitedMin[0],actor.walkPoint.x);actor.visitedMin[1]=Math.min(actor.visitedMin[1],actor.walkPoint.z);
     actor.visitedMax[0]=Math.max(actor.visitedMax[0],actor.walkPoint.x);actor.visitedMax[1]=Math.max(actor.visitedMax[1],actor.walkPoint.z);
     return moved;
@@ -484,7 +514,8 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
       const stride=actor.isDog?.25:.34,phase=actor.travel/stride*TAU+actor.phase;
       actor.activity=sniffing?'sniffing':actor.roaming&&actor.pause>0?'looking-around':hasRoute?'walking':'standing';
       if(actor.hike)actor.activity=actor.hike.stage==='summit'?'watching-sea':actor.hike.stage==='resting'?'resting':moved>1e-8?'walking':'turning-or-waiting';
-      const bob=Math.abs(Math.sin(phase))*(actor.isDog?.006:.012)*actor.walkFactor;
+      // Skeletal guests have authored hip motion and their own sole grounding.
+      const bob=actor.spec.skeletal?0:Math.abs(Math.sin(phase))*(actor.isDog?.006:.012)*actor.walkFactor;
       if(actor.roaming){
         actor.object.position.copy(actor.walkPoint);actor.object.position.y+=bob;
         actorQ.setFromAxisAngle(up,actor.heading-actor.restAngle);
@@ -522,11 +553,41 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
           limb.object.quaternion.copy(armQ).multiply(limbQ).multiply(limb.base);
         }else limb.object.quaternion.copy(limbQ).multiply(limb.base);
       }
+      actor.external?.update({dt,time,moved,walkFactor:actor.walkFactor,activity:actor.activity});
       actor.distance+=actor.object.position.distanceTo(actor.lastPosition);actor.lastPosition.copy(actor.object.position);
     }
   }
 
-  function activeActor(actor){return sceneMode==='harbor'||!actor.harborOnly;}
+  function activeActor(actor){return !actor.externalControlled&&(sceneMode==='harbor'||!actor.harborOnly);}
+  function setExternalControl(id,enabled){
+    const actor=actors.find(item=>item.spec.id===id&&item.external);if(!actor)return false;
+    actor.externalControlled=Boolean(enabled);actor.externalTrip=null;actor.path=[];actor.pathIndex=0;actor.pause=0;
+    if(!actor.externalControlled){
+      actor.walkPoint.copy(actor.object.position);
+      const safe=actor.navigator?.valid(actor.walkPoint.x,actor.walkPoint.z)&&clearOfActors(actor,actor.walkPoint.x,actor.walkPoint.z)
+        ?[actor.walkPoint.x,actor.walkPoint.z]:actor.navigator?.nearest(actor.walkPoint.x,actor.walkPoint.z,actorObstacles(actor,.035));
+      if(safe){actor.walkPoint.set(safe[0],actor.navigator.height(...safe),safe[1]);actor.object.position.copy(actor.walkPoint);}
+      actor.lastPosition.copy(actor.object.position);
+      const forward=new THREE.Vector3(0,0,1).applyQuaternion(actor.object.quaternion);
+      actor.heading=Math.atan2(forward.x,forward.z);
+    }
+    return true;
+  }
+  function walkExternalTo(id,x,z){
+    const actor=actors.find(item=>item.spec.id===id&&item.external);if(!actor||!actor.roaming||actor.externalControlled||!Number.isFinite(x)||!Number.isFinite(z))return false;
+    actor.externalTrip={x,z,status:'walking'};actor.path=[];actor.pathIndex=0;actor.pause=0;
+    return true;
+  }
+  function getExternalTrip(id){
+    const actor=actors.find(item=>item.spec.id===id&&item.external);if(!actor)return null;
+    return {status:actor.externalTrip?.status||'idle',position:actor.object.position.toArray(),controlled:actor.externalControlled};
+  }
+  // Query the exact same dynamic, trail and static clearances used when an
+  // externally controlled actor returns to ordinary walking.
+  function isExternalLandingFree(id,x,z){
+    const actor=actors.find(item=>item.spec.id===id&&item.external);
+    return !!actor?.navigator?.valid(x,z)&&clearOfActors(actor,x,z,actor.navigator.height(x,z));
+  }
   function setMode(nextMode){
     if(nextMode!=='harbor'&&nextMode!=='surf')return false;
     const changed=sceneMode!==nextMode;
@@ -536,13 +597,14 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
     for(const actor of actors)if(actor.harborOnly)actor.object.visible=harbor;
     if(changed&&landNavigator&&harborLandNavigator!==surfLandNavigator){
       for(const actor of actors){
-        if(!actor.roaming||actor.hike)continue;
+        if(!actor.roaming||actor.hike||actor.externalControlled)continue;
         actor.path=[];actor.pathIndex=0;
         // A resident may occupy an empty beach cell when dock props reappear.
         // Resolve only that new overlap; all travel and activity progress stays.
-        if(!landNavigator.valid(actor.walkPoint.x,actor.walkPoint.z)){
-          const safe=landNavigator.nearest(actor.walkPoint.x,actor.walkPoint.z,actorObstacles(actor,.035));
-          if(safe){actor.walkPoint.set(safe[0],landNavigator.height(...safe),safe[1]);actor.object.position.copy(actor.walkPoint);actor.lastPosition.copy(actor.walkPoint);}
+        const nav=actor.navigator;
+        if(!nav.valid(actor.walkPoint.x,actor.walkPoint.z)){
+          const safe=nav.nearest(actor.walkPoint.x,actor.walkPoint.z,actorObstacles(actor,.035));
+          if(safe){actor.walkPoint.set(safe[0],nav.height(...safe),safe[1]);actor.object.position.copy(actor.walkPoint);actor.lastPosition.copy(actor.walkPoint);}
         }
       }
     }
@@ -569,8 +631,8 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
       }
       if(sceneMode==='harbor')renderWake();
     },
-    setMode,getMode:()=>sceneMode,setDestination,setContainerTilt,getViewSubjects,getViewPose,
-    exportLandGrid:()=>landNavigator?.exportGrid()||null,
+    setMode,getMode:()=>sceneMode,setDestination,setContainerTilt,getViewSubjects,getViewPose,setExternalControl,walkExternalTo,getExternalTrip,isExternalLandingFree,
+    exportLandGrid:(actorId)=>((actorId?actors.find(a=>a.spec.id===actorId)?.navigator:null)||landNavigator)?.exportGrid()||null,
     getDiagnostics:()=>({
       sceneMode,mode,destinationMarker:false,boatPresent:!!boat,boatVisible:!!boat&&sceneMode==='harbor',boatPosition:boat?.position.toArray(),boatStart:boatStart?.toArray(),
       heading,speed,totalDistance,verticalVelocity:verticalV,tilt:[gradientX,gradientZ],destination:destination?.slice()||null,
@@ -586,8 +648,8 @@ export function createHarborMotion(THREE,{model,meta={},water={},scene=model,mod
       viewSubjects:Array.from(viewSubjects.values()).filter(availableSubject).map(s=>({id:s.id,eyeLocal:s.eyeLocal.toArray(),anchorSource:s.anchorSource,hiddenObjects:s.hiddenObjects.map(o=>o.name)})),
       landNavigation:landNavigator?{...landNavigator.diagnostics(),sceneMode,cachedLayouts:harborLandNavigator===surfLandNavigator?1:2}:null,
       trailClearance,
-      actors:actors.map(a=>({name:a.object.name,active:activeActor(a),position:a.object.position.toArray(),distance:a.distance,walking:activeActor(a)&&(a.roaming||!!a.curve)&&a.walkFactor>.02,limbs:a.limbs.length,kind:a.isDog?'dog':'person',activity:a.activity,walkFactor:a.walkFactor,tailAngle:a.tailAngle,roaming:a.roaming,target:a.target||null,destinations:a.destinations,blockedMoves:a.blocked,actorYields:a.actorYields,contactRadius:a.contactRadius,landSafe:a.hike?null:a.roaming?landNavigator.valid(a.object.position.x,a.object.position.z):null,hike:a.hike?.diagnostics()||null,visitedBounds:{min:a.visitedMin.slice(),max:a.visitedMax.slice()},roamingExtent:[a.visitedMax[0]-a.visitedMin[0],a.visitedMax[1]-a.visitedMin[1]]})),
+      actors:actors.map(a=>({name:a.object.name,active:activeActor(a),position:a.object.position.toArray(),distance:a.distance,walking:activeActor(a)&&(a.roaming||!!a.curve)&&a.walkFactor>.02,limbs:a.limbs.length,kind:a.isDog?'dog':'person',activity:a.activity,walkFactor:a.walkFactor,tailAngle:a.tailAngle,roaming:a.roaming,target:a.target||null,destinations:a.destinations,blockedMoves:a.blocked,actorYields:a.actorYields,contactRadius:a.contactRadius,landSafe:a.hike?null:a.roaming?a.navigator.valid(a.object.position.x,a.object.position.z):null,hike:a.hike?.diagnostics()||null,animation:a.external?.diagnostics?.()||null,visitedBounds:{min:a.visitedMin.slice(),max:a.visitedMax.slice()},roamingExtent:[a.visitedMax[0]-a.visitedMin[0],a.visitedMax[1]-a.visitedMin[1]]})),
     }),
-    dispose(){viewSubjects.clear();actors.length=0;scene.remove(root);for(const g of wakeGeometries)g.dispose();wakeMaterial.dispose();foamGeometry.dispose();foamMaterial.dispose();},
+    dispose(){viewSubjects.clear();for(const actor of actors)actor.external?.dispose?.();actors.length=0;scene.remove(root);for(const g of wakeGeometries)g.dispose();wakeMaterial.dispose();foamGeometry.dispose();foamMaterial.dispose();},
   };
 }

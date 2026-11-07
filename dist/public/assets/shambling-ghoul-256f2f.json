@@ -1,0 +1,47 @@
+{
+  "name": "Shambling Ghoul",
+  "author": "Polyfork",
+  "source": "https://polyfork.dev/asset/shambling-ghoul-256f2f",
+  "sourceModule": "https://polyfork.dev/cdn/shambling-ghoul-256f2f.mjs",
+  "paramsSource": "https://polyfork.dev/cdn/shambling-ghoul-256f2f-params.json",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "parameters": {
+    "age": "kid",
+    "build": 1,
+    "expression": "warm"
+  },
+  "smoothing": {
+    "head": {
+      "style": "cube",
+      "look": "smooth",
+      "conform": true,
+      "eyes": "bean"
+    },
+    "expression": "warm",
+    "segments": {
+      "limb": 16,
+      "torso": 20,
+      "neck": 12
+    },
+    "smoothNormals": [
+      "body",
+      "attach-hair-mesh"
+    ],
+    "skin": "Coincident vertices welded only when all attributes including skin weights match."
+  },
+  "ageOptions": [
+    "kid",
+    "teen",
+    "adult",
+    "old"
+  ],
+  "ageSelection": "Youngest available official age preset; proportions regenerated, not adult mesh uniformly scaled.",
+  "changes": "Official youngest age preset with default medium build; rounded conforming head, moderately denser body geometry, smooth skin/hair normals. Original named skeleton and skin weights retained. Runtime authors walking, wading, swimming, boarding, standing, and surfing poses.",
+  "bytes": 535480,
+  "sha256": "1001da8c8fd24a590296ccbfb8a770287b06ebe9d10095e1a5bb01c121daaa4d",
+  "animations": [],
+  "bones": 31,
+  "meshes": 4,
+  "triangles": 7112
+}

@@ -1,5 +1,5 @@
 /** Optional island ambience. Nothing is fetched or played before the listener opts in. */
-const VOLUME=.9;
+const VOLUME=.9, CHEER_VOLUME=.38;
 
 export function createHarborAudio({onChange}={}){
   let enabled=false;
@@ -7,6 +7,8 @@ export function createHarborAudio({onChange}={}){
   let context=null,master=null,filter=null,subjectGain=null,compressor=null,analyser=null,samples=null;
   let loadPromise=null,loadAbort=null,suspendTimer=null,request=0,mixRequest=0;
   let buffer=null,source=null;
+  let cheerBuffer=null,cheerLoadPromise=null,cheerAbort=null,cheerSource=null,cheerGain=null;
+  let cheerRevision=0,cheerAttempts=0,cheerPlayed=0,cheerError=null;
 
   const loaded=()=>buffer!==null;
   const visible=()=>!document.hidden&&!pageAway;
@@ -65,6 +67,52 @@ export function createHarborAudio({onChange}={}){
     });
     emit();return loadPromise;
   }
+  function ensureCheerBuffer(){
+    if(cheerBuffer)return Promise.resolve(cheerBuffer);
+    if(cheerLoadPromise)return cheerLoadPromise;
+    cheerAbort=new AbortController();const controller=cheerAbort;
+    const timeout=setTimeout(()=>controller.abort(),30000);
+    cheerLoadPromise=(async()=>{
+      const url=new URL('./public/audio/surf-cheer.mp3?v=1',import.meta.url);
+      const response=await fetch(url,{signal:controller.signal});
+      if(!response.ok)throw new Error(`Cheer: HTTP ${response.status}`);
+      const decoded=await context.decodeAudioData(await response.arrayBuffer());
+      if(!disposed)cheerBuffer=decoded;
+      return decoded;
+    })().finally(()=>{
+      clearTimeout(timeout);cheerLoadPromise=null;
+      if(cheerAbort===controller)cheerAbort=null;
+    });
+    return cheerLoadPromise;
+  }
+  function stopCheer(){
+    cheerRevision++;cheerAbort?.abort();
+    if(!cheerSource)return;
+    const old=cheerSource,gain=cheerGain;cheerSource=null;cheerGain=null;
+    try{old.stop();}catch{}old.disconnect();gain?.disconnect();
+  }
+  async function playSurfCheer(){
+    // The event never activates audio or fetches a recording without consent.
+    // Capture a revision so a late decode cannot play after mute/pause/hide.
+    if(!enabled||!playing||!visible()||disposed||!context)return false;
+    cheerAttempts++;const revision=++cheerRevision;cheerError=null;
+    try{
+      const decoded=await ensureCheerBuffer();
+      if(revision!==cheerRevision||!canPlay())return false;
+      if(context.state!=='running')await context.resume();
+      if(revision!==cheerRevision||!canPlay()||context.state!=='running')return false;
+      // A second event replaces a previous one rather than stacking applause.
+      if(cheerSource){try{cheerSource.stop();}catch{}cheerSource.disconnect();cheerGain?.disconnect();}
+      const next=context.createBufferSource(),gain=context.createGain();
+      next.buffer=decoded;gain.gain.value=CHEER_VOLUME;next.connect(gain);gain.connect(filter);
+      cheerSource=next;cheerGain=gain;cheerPlayed++;
+      next.onended=()=>{next.disconnect();gain.disconnect();if(cheerSource===next){cheerSource=null;cheerGain=null;}emit();};
+      next.start();emit();return true;
+    }catch(cause){
+      if(!disposed&&revision===cheerRevision&&cause?.name!=='AbortError')cheerError='欢呼声暂时无法加载';
+      emit();return false;
+    }
+  }
   function startSource(){
     // Reuse the same loop through mute/pause/resume, so rapid clicks cannot
     // stack copies of the waves, birds and distant voices in the premixed track.
@@ -76,6 +124,7 @@ export function createHarborAudio({onChange}={}){
     cancelSuspend();const revision=++mixRequest;
     if(!context||disposed){emit();return;}
     if(!canPlay()){
+      stopCheer();
       fade(master.gain,0);
       suspendTimer=setTimeout(()=>{
         suspendTimer=null;
@@ -121,6 +170,7 @@ export function createHarborAudio({onChange}={}){
       for(const value of samples){peak=Math.max(peak,Math.abs(value));square+=value*value;}
     }
     return {...snapshot(),sourceCount:source?1:0,bufferDuration:buffer?.duration||0,volume:VOLUME,
+      cheer:{loaded:!!cheerBuffer,loading:!!cheerLoadPromise,playing:!!cheerSource,attempts:cheerAttempts,played:cheerPlayed,volume:CHEER_VOLUME,error:cheerError},
       peak,rms:samples?Math.sqrt(square/samples.length):0,
       outputGain:master?.gain.value||0,filterFrequency:filter?.frequency.value||0};
   }
@@ -132,7 +182,7 @@ export function createHarborAudio({onChange}={}){
   window.addEventListener('pageshow',pageShown);
   function dispose(){
     if(disposed)return;
-    disposed=true;enabled=false;request++;mixRequest++;cancelSuspend();loadAbort?.abort();
+    disposed=true;enabled=false;request++;mixRequest++;cancelSuspend();loadAbort?.abort();cheerAbort?.abort();stopCheer();
     document.removeEventListener('visibilitychange',visibilityChanged);
     window.removeEventListener('pagehide',pageHidden);window.removeEventListener('pageshow',pageShown);
     if(context)context.removeEventListener('statechange',emit);
@@ -141,5 +191,5 @@ export function createHarborAudio({onChange}={}){
     if(context&&context.state!=='closed')context.close().catch(()=>{});
   }
   queueMicrotask(emit);
-  return {setEnabled,setPlaying,setSubject,diagnostics,dispose};
+  return {setEnabled,setPlaying,setSubject,playSurfCheer,diagnostics,dispose};
 }

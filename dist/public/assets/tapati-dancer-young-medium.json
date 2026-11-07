@@ -1,0 +1,46 @@
+{
+  "name": "Tapati Dancer",
+  "source": "https://polyfork.dev/asset/tapati-dancer-5557aa",
+  "sourceModule": "https://polyfork.dev/cdn/tapati-dancer-5557aa.mjs",
+  "author": "Polyfork",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "parameters": {
+    "age": "teen",
+    "build": 1,
+    "figure": "feminine"
+  },
+  "smoothing": {
+    "head": {
+      "style": "cube",
+      "look": "smooth",
+      "conform": true,
+      "eyes": "bean"
+    },
+    "expression": "warm",
+    "segments": {
+      "limb": 16,
+      "torso": 20,
+      "neck": 12
+    },
+    "smoothNormals": [
+      "body",
+      "attach-hair-mesh"
+    ]
+  },
+  "buildRange": [
+    0.86,
+    1.18
+  ],
+  "buildMeaning": "default medium frame girth in the official character controls",
+  "animation": {
+    "name": "Walk",
+    "source": "https://polyfork.dev/asset/dragon-slayer-91ab39",
+    "duration": 0.96670001745224,
+    "hipRatio": 0.8560711890778286,
+    "change": "Retargeted hip translations to the new rest height; rotations retained in this file, free-arm walking and idle added at runtime"
+  },
+  "sha256": "9c43cbcf86a7ad772a8808e50609c494e31bd10721f405c932815a6429ec3e77",
+  "bytes": 902632,
+  "triangles": 9814
+}

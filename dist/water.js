@@ -5,14 +5,14 @@
  * No image assets, network requests, or Blender scene changes are required.
  */
 import { createWaterPhysics } from './water-physics.js?v=12.2';
-import { createCoastWave, COAST_GLSL } from './coast-wave.js?v=wave-runout-1';
+import { createCoastWave, COAST_GLSL } from './coast-wave.js?v=continuous-breaker-8';
 
 const TAU = Math.PI * 2;
 const DEFAULT_RADIUS = 9.0;
 const IMMERSIVE_RADIUS = 100;
 const DEPTH = 1.80;
 const DURATION = 6;
-const SURFACE_SEGMENTS = 256, SURFACE_RINGS = 112;
+const SURFACE_SEGMENTS = 384, SURFACE_RINGS = 112;
 const WAVES = [
   { amplitude: 0.024, wavelength: 3.10, direction: [0.894427191, -0.447213595], harmonic: 1, phase: 0.35 },
   { amplitude: 0.014, wavelength: 1.65, direction: [-0.287347886, -0.957826285], harmonic: 2, phase: 1.40 },
@@ -458,6 +458,7 @@ export function createHarborWater(THREE, options = {}) {
     harborOpticalRadius: { value: radius },
     harborOpticalDepth: { value: DEPTH },
     harborImmersive: { value: 0 },
+    harborSubmergedView: { value: 0 },
     harborUnderwaterHaze: { value: new THREE.Color('#398c98') },
     harborUnderwaterHazeRange: { value: new THREE.Vector2(6,15) },
     harborFieldSize: { value: physics.size },
@@ -505,7 +506,8 @@ export function createHarborWater(THREE, options = {}) {
     transparent: true,
     opacity: 0.40,
     depthWrite: false,
-    side: THREE.FrontSide,
+    side: THREE.DoubleSide,
+    forceSinglePass: true,
     ior: 1.333,
     transmission: 0,
     clearcoat: 0.22,
@@ -532,10 +534,13 @@ export function createHarborWater(THREE, options = {}) {
         vHarborWaterXZ = position.xz;
       `);
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', `#include <common>\n${OPTICAL_GLSL}\n${OCEAN_WAVE_GLSL}\n${COAST_GLSL}\nuniform float harborTime;\nuniform mat4 harborContainerMatrix;\nvarying vec2 vHarborWaterXZ;`)
+      .replace('#include <common>', `#include <common>\n${OPTICAL_GLSL}\n${OCEAN_WAVE_GLSL}\n${COAST_GLSL}\nuniform float harborTime;\nuniform float harborSubmergedView;\nuniform mat4 harborContainerMatrix;\nvarying vec2 vHarborWaterXZ;`)
       .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
         if(length(vHarborWaterXZ)<harborRadius-0.5 && texture2D(harborField,vHarborWaterXZ/(2.0*harborRadius)+0.5).w < 0.99) discard;
         vec4 harborSurf = harborBreaker(vHarborWaterXZ);
+        // A rolled crest exposes the reverse of this same water mesh. Keep
+        // ordinary flat-water undersides on the dedicated underwater shader.
+        if(!gl_FrontFacing && (harborSubmergedView>.5 || harborSurf.x<.12)) discard;
         harborProtectDryScene(harborSurf.x);`)
       .replace('#include <roughnessmap_fragment>', `
         #include <roughnessmap_fragment>
@@ -853,7 +858,7 @@ export function createHarborWater(THREE, options = {}) {
     shaderUniforms,
     appearanceNames: Object.freeze(Object.keys(APPEARANCES)),
     get appearance() { return appearance; },
-    setUnderwaterView(enabled) { underwaterView=!!enabled;syncImmersiveVisibility(); },
+    setUnderwaterView(enabled) { underwaterView=!!enabled;shaderUniforms.harborSubmergedView.value=underwaterView?1:0;syncImmersiveVisibility(); },
     setImmersiveView(enabled) {
       const next=!!enabled;
       if(next===immersiveView)return;
@@ -868,8 +873,9 @@ export function createHarborWater(THREE, options = {}) {
     waveGLSL: WAVE_GLSL,
     get coastWaveRunning(){return coastWave.running;},
     get coastWaveStopping(){return coastWave.stopping;},
-    startCoastWave(elapsed = previousSeconds ?? 0, x, z) {
-      return coastWave.start(elapsed,x,z);
+    getCoastWaveState(){return coastWave.diagnostics();},
+    startCoastWave(elapsed = previousSeconds ?? 0, x, z, options) {
+      return coastWave.start(elapsed,x,z,options);
     },
     stopCoastWave() { coastWave.stop(); },
     cancelCoastWave(elapsed = previousSeconds ?? 0) { return coastWave.cancel(elapsed); },
